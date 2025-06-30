@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-black;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* globals.css */
+
+/* Diatype font classes */
+.diatype-medium-text {
+  font-family: var(--font-diatype-medium);
+}
+
+.diatype-light-text {
+  font-family: var(--font-diatype-light);
+}
+
+.diatype-bold-text {
+  font-family: var(--font-diatype-bold);
+}
+
+.diatype-thin-text {
+  font-family: var(--font-diatype-thin);
+}
+
+/* Greycliff font classes */
+.greycliff-bold-text {
+  font-family: var(--font-greycliff-bold);
+}
+
+.greycliff-demibold-text {
+  font-family: var(--font-greycliff-demibold);
+}
+
+.greycliff-extrabold-text {
+  font-family: var(--font-greycliff-extrabold);
+}
+
+.greycliff-heavy-text {
+  font-family: var(--font-greycliff-heavy);
+}
+
+.greycliff-medium-text {
+  font-family: var(--font-greycliff-medium);
+}
+
+.greycliff-regular-text {
+  font-family: var(--font-greycliff-regular);
+}
