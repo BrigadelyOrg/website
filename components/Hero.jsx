@@ -8,11 +8,12 @@ const Hero = () => {
       <div className="container mx-auto flex flex-col items-center text-center space-y-8">
         <div className="space-y-4 max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-            Hire | Onboard  <br/> Team Locally
+           Smart Team Management Tool  <br/> For your Business
           </h1>
           <p className="text-gray-700 text-base md:text-lg">
+            Brigadely helps you manage your team, handle payroll payments, manage expenses, and run your operations, all from one powerful business dashboard
             Brigadely helps Nigerian businesses grow beyond borders with ease, speed, and full compliance.
-            Our all-in-one People Platform simplifies how you hire, onboard, manage, and offboard talent whether they're across town or across Africa.
+            
             
           </p>
         </div>
