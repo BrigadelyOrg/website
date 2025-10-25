@@ -1,0 +1,115 @@
+name: HouseofFirts to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t docker.io/${{ secrets.DOCKER_USERNAME }}/brigadely-website:latest .
+          docker push docker.io/${{ secrets.DOCKER_USERNAME }}/brigadely-website:latest
+
+      - name: SSH into EC2 and Deploy
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Update system packages
+            sudo apt update -y
+            
+            # Ensure Docker installation
+            if ! command -v docker &> /dev/null; then
+              echo "Installing Docker..."
+              sudo apt install -y docker.io
+              sudo systemctl enable --now docker
+              sudo usermod -aG docker ubuntu
+              echo "Docker installed successfully."
+            fi
+
+            # Ensure Node.js and PM2 are installed if needed
+            if ! command -v node &> /dev/null; then
+              echo "Installing Node.js and npm..."
+              curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+              sudo apt install -y nodejs
+              echo "Nodejs installed successfully."
+            fi
+
+            if ! command -v pm2 &> /dev/null; then
+              echo "Installing PM2..."
+              sudo npm install -g pm2
+              echo "PM2 installed successfully."
+            fi
+
+            # Ensure Nginx installation and setup as reverse proxy
+            if ! command -v nginx &> /dev/null; then
+              sudo apt install -y nginx
+              sudo systemctl enable --now nginx
+              echo "Nginx installed successfully."
+            fi
+            
+            # Create Nginx proxy parameters file if it doesn't exist
+            sudo bash -c 'cat > /etc/nginx/proxy_params <<EOF
+            proxy_set_header Upgrade \$http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host \$host;
+            proxy_cache_bypass \$http_upgrade;
+            EOF'
+
+            # Configure Nginx for reverse proxy
+            sudo bash -c 'cat > /etc/nginx/sites-available/default <<EOF
+            server {
+                listen 80;
+                server_name brigadely.com www.brigadely.com;
+
+                location / {
+                    proxy_pass http://localhost:3000;
+                    proxy_http_version 1.1;
+                    include /etc/nginx/proxy_params;
+                }
+            }
+            EOF'
+            sudo nginx -t && sudo systemctl restart nginx
+
+            # Set up SSL with Let's Encrypt Certbot if certificate does not exist
+            if [ ! -d "/etc/letsencrypt/live/brigadely.com" ]; then
+              echo "Setting up HTTPS with Certbot..."
+              sudo apt install -y certbot python3-certbot-nginx
+              sudo certbot --nginx -d brigadely.com -d www.brigadely.com --non-interactive --agree-tos -m info@brigadely.com
+            fi
+
+            # Set up a cron job for SSL certificate renewal if not exists
+            if ! crontab -l | grep -q "certbot renew"; then
+              echo "0 0 * * 0 /usr/bin/certbot renew --quiet" | sudo tee -a /etc/crontab
+            fi
+
+            # Pull the latest Docker image and restart the container
+            sudo docker pull docker.io/${{ secrets.DOCKER_USERNAME }}/brigadely-website:latest
+            sudo docker stop brigadely-website-container || true
+            sudo docker rm brigadely-website-container || true
+            sudo docker run -d --name brigadely-website-container -p 3000:3000 docker.io/${{ secrets.DOCKER_USERNAME }}/brigadely-website:latest
+
+            # Configure UFW firewall if not already enabled
+            if ! sudo ufw status | grep -q "Status: active"; then
+              sudo ufw allow OpenSSH
+              sudo ufw allow 'Nginx Full'
+              sudo ufw --force enable
+            fi
+
+            echo "Deployment complete."
