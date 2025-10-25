@@ -16,7 +16,7 @@ const About = () => {
             Built for the Future of Work in Africa and Beyond <br />
           </h2>
           <p className="text-gray-700 text-base leading-relaxed">
-            Brigadely empowers businesses of all sizes from nimble startups to large enterprises — to hire, manage, and pay talent anywhere, effortlessly.
+            Brigadely empowers businesses of all sizes from nimble startups to large enterprises — to hire, manage, and pay talent anywhere, and effortlessly.
             Whether you're building a remote-first team across borders or scaling operations across Africa,
             Brigadely simplifies everything from local onboarding to consolidated payroll without the need to set up local entities. <br/>
 
