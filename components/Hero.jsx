@@ -12,7 +12,7 @@ const Hero = () => {
           </h1>
           <p className="text-gray-700 text-base md:text-lg">
             Brigadely helps you manage your team, handle payroll payments, manage expenses, and run your operations, all from one powerful business dashboard
-            Brigadely helps Nigerian businesses grow beyond borders with ease, speed, and full compliance.
+            
             
             
           </p>

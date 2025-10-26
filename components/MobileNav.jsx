@@ -9,45 +9,40 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { LuMenu } from "react-icons/lu";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; // Import VisuallyHidden
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
+import { useState } from "react";
 
 const links = [
-  {
-    name: "about us",
-    path: "#about",
-  },
-  {
-    name: "features",
-    path: "#features",
-  },
-  {
-    name: "how it works",
-    path: "#howItWorks",
-  },
-  {
-    name: "faqs",
-    path: "#faqs",
-  },
+  { name: "about us", path: "#about" },
+  { name: "features", path: "#features" },
+  { name: "how it works", path: "#howItWorks" },
+  { name: "faqs", path: "#faqs" },
 ];
 
 const MobileNav = () => {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="flex justify-center items-center">
         <LuMenu className="text-[32px] text-black" />
       </SheetTrigger>
+
       <SheetContent className="flex flex-col bg-white" side="right">
         <VisuallyHidden>
-          <SheetTitle>Menu</SheetTitle> {/* Hides the title visually */}
+          <SheetTitle>Menu</SheetTitle>
         </VisuallyHidden>
 
         <div className="mt-32 mb-14 text-center text-2xl">
-          <Link href={"/"}>
+          <Link href={"/"} onClick={handleLinkClick}>
             <Image
-              src="/img/logo.png"
+              src="/img/logo1.png"
               alt="logo"
               width={120}
               height={120}
@@ -63,9 +58,10 @@ const MobileNav = () => {
               <Link
                 key={index}
                 href={href}
+                onClick={handleLinkClick}
                 className={`${
                   link.path === pathname &&
-                  "text-primary  border-b-2 border-primary"
+                  "text-primary border-b-2 border-primary"
                 } text-xl capitalize hover:text-primary transition-all`}
               >
                 {link.name}
