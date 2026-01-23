@@ -1,4 +1,4 @@
-name: HouseofFirts to EC2
+name: Brigadely to EC2
 
 on:
   push:
