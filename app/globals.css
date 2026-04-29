@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+  /* Body: Inter sans-serif (Bujeti standard) */
   body {
-    @apply bg-white text-black;
+    @apply bg-white text-[#171717];
+    font-family: var(--font-inter), sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  /* Headings: Libre Baskerville serif, weight 400 (Bujeti standard) */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-libre-baskerville), serif;
+    font-weight: 400;
+  }
+
+  /* Italic <em> inside headings renders Libre Baskerville Italic */
+  em {
+    font-style: italic;
   }
 }
 
@@ -12,46 +27,15 @@ html {
   scroll-behavior: smooth;
 }
 
-/* globals.css */
+/* Legacy utility classes kept for optional use */
+.diatype-medium-text  { font-family: var(--font-diatype-medium); }
+.diatype-light-text   { font-family: var(--font-diatype-light); }
+.diatype-bold-text    { font-family: var(--font-diatype-bold); }
+.diatype-thin-text    { font-family: var(--font-diatype-thin); }
 
-/* Diatype font classes */
-.diatype-medium-text {
-  font-family: var(--font-diatype-medium);
-}
-
-.diatype-light-text {
-  font-family: var(--font-diatype-light);
-}
-
-.diatype-bold-text {
-  font-family: var(--font-diatype-bold);
-}
-
-.diatype-thin-text {
-  font-family: var(--font-diatype-thin);
-}
-
-/* Greycliff font classes */
-.greycliff-bold-text {
-  font-family: var(--font-greycliff-bold);
-}
-
-.greycliff-demibold-text {
-  font-family: var(--font-greycliff-demibold);
-}
-
-.greycliff-extrabold-text {
-  font-family: var(--font-greycliff-extrabold);
-}
-
-.greycliff-heavy-text {
-  font-family: var(--font-greycliff-heavy);
-}
-
-.greycliff-medium-text {
-  font-family: var(--font-greycliff-medium);
-}
-
-.greycliff-regular-text {
-  font-family: var(--font-greycliff-regular);
-}
+.greycliff-bold-text      { font-family: var(--font-greycliff-bold); }
+.greycliff-demibold-text  { font-family: var(--font-greycliff-demibold); }
+.greycliff-extrabold-text { font-family: var(--font-greycliff-extrabold); }
+.greycliff-heavy-text     { font-family: var(--font-greycliff-heavy); }
+.greycliff-medium-text    { font-family: var(--font-greycliff-medium); }
+.greycliff-regular-text   { font-family: var(--font-greycliff-regular); }

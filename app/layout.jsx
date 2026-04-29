@@ -1,9 +1,25 @@
 import localFont from "next/font/local";
+import { Inter, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Import each font weight
+// --- Google fonts (primary system, matches Bujeti design standard) ---
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const libreBaskerville = Libre_Baskerville({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-libre-baskerville",
+  display: "swap",
+});
+
+// --- Local fonts (kept as CSS variables for optional use) ---
 const diatypeRegular = localFont({
   src: "/fonts/abc-diatype-regular.otf",
   variable: "--font-diatype-regular",
@@ -33,7 +49,7 @@ const diatypeThin = localFont({
   variable: "--font-diatype-thin",
   weight: "100",
 });
-// Import each Greycliff CF font weight
+
 const greycliffBold = localFont({
   src: "/fonts/greycliffcf/Fontspring-DEMO-greycliffcf-bold.otf",
   variable: "--font-greycliff-bold",
@@ -71,15 +87,31 @@ const greycliffRegular = localFont({
 });
 
 export const metadata = {
-  title: "Brigadely | #1 People Management System For Global Team",
-  description: "Work smarter, not harder with Brigadely. Your all-in-one people management system for global finance.",
+  title: "Brigadely — Hire, Pay & Manage Global Teams From One Platform",
+  description:
+    "Brigadely is the all-in-one people platform for African businesses. Run payroll in 25+ currencies, hire across 40+ countries, and manage HR operations — fully compliant, from one dashboard.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${diatypeRegular.variable} ${diatypeMedium.variable} ${diatypeLight.variable} ${diatypeBold.variable} ${diatypeThin.variable} ${greycliffBold.variable} ${greycliffDemiBold.variable} ${greycliffExtraBold.variable} ${greycliffHeavy.variable} ${greycliffMedium.variable} ${greycliffRegular.variable} antialiased`}
+        className={`
+          ${inter.variable}
+          ${libreBaskerville.variable}
+          ${diatypeRegular.variable}
+          ${diatypeMedium.variable}
+          ${diatypeLight.variable}
+          ${diatypeBold.variable}
+          ${diatypeThin.variable}
+          ${greycliffBold.variable}
+          ${greycliffDemiBold.variable}
+          ${greycliffExtraBold.variable}
+          ${greycliffHeavy.variable}
+          ${greycliffMedium.variable}
+          ${greycliffRegular.variable}
+          antialiased
+        `}
       >
         <Header />
         {children}

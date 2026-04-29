@@ -19,8 +19,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "#1774F6",
-        // Add your custom color configurations
+        primary: "#007a3d",
+        "primary-dark": "#005a2d",
+        "brand-mint": "#e0f3ec",
+        "brand-cream": "#FFFCF5",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -28,12 +30,14 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
+        // Primary system (Bujeti design standard)
+        sans: ["var(--font-inter)", "sans-serif"],
+        serif: ["var(--font-libre-baskerville)", "serif"],
+        // Legacy local fonts available via utility classes
         "greycliff-regular": ["var(--font-greycliff-regular)", "sans-serif"],
         "greycliff-bold": ["var(--font-greycliff-bold)", "sans-serif"],
-        "greycliff-light": ["var(--font-greycliff-light)", "sans-serif"],
         "greycliff-medium": ["var(--font-greycliff-medium)", "sans-serif"],
-        "greycliff-thin": ["var(--font-greycliff-thin)", "sans-serif"],
-        // Add additional variants as needed
+        "diatype": ["var(--font-diatype-regular)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

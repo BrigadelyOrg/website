@@ -1,40 +1,13 @@
 import Link from "next/link";
 import React from "react";
-
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
-} from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const Socials = ({ iconStyles }) => {
   const socialLinks = [
-    // {
-    //   name: "Twitter",
-    //   icon: <FaTwitter />,
-    //   url: "https://x.com/MoshoodDebug",
-    // },
-    {
-      name: "Facebook",
-      icon: <FaFacebookF />,
-      url: "",
-    },
-    {
-      name: "LinkedIn",
-      icon: <FaTwitter />,
-      url: "",
-    },
-    {
-      name: "Instagram",
-      icon: <FaLinkedinIn />,
-      url: "",
-    },
-    {
-      name: "WhatsAapp",
-      icon: <FaInstagram />,
-      url: "",
-    },
+    { name: "Facebook", icon: <FaFacebookF />, url: "" },
+    { name: "LinkedIn", icon: <FaLinkedinIn />, url: "" },
+    { name: "Instagram", icon: <FaInstagram />, url: "" },
+    { name: "WhatsApp", icon: <FaWhatsapp />, url: "" },
   ];
 
   return (
@@ -42,10 +15,11 @@ const Socials = ({ iconStyles }) => {
       {socialLinks.map((social) => (
         <Link
           key={social.name}
-          href={social.url}
+          href={social.url || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-blue-600 transition duration-200"
+          className={`hover:text-[#007a3d] transition duration-200 ${iconStyles}`}
+          aria-label={social.name}
         >
           {social.icon}
         </Link>

@@ -1,49 +1,57 @@
 import React from "react";
-import Image from "next/image";
 import GetStartedBtn from "@/components/GetStartedBtn";
+import AboutIllustration from "@/components/AboutIllustration";
+
+const benefits = [
+  "Run PAYE-compliant payroll for every employee and contractor",
+  "Automate PENCOM, NHF, NSITF, and ITF deductions without the manual work",
+  "Manage the full employee lifecycle from onboarding to offboarding",
+  "Stay compliant with local labor laws, FIRS requirements, and statutory tax rules",
+  "Built for Africa, starting with the markets that matter most",
+];
 
 const About = () => {
   return (
-    <section className="bg-[#FFFCF5] py-20 px-6 md:px-20">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        {/* Left Text Content */}
-        <div className="space-y-6">
-          <p className="uppercase text-sm tracking-widest text-gray-700">
-            The People Platform
-          </p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight">
-            Built for the Future of Work in Africa and Beyond <br />
-          </h2>
-          <p className="text-gray-700 text-base leading-relaxed">
-            Brigadely empowers businesses of all sizes from nimble startups to large enterprises — to hire, manage, and pay talent anywhere, and effortlessly.
-            Whether you're building a remote-first team across borders or scaling operations across Africa,
-            Brigadely simplifies everything from local onboarding to consolidated payroll without the need to set up local entities. <br/>
+    <section id="about" className="bg-[#FFFCF5] py-20 px-6 md:px-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            ✅ Hire across countries — no legal headaches <br/>
-            ✅ Pay employees, contractors, and freelancers — all in one place<br/>
-            ✅ Manage your team — from onboarding to offboarding, all in one platform<br/>
-            ✅ Scale your business — with local compliance and support<br/>
-            ✅ Ensure full compliance — local laws, taxes, and reporting handled for you <br/>
-            <br/>
-            From hiring and onboarding to payroll and compliance,
-            Brigadely does it all with full compliance.
+        <div className="space-y-7">
+          <p className="uppercase text-xs tracking-widest text-[#007a3d] font-semibold">
+            Built for African Business
           </p>
-          <br/>
-          <GetStartedBtn customClass="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-gray-900 mt-4"/>
+          <h2 className="text-3xl md:text-4xl text-gray-900 leading-tight">
+            Stop juggling 5 tools to manage your team.{" "}
+            <em className="text-[#007a3d]">Do it all from one platform.</em>
+          </h2>
+          <p className="text-gray-600 text-base leading-relaxed">
+            Most HR tools weren&apos;t built for African businesses. They ignore PAYE
+            complexities, can&apos;t handle local payroll, and have no concept of
+            PENCOM, NHF, or NSITF. Brigadely was built from the ground up for
+            how African businesses actually operate.
+          </p>
+          <ul className="space-y-3">
+            {benefits.map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3 text-gray-700 text-sm">
+                <span className="mt-0.5 w-5 h-5 rounded-full bg-[#e0f3ec] flex items-center justify-center flex-shrink-0">
+                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path
+                      d="M1 4L3.5 6.5L9 1"
+                      stroke="#007a3d"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                {benefit}
+              </li>
+            ))}
+          </ul>
+          <GetStartedBtn customClass="bg-[#007a3d] text-white hover:bg-[#005a2d]" />
         </div>
 
-        {/* Right Image */}
         <div className="flex justify-center">
-          <div className="relative transform rotate-[-2deg] shadow-lg">
-            <Image
-              src="/img/about.png" // Replace with your actual file path
-              alt="Global People Visual"
-              width={400}
-              height={500}
-              className="rounded-md"
-            />
-          </div>
+          <AboutIllustration />
         </div>
 
       </div>
