@@ -6,7 +6,6 @@ import Socials from "./Socials";
 const footerLinks = {
   Product: [
     { label: "Payroll Management", href: "#features" },
-    { label: "Global Hiring", href: "#features" },
     { label: "Employee Benefits", href: "#features" },
     { label: "HR Operations", href: "#features" },
     { label: "Expense Tracking", href: "#features" },

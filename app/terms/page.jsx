@@ -39,7 +39,7 @@ const sections = [
         </p>
         <ul className="list-disc ml-6 space-y-2">
           <li>Payroll processing and disbursement across multiple currencies and jurisdictions</li>
-          <li>Global hiring and contractor management</li>
+          <li>contractor management</li>
           <li>Employee benefits administration</li>
           <li>HR operations and workforce analytics</li>
           <li>Expense tracking and reimbursement management</li>

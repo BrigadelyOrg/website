@@ -17,7 +17,7 @@ const products = [
   },
   {
     icon: Users,
-    title: "Global Hiring",
+    title: "Hiring",
     description:
       "Onboard employees and contractors compliantly, wherever your team is based. Built for Africa, expanding to more markets soon.",
   },

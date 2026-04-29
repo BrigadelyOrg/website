@@ -28,7 +28,7 @@ const Hero = () => {
 
         {/* Main heading */}
         <h1 className="text-5xl md:text-6xl lg:text-7xl text-white leading-[1.1] tracking-tight max-w-4xl mb-7">
-          Hire, pay & manage <br className="hidden md:block" />
+          Onboard, pay & manage <br className="hidden md:block" />
           your team,{" "}
           <em className="text-[#4ade80]">all in one place</em>
         </h1>
