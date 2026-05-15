@@ -2,18 +2,24 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
 import Image from "next/image";
 
 const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  // Non-homepage routes have light backgrounds — always show the pill
+  const [scrolled, setScrolled] = useState(!isHomePage);
 
   useEffect(() => {
+    if (!isHomePage) return;
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHomePage]);
 
   const light = !scrolled;
 

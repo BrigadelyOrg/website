@@ -21,7 +21,7 @@ const footerLinks = {
     { label: "Help Centre", href: "#" },
     { label: "API Docs", href: "#" },
     { label: "Integrations", href: "#" },
-    { label: "Pricing", href: "#" },
+    { label: "Pricing", href: "/pricing" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "/privacy" },

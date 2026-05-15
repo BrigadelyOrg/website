@@ -3,6 +3,7 @@ import TrustBar from "@/components/TrustBar";
 import ProductsGrid from "@/components/ProductsGrid";
 import About from "@/components/About";
 import Features from "@/components/Features";
+import ComingSoon from "@/components/ComingSoon";
 import OnboardingTimeline from "@/components/OnboardingTimeline";
 import ROISection from "@/components/ROISection";
 import Testimonials from "@/components/Testimonials";
@@ -18,6 +19,7 @@ export default function Home() {
       <ProductsGrid />
       <About />
       <Features />
+      <ComingSoon />
       <OnboardingTimeline />
       <ROISection />
       <Testimonials />

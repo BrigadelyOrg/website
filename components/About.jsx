@@ -3,8 +3,7 @@ import GetStartedBtn from "@/components/GetStartedBtn";
 import AboutIllustration from "@/components/AboutIllustration";
 
 const benefits = [
-  "Run PAYE-compliant payroll for every employee and contractor",
-  "Automate PENCOM, NHF, NSITF, and ITF deductions without the manual work",
+  "Run payroll for every employee and contractor in one place",
   "Manage the full employee lifecycle from onboarding to offboarding",
   "Stay compliant with local labor laws, FIRS requirements, and statutory tax rules",
   "Built for Africa, starting with the markets that matter most",
@@ -24,10 +23,10 @@ const About = () => {
             <em className="text-[#007a3d]">Do it all from one platform.</em>
           </h2>
           <p className="text-gray-600 text-base leading-relaxed">
-            Most HR tools weren&apos;t built for African businesses. They ignore PAYE
-            complexities, can&apos;t handle local payroll, and have no concept of
-            PENCOM, NHF, or NSITF. Brigadely was built from the ground up for
-            how African businesses actually operate.
+            Most HR tools weren&apos;t built for African businesses. They ignore local
+            payroll realities and have no concept of local compliance.
+            Brigadely was built from the ground up for how African businesses
+            actually operate with full statutory compliance automation.
           </p>
           <ul className="space-y-3">
             {benefits.map((benefit, i) => (
@@ -47,7 +46,9 @@ const About = () => {
               </li>
             ))}
           </ul>
-          <GetStartedBtn customClass="bg-[#007a3d] text-white hover:bg-[#005a2d]" />
+          <div className="mt-6">
+            <GetStartedBtn customClass="bg-[#007a3d] text-white hover:bg-[#005a2d]" />
+          </div>
         </div>
 
         <div className="flex justify-center">

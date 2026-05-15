@@ -9,9 +9,9 @@ const metrics = [
   },
   {
     value: "100%",
-    label: "Compliance built in from day one",
+    label: "Compliance-ready from day one",
     detail:
-      "PAYE, PENCOM, NHF, NSITF, and ITF contributions calculated and filed automatically.",
+      "Built around Nigerian statutory requirements — PAYE, PENCOM, NHF, NSITF, and ITF automation coming soon.",
   },
   {
     value: "3×",

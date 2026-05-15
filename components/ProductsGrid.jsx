@@ -13,7 +13,7 @@ const products = [
     icon: CreditCard,
     title: "Payroll Management",
     description:
-      "Run fully compliant payroll for your entire workforce. PAYE, PENCOM, NHF, and NSITF deductions handled automatically, on time, every pay cycle.",
+      "Run payroll for your entire workforce, on time, every pay cycle.",
   },
   {
     icon: Users,

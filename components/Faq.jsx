@@ -7,12 +7,12 @@ const faqItems = [
   {
     question: "What is Brigadely?",
     answer:
-      "Brigadely is a people management platform built for African businesses. It handles PAYE, PENCOM, NHF, NSITF, and ITF compliance automatically, so you can run payroll, manage your workforce, and grow your team without the administrative overhead.",
+      "Brigadely is a people management platform built for African businesses. It lets you run payroll, manage your workforce, and grow your team without the administrative overhead. Automated PAYE, PENCOM, NHF, NSITF, and ITF compliance is on the roadmap and coming soon.",
   },
   {
     question: "How does Brigadely handle multi-country compliance?",
     answer:
-      "Brigadely is built around local compliance. It automatically calculates PAYE across all state tax jurisdictions, handles PENCOM pension contributions (8% employee, 10% employer), NHF deductions, NSITF premiums, and ITF levies. When the law changes, we update the platform so you never have to.",
+      "Brigadely is built around local compliance. We are actively working on automated PAYE calculations across all state tax jurisdictions, PENCOM pension contributions (8% employee, 10% employer), NHF deductions, NSITF premiums, and ITF levies. These features are coming soon — when the law changes, we will update the platform so you never have to.",
   },
   {
     question: "Can I pay contractors and employees in different currencies?",
@@ -42,10 +42,10 @@ const FAQ = () => {
     <section id="faqs" className="container mx-auto py-20 px-5">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-14">
-          <p className="uppercase text-4xl tracking-widest text-[#007a3d] font-semibold mb-3">
+          <p className="uppercase text-xs tracking-widest text-[#007a3d] font-semibold mb-3">
             FAQ
           </p>
-          <h2 className="text-2xl md:text-4xl">
+          <h2 className="text-3xl md:text-4xl">
             Have questions?{" "}
             <em className="text-[#007a3d]">We have answers.</em>
           </h2>

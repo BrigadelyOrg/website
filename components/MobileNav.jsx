@@ -17,6 +17,7 @@ const links = [
   { name: "about", path: "#about" },
   { name: "features", path: "#features" },
   { name: "how it works", path: "#how-it-works" },
+  { name: "pricing", path: "/pricing" },
   { name: "faqs", path: "#faqs" },
 ];
 
@@ -55,7 +56,11 @@ const MobileNav = ({ light = false }) => {
 
         <nav className="flex flex-col justify-center items-center gap-6">
           {links.map((link, index) => {
-            const href = pathname !== "/" ? `/${link.path}` : link.path;
+            const href = link.path.startsWith("/")
+              ? link.path
+              : pathname !== "/"
+              ? `/${link.path}`
+              : link.path;
             return (
               <Link
                 key={index}

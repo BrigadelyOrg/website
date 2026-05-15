@@ -35,9 +35,8 @@ const Hero = () => {
 
         {/* Subheading */}
         <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed mb-12">
-          Run fully compliant payroll, automate your PAYE, PENCOM, and NHF
-          deductions, and manage your entire workforce from one
-          powerful platform.
+          Run payroll and manage your entire workforce from one powerful
+          platform.
         </p>
 
         {/* Dual CTAs */}
