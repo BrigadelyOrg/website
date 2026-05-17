@@ -76,18 +76,19 @@ const MobileNav = ({ light = false }) => {
 
         <div className="mt-10 flex flex-col items-center gap-4">
           <Link
-            href="#"
+            href="https://app.brigadely.com/signin"
+            target="_blank"
             className="text-sm font-medium font-sans text-gray-600 hover:text-gray-900"
           >
             Sign In
           </Link>
           <Link
-            href="https://forms.gle/MZjpMyXYd9fR9Sx4A"
+            href="https://app.brigadely.com/signup"
             target="_blank"
             onClick={handleLinkClick}
             className="w-full text-center bg-[#9fff59] text-[#0d0d0d] py-3 px-6 rounded-full font-semibold font-sans hover:opacity-90 transition duration-200"
           >
-            Book a Demo
+            Get Started Free
           </Link>
         </div>
       </SheetContent>

@@ -64,7 +64,8 @@ const Header = () => {
             {/* Desktop CTAs */}
             <div className="hidden lg:flex items-center gap-5">
               <Link
-                href="#"
+                href="https://app.brigadely.com/signin"
+                target="_blank"
                 className={`text-sm font-medium font-sans transition-colors duration-300 ${
                   light
                     ? "text-white/70 hover:text-white"
@@ -73,9 +74,9 @@ const Header = () => {
               >
                 Sign In
               </Link>
-              <Link href="https://forms.gle/MZjpMyXYd9fR9Sx4A" target="_blank">
+              <Link href="https://app.brigadely.com/signup" target="_blank">
                 <div className="px-5 py-2 bg-[#007a3d] text-white text-sm font-semibold font-sans rounded-full hover:opacity-90 active:scale-95 transition duration-200 whitespace-nowrap">
-                  Book a Demo
+                  Get Started Free
                 </div>
               </Link>
             </div>

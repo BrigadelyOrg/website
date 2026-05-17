@@ -58,7 +58,7 @@ const Footer = () => {
               >
                 info@brigadely.com
               </a>
-              <p className="text-sm text-gray-500">Lagos, Nigeria</p>
+              <p className="text-sm text-gray-500">Ibadan, Nigeria</p>
             </div>
             <Socials iconStyles="text-gray-500 text-base hover:text-white" />
           </div>

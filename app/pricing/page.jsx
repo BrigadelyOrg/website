@@ -16,7 +16,8 @@ const tiers = [
     price: "₦10,000",
     unit: "per employee / month",
     popular: false,
-    cta: "Join Waitlist",
+    trial: "90-day free trial",
+    cta: "Start Free Trial",
     ctaStyle: "outline",
     features: [
       "NGN payroll processing",
@@ -35,7 +36,8 @@ const tiers = [
     price: "₦20,000",
     unit: "per employee / month",
     popular: true,
-    cta: "Join Waitlist",
+    trial: "90-day free trial",
+    cta: "Start Free Trial",
     ctaStyle: "solid",
     features: [
       "Everything in Basic",
@@ -54,7 +56,8 @@ const tiers = [
     price: "₦30,000",
     unit: "per employee / month",
     popular: false,
-    cta: "Join Waitlist",
+    trial: "90-day free trial",
+    cta: "Start Free Trial",
     ctaStyle: "outline",
     features: [
       "Everything in Starter",
@@ -73,6 +76,7 @@ const tiers = [
     price: "Custom",
     unit: "enterprise contract",
     popular: false,
+    trial: null,
     cta: "Contact sales",
     ctaStyle: "ghost",
     features: [
@@ -190,6 +194,10 @@ export default function PricingPage() {
             We believe Brigadely should be accessible to every African business,
             no matter the size.
           </p>
+          <div className="inline-flex items-center gap-2 bg-[#f0faf4] border border-[#c3e8d4] text-[#007a3d] text-sm font-semibold font-sans px-5 py-2.5 rounded-full mt-6">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm8.75-3.25a.75.75 0 00-1.5 0v3.5l2.25 2.25a.75.75 0 001.06-1.06L8.75 7.69V4.75z" fill="#007a3d"/></svg>
+            90-day free trial on all plans — no credit card required
+          </div>
         </div>
       </div>
 
@@ -237,16 +245,16 @@ export default function PricingPage() {
                     <p className="text-xs font-sans text-gray-400 mt-1.5">
                       {tier.unit}
                     </p>
-                    <p className={`text-xs font-semibold font-sans mt-2 ${
-                      tier.popular ? "text-[#007a3d]" : "text-gray-400"
-                    }`}>
-                      {tier.target}
-                    </p>
+                    {tier.trial && (
+                      <p className="text-xs font-semibold font-sans mt-2 text-[#007a3d]">
+                        {tier.trial} included
+                      </p>
+                    )}
                   </div>
 
                   {/* CTA */}
                   <Link
-                    href="https://forms.gle/MZjpMyXYd9fR9Sx4A"
+                    href="https://app.brigadely.com/signup"
                     target="_blank"
                     className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-sm font-semibold font-sans transition duration-200 ${
                       tier.ctaStyle === "solid"
@@ -292,7 +300,7 @@ export default function PricingPage() {
               Covers payment processing and bank transfer costs. Rates reduce at higher tiers. E.g. ₦10M payroll on Basic = ₦50,000 fee.
             </p>
           </div>
-          <Link href="https://forms.gle/MZjpMyXYd9fR9Sx4A" target="_blank"
+          <Link href="https://app.brigadely.com/signup" target="_blank"
             className="text-xs font-semibold font-sans text-[#007a3d] hover:underline whitespace-nowrap flex-shrink-0">
             Questions? Talk to us →
           </Link>
@@ -320,7 +328,7 @@ export default function PricingPage() {
                         {tier.name}
                       </p>
                       <Link
-                        href="https://forms.gle/MZjpMyXYd9fR9Sx4A"
+                        href="https://app.brigadely.com/signup"
                         target="_blank"
                         className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition duration-200 ${
                           tier.popular
@@ -385,7 +393,7 @@ export default function PricingPage() {
             {[
               {
                 q: "Is there a free trial?",
-                a: "We offer a guided onboarding demo so you can see the platform before committing. Reach out to book a session.",
+                a: "Yes — every plan includes a 90-day free trial with no credit card required. You get full access to all features on your chosen plan so you can run payroll and manage your team before paying anything.",
               },
               {
                 q: "Can I change plans as my team grows?",
@@ -420,12 +428,12 @@ export default function PricingPage() {
             Not sure which plan is right for you?
           </h2>
           <p className="text-gray-400 font-sans text-sm leading-relaxed mb-8">
-            Talk to us and we will walk you through the right fit for your team size,
+            Start your 90-day free trial today, or talk to us and we will walk you through the right fit for your team size,
             compliance needs, and budget.
           </p>
-          <Link href="https://forms.gle/MZjpMyXYd9fR9Sx4A" target="_blank">
+          <Link href="https://app.brigadely.com/signup" target="_blank">
             <button className="inline-flex items-center gap-2 bg-[#007a3d] text-white px-8 py-3.5 rounded-full font-semibold font-sans hover:bg-[#005a2d] transition duration-200 text-sm">
-              Book a Demo <GoArrowUpRight size={15} />
+              Start Free Trial <GoArrowUpRight size={15} />
             </button>
           </Link>
         </div>

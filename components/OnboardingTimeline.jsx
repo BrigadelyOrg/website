@@ -118,7 +118,7 @@ const OnboardingTimeline = () => {
                 ))}
               </ul>
 
-              <Link href="https://forms.gle/MZjpMyXYd9fR9Sx4A" target="_blank">
+              <Link href="https://app.brigadely.com/signup" target="_blank">
                 <button
                   className={`w-full mt-2 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition duration-200 ${
                     phase.highlight

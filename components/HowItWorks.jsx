@@ -82,7 +82,7 @@ const HowItWorks = () => {
           and compliance into a single system for every type of worker. Consolidate
           your tools, reduce overhead, and unlock unrivalled insights.
         </p>
-        <Link href="https://forms.gle/MZjpMyXYd9fR9Sx4A" target="_blank">
+        <Link href="https://app.brigadely.com/signup" target="_blank">
           <button className="mt-8 flex items-center gap-2 mx-auto border border-gray-500 text-white px-6 py-3 rounded-full text-sm font-semibold font-sans hover:border-white hover:bg-white hover:text-black transition duration-200">
             Get started <GoArrowUpRight size={16} />
           </button>
