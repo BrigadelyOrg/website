@@ -39,16 +39,11 @@ const Hero = () => {
           platform.
         </p>
 
-        {/* Dual CTAs */}
-        <div className="flex flex-col sm:flex-row gap-3 items-center mb-24">
+        {/* CTA */}
+        <div className="mb-24">
           <Link href="https://app.brigadely.com/signup" target="_blank">
-            <button className="bg-white text-[#0a0a0a] py-3.5 px-8 rounded-full font-semibold hover:bg-gray-100 transition duration-200 text-base min-w-[160px]">
-              Start Free Trial
-            </button>
-          </Link>
-          <Link href="https://app.brigadely.com/signup" target="_blank">
-            <button className="bg-[#007a3d] text-white py-3.5 px-8 rounded-full font-semibold hover:bg-[#005a2d] transition duration-200 text-base flex items-center gap-2 min-w-[160px] justify-center">
-              Get Started <GoArrowUpRight size={16} />
+            <button className="bg-[#007a3d] text-white py-3.5 px-8 rounded-full font-semibold hover:bg-[#005a2d] transition duration-200 text-base flex items-center gap-2 justify-center">
+              Start Free Trial <GoArrowUpRight size={16} />
             </button>
           </Link>
         </div>

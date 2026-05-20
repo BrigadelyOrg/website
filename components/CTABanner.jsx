@@ -18,15 +18,10 @@ const CTABanner = () => {
           compliant people operations with Brigadely. 90-day free trial on all plans.
           No setup fees. No consultants needed.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+        <div className="flex justify-center pt-2">
           <Link href="https://app.brigadely.com/signup" target="_blank">
             <button className="flex items-center gap-2 bg-white text-[#007a3d] px-8 py-3.5 rounded-full font-bold hover:bg-green-50 transition duration-200 text-base">
-              Get Started Free <GoArrowUpRight size={18} />
-            </button>
-          </Link>
-          <Link href="https://app.brigadely.com/signup" target="_blank">
-            <button className="flex items-center gap-2 border-2 border-white text-white px-8 py-3.5 rounded-full font-bold hover:bg-white hover:text-[#007a3d] transition duration-200 text-base">
-              Book a Demo <GoArrowUpRight size={18} />
+              Get Started For Free <GoArrowUpRight size={18} />
             </button>
           </Link>
         </div>
