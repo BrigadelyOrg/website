@@ -1,0 +1,67 @@
+<svg viewBox="0 0 276 464" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="276" height="464" fill="#FAF9F6"/>
+  <!-- title -->
+  <text x="138" y="20" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#16160F">Run payroll</text>
+  <text x="138" y="36" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#737065">Threadline Co. · May 2025</text>
+  <!-- green pay card -->
+  <rect x="12" y="44" width="252" height="100" rx="14" fill="#0B5E34"/>
+  <text x="26" y="65" font-family="sans-serif" font-size="12" fill="#DCEFE0">Pay 12 employees</text>
+  <text x="26" y="92" font-family="sans-serif" font-size="27" font-weight="700" fill="white">&#8358;3,600,000</text>
+  <line x1="26" y1="103" x2="250" y2="103" stroke="rgba(255,255,255,0.18)"/>
+  <text x="26" y="119" font-family="sans-serif" font-size="11" fill="#DCEFE0">Net &#8358;3,180,000</text>
+  <text x="146" y="119" font-family="sans-serif" font-size="11" fill="#DCEFE0">Deductions &#8358;420,000</text>
+  <!-- 5 deduction rows (each 46px, y=152-382) -->
+  <!-- header label -->
+  <text x="12" y="161" font-family="sans-serif" font-size="10" font-weight="700" fill="#737065" letter-spacing="0.08em">STATUTORY DEDUCTIONS — AUTO</text>
+  <line x1="12" y1="168" x2="264" y2="168" stroke="#EFEFEA"/>
+  <!-- PAYE (y=168-214) -->
+  <circle cx="22" cy="191" r="9" fill="#DCEFE0"/>
+  <path d="M18 191 L21 194 L27 187" stroke="#0B5E34" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="40" y="188" font-family="sans-serif" font-size="13" font-weight="500" fill="#16160F">PAYE</text>
+  <text x="40" y="202" font-family="sans-serif" font-size="11" fill="#737065">Lagos State IRS</text>
+  <text x="264" y="188" text-anchor="end" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">&#8358;162,000</text>
+  <rect x="212" y="194" width="52" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="238" y="206" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">Ready</text>
+  <line x1="12" y1="214" x2="264" y2="214" stroke="#EFEFEA"/>
+  <!-- Pension (y=214-260) -->
+  <circle cx="22" cy="237" r="9" fill="#DCEFE0"/>
+  <path d="M18 237 L21 240 L27 233" stroke="#0B5E34" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="40" y="234" font-family="sans-serif" font-size="13" font-weight="500" fill="#16160F">Pension</text>
+  <text x="40" y="248" font-family="sans-serif" font-size="11" fill="#737065">ARM Pensions · PenCom</text>
+  <text x="264" y="234" text-anchor="end" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">&#8358;162,000</text>
+  <rect x="212" y="240" width="52" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="238" y="252" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">Ready</text>
+  <line x1="12" y1="260" x2="264" y2="260" stroke="#EFEFEA"/>
+  <!-- NHF (y=260-306) -->
+  <circle cx="22" cy="283" r="9" fill="#DCEFE0"/>
+  <path d="M18 283 L21 286 L27 279" stroke="#0B5E34" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="40" y="280" font-family="sans-serif" font-size="13" font-weight="500" fill="#16160F">NHF</text>
+  <text x="40" y="294" font-family="sans-serif" font-size="11" fill="#737065">Federal Mortgage Bank</text>
+  <text x="264" y="280" text-anchor="end" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">&#8358;42,000</text>
+  <rect x="212" y="286" width="52" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="238" y="298" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">Ready</text>
+  <line x1="12" y1="306" x2="264" y2="306" stroke="#EFEFEA"/>
+  <!-- NSITF (y=306-352) -->
+  <circle cx="22" cy="329" r="9" fill="#DCEFE0"/>
+  <path d="M18 329 L21 332 L27 325" stroke="#0B5E34" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="40" y="326" font-family="sans-serif" font-size="13" font-weight="500" fill="#16160F">NSITF</text>
+  <text x="40" y="340" font-family="sans-serif" font-size="11" fill="#737065">Social Insurance Trust Fund</text>
+  <text x="264" y="326" text-anchor="end" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">&#8358;36,000</text>
+  <rect x="212" y="332" width="52" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="238" y="344" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">Ready</text>
+  <line x1="12" y1="352" x2="264" y2="352" stroke="#EFEFEA"/>
+  <!-- ITF (y=352-398) -->
+  <circle cx="22" cy="375" r="9" fill="#DCEFE0"/>
+  <path d="M18 375 L21 378 L27 371" stroke="#0B5E34" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="40" y="372" font-family="sans-serif" font-size="13" font-weight="500" fill="#16160F">ITF</text>
+  <text x="40" y="386" font-family="sans-serif" font-size="11" fill="#737065">Industrial Training Fund</text>
+  <text x="264" y="372" text-anchor="end" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">&#8358;18,000</text>
+  <rect x="212" y="378" width="52" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="238" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">Ready</text>
+  <line x1="12" y1="398" x2="264" y2="398" stroke="#EFEFEA"/>
+  <!-- Run payroll button -->
+  <rect x="12" y="406" width="252" height="42" rx="10" fill="#0B5E34"/>
+  <text x="138" y="431" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="white">Run payroll &#8594;</text>
+  <!-- note -->
+  <text x="138" y="456" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#737065">Compliant on every run</text>
+</svg>

@@ -1,65 +1,122 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { GoArrowUpRight } from "react-icons/go";
-import { Sparkles } from "lucide-react";
-import DashboardMockup from "@/components/DashboardMockup";
+
+const BONE = "#F4EFE4";
+const GREEN = "#007a3d";
+
+const statutoryItems = ["PAYE", "PENSION", "NHF", "NSITF", "TAX"];
+
+// [VERIFY: replace with actual customer names and swap placeholder boxes for
+// real logo <Image> files at 80–120px wide, 32px tall, with className="opacity-40 brightness-0"]
+const trustedCompanies = [
+  { name: "Tender Cash" },
+  { name: "FBIS Tech" },
+  { name: "Juno Inc" },
+  { name: "CustomierHQ" },
+  { name: "Qomat School" },
+  { name: "Berry Valley" },
+];
 
 const Hero = () => {
   return (
-    <section className="bg-[#0a0a0a] w-full overflow-hidden relative">
+    <section style={{ backgroundColor: BONE }} className="w-full overflow-hidden">
+      <div className="container -mb-[90px] mx-auto px-6 md:px-12 lg:px-16 pt-32 lg:pt-36">
+        <div className="flex flex-col lg:flex-row items-start gap-16 lg:gap-8">
 
-      {/* Atmospheric green glow behind heading */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,122,61,0.18) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
+          {/* Left: text */}
+          <div className="lg:w-[50%] pb-20 lg:pb-32">
+            <p
+              className="font-sans text-[11px] font-bold tracking-[0.18em] uppercase mb-7"
+              style={{ color: GREEN }}
+            >
+              The financial OS for African businesses
+            </p>
 
-      <div className="container mx-auto flex flex-col items-center text-center pt-24 pb-0 px-4 relative z-10">
+            <h1
+              className="text-[3rem] sm:text-[4rem] lg:text-[3.25rem] text-[#111111] mb-8"
+              style={{
+                fontFamily: "var(--font-inter)",
+                fontWeight: 900,
+                lineHeight: 0.93,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              Every payment out of your
+              business, on one{" "}
+              <span style={{ color: GREEN }}>ledger.</span>
+            </h1>
 
-        {/* Announcement pill */}
-        <div className="inline-flex items-center gap-2 border border-white/15 bg-white/5 text-white/70 text-sm px-4 py-2 rounded-full mb-12 backdrop-blur-sm">
-          <Sparkles size={13} className="text-[#4ade80]" />
-          <span>People management, built for African businesses</span>
+            <p className="font-sans text-lg leading-relaxed text-gray-600 mb-10 max-w-md">
+              Staff, contractors, vendors, and every statutory obligation
+              PAYE, Pension, NHF, NSITF, and TAX on a single ledger that
+              calculates, remits, and files itself on every pay cycle.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <Link href="https://app.brigadely.com/signup" target="_blank">
+                <button
+                  className="px-8 py-4 rounded-full font-sans font-semibold text-sm text-white transition duration-200 hover:opacity-90"
+                  style={{ backgroundColor: GREEN }}
+                >
+                  Start free trial
+                </button>
+              </Link>
+              <Link href="https://app.brigadely.com/signup" target="_blank">
+                <button className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent">
+                  Get a demo
+                </button>
+              </Link>
+            </div>
+            <p className="font-sans text-xs text-gray-400">60 days free. No commitment required.</p>
+          </div>
+
+          {/* Right: dashboard screenshot */}
+          <div className="lg:w-[50%] flex items-start justify-center lg:justify-end pt-4 lg:pt-12 pb-8">
+            <div
+              className="w-full max-w-xl"
+              style={{
+                transform: "perspective(1400px) rotateY(-9deg) rotateX(4deg)",
+                transformOrigin: "top center",
+              }}
+            >
+              <Image
+                src="/img/payroll-table.jpeg"
+                alt="Brigadely payroll dashboard"
+                width={900}
+                height={600}
+                className="rounded-xl shadow-2xl border border-gray-200 w-full h-auto"
+                priority
+              />
+            </div>
+          </div>
+
         </div>
-
-        {/* Main heading */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl text-white leading-[1.1] tracking-tight max-w-4xl mb-7">
-          Onboard, pay & manage <br className="hidden md:block" />
-          your team,{" "}
-          <em className="text-[#4ade80]">all in one place</em>
-        </h1>
-
-        {/* Subheading */}
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed mb-12">
-          Run payroll and manage your entire workforce from one powerful
-          platform.
-        </p>
-
-        {/* CTA */}
-        <div className="mb-24">
-          <Link href="https://app.brigadely.com/signup" target="_blank">
-            <button className="bg-[#007a3d] text-white py-3.5 px-8 rounded-full font-semibold hover:bg-[#005a2d] transition duration-200 text-base flex items-center gap-2 justify-center">
-              Start Free Trial <GoArrowUpRight size={16} />
-            </button>
-          </Link>
-        </div>
-
-        {/* Hero dashboard — custom JSX mockup, bleeds into next section */}
-        <div className="w-full max-w-6xl relative mx-auto">
-          {/* Left edge fade */}
-          <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-          {/* Right edge fade */}
-          <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-          {/* Top edge fade */}
-          <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-          <DashboardMockup />
-        </div>
-
       </div>
+
+      {/* Trusted by — 6 companies */}
+      <div className="border-t border-gray-100 pt-6 pb-10 px-6">
+        <p className="font-sans text-[10px] font-bold tracking-[0.18em] uppercase text-center text-black-300 mb-7">
+          Trusted by businesses across Nigeria
+        </p>
+        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+          {trustedCompanies.map((company) => (
+            <span
+              key={company.name}
+              className="text-xl md:text-2xl select-none"
+              style={{
+                fontFamily: "var(--font-inter)",
+                fontWeight: 900,
+                color: "#080909",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              {company.name}
+            </span>
+          ))}
+        </div>
+      </div>
+
     </section>
   );
 };

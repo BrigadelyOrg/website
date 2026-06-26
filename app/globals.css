@@ -27,6 +27,11 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* Legacy utility classes kept for optional use */
 .diatype-medium-text  { font-family: var(--font-diatype-medium); }
 .diatype-light-text   { font-family: var(--font-diatype-light); }

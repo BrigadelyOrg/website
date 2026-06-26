@@ -4,18 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { name: "about", path: "#about" },
-  { name: "features", path: "#features" },
-  { name: "how it works", path: "#how-it-works" },
-  { name: "pricing", path: "/pricing" },
-  { name: "faqs", path: "#faqs" },
+  { name: "The Platform", path: "#product" },
+  { name: "Who it's for", path: "#who" },
+  { name: "Compliance", path: "#compliance" },
+  { name: "How it works", path: "#how-it-works" },
+  { name: "FAQ", path: "#faqs" },
 ];
 
 const Nav = ({ light = false }) => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-8">
+    <nav className="flex gap-7">
       {links.map((link, index) => {
         const href = link.path.startsWith("/")
           ? link.path
@@ -26,10 +26,10 @@ const Nav = ({ light = false }) => {
           <Link
             key={index}
             href={href}
-            className={`capitalize text-sm font-medium font-sans transition-colors duration-300 ${
+            className={`text-sm font-medium font-sans transition-colors duration-200 ${
               light
                 ? "text-white/70 hover:text-white"
-                : "text-gray-500 hover:text-gray-900"
+                : "text-gray-500 hover:text-[#111111]"
             }`}
           >
             {link.name}

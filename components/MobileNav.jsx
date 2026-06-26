@@ -14,11 +14,12 @@ import Image from "next/image";
 import { useState } from "react";
 
 const links = [
-  { name: "about", path: "#about" },
-  { name: "features", path: "#features" },
-  { name: "how it works", path: "#how-it-works" },
-  { name: "pricing", path: "/pricing" },
-  { name: "faqs", path: "#faqs" },
+  { name: "Platform", path: "#product" },
+  { name: "Who it's for", path: "#who" },
+  { name: "Compliance", path: "#compliance" },
+  { name: "How it works", path: "#how-it-works" },
+  { name: "For accountants", path: "#who" },
+  { name: "FAQ", path: "#faqs" },
 ];
 
 const MobileNav = ({ light = false }) => {
@@ -32,7 +33,7 @@ const MobileNav = ({ light = false }) => {
       <SheetTrigger className="flex justify-center items-center">
         <LuMenu
           className={`text-[28px] transition-colors duration-300 ${
-            light ? "text-white" : "text-black"
+            light ? "text-white" : "text-[#111111]"
           }`}
         />
       </SheetTrigger>
@@ -66,7 +67,7 @@ const MobileNav = ({ light = false }) => {
                 key={index}
                 href={href}
                 onClick={handleLinkClick}
-                className="text-lg capitalize font-medium font-sans text-gray-700 hover:text-[#007a3d] transition-all"
+                className="text-lg font-medium font-sans text-gray-700 hover:text-[#007a3d] transition-all"
               >
                 {link.name}
               </Link>
@@ -80,15 +81,16 @@ const MobileNav = ({ light = false }) => {
             target="_blank"
             className="text-sm font-medium font-sans text-gray-600 hover:text-gray-900"
           >
-            Sign In
+            Sign in
           </Link>
           <Link
             href="https://app.brigadely.com/signup"
             target="_blank"
             onClick={handleLinkClick}
-            className="w-full text-center bg-[#9fff59] text-[#0d0d0d] py-3 px-6 rounded-full font-semibold font-sans hover:opacity-90 transition duration-200"
+            className="w-full text-center text-white py-3.5 px-6 rounded-full font-semibold font-sans hover:opacity-90 transition duration-200"
+            style={{ backgroundColor: "#007a3d" }}
           >
-            Get Started Free
+            Start free trial
           </Link>
         </div>
       </SheetContent>

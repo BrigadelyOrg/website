@@ -1,0 +1,58 @@
+<svg viewBox="0 0 276 464" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="276" height="464" fill="#FAF9F6"/>
+  <!-- title -->
+  <text x="12" y="20" font-family="sans-serif" font-size="17" font-weight="700" fill="#16160F">Clients</text>
+  <text x="264" y="20" text-anchor="end" font-family="sans-serif" font-size="12" font-weight="600" fill="#1A8D49">8 clients</text>
+  <text x="12" y="38" font-family="sans-serif" font-size="12" fill="#737065">June 2025 filing cycle</text>
+  <!-- column headers -->
+  <rect x="0" y="46" width="276" height="26" fill="#F2EDE4"/>
+  <text x="12" y="63" font-family="sans-serif" font-size="10" font-weight="700" fill="#737065">Client</text>
+  <text x="162" y="63" font-family="sans-serif" font-size="10" font-weight="700" fill="#737065">Status</text>
+  <text x="228" y="63" font-family="sans-serif" font-size="10" font-weight="700" fill="#737065">Deadline</text>
+  <line x1="0" y1="72" x2="276" y2="72" stroke="#EFEFEA"/>
+  <!-- Threadline Co. -->
+  <text x="12" y="92" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">Threadline Co.</text>
+  <text x="12" y="107" font-family="sans-serif" font-size="11" fill="#737065">Fashion retail · 248 employees</text>
+  <rect x="154" y="80" width="60" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="184" y="92" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">All filed</text>
+  <text x="228" y="92" font-family="sans-serif" font-size="11" fill="#737065">Jun 30</text>
+  <line x1="0" y1="121" x2="276" y2="121" stroke="#EFEFEA"/>
+  <!-- Kenna Foods -->
+  <text x="12" y="141" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">Kenna Foods Ltd</text>
+  <text x="12" y="156" font-family="sans-serif" font-size="11" fill="#737065">Food processing · 84 employees</text>
+  <rect x="148" y="129" width="74" height="17" rx="8" fill="#FEF3C7"/>
+  <text x="185" y="141" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#D97706">PAYE pending</text>
+  <text x="228" y="141" font-family="sans-serif" font-size="11" fill="#D97706">Jun 15</text>
+  <line x1="0" y1="170" x2="276" y2="170" stroke="#EFEFEA"/>
+  <!-- Mira Logistics -->
+  <text x="12" y="190" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">Mira Logistics</text>
+  <text x="12" y="205" font-family="sans-serif" font-size="11" fill="#737065">Freight · 62 employees</text>
+  <rect x="154" y="178" width="60" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="184" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">All filed</text>
+  <text x="228" y="190" font-family="sans-serif" font-size="11" fill="#737065">Jun 30</text>
+  <line x1="0" y1="219" x2="276" y2="219" stroke="#EFEFEA"/>
+  <!-- Viva Retail -->
+  <text x="12" y="239" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">Viva Retail</text>
+  <text x="12" y="254" font-family="sans-serif" font-size="11" fill="#737065">Consumer retail · 38 employees</text>
+  <rect x="154" y="227" width="60" height="17" rx="8" fill="#DCEFE0"/>
+  <text x="184" y="239" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#0B5E34">All filed</text>
+  <text x="228" y="239" font-family="sans-serif" font-size="11" fill="#737065">Jun 30</text>
+  <line x1="0" y1="268" x2="276" y2="268" stroke="#EFEFEA"/>
+  <!-- Apex Credit -->
+  <text x="12" y="288" font-family="sans-serif" font-size="13" font-weight="600" fill="#16160F">Apex Credit</text>
+  <text x="12" y="303" font-family="sans-serif" font-size="11" fill="#737065">Microfinance · 24 employees</text>
+  <rect x="142" y="276" width="82" height="17" rx="8" fill="#FEF3C7"/>
+  <text x="183" y="288" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#D97706">Pension pending</text>
+  <text x="228" y="288" font-family="sans-serif" font-size="11" fill="#D97706">Jun 15</text>
+  <line x1="0" y1="317" x2="276" y2="317" stroke="#EFEFEA"/>
+  <!-- +3 more row -->
+  <rect x="0" y="317" width="276" height="32" fill="#F2EDE4"/>
+  <text x="138" y="337" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#737065">+ 3 more clients</text>
+  <line x1="0" y1="349" x2="276" y2="349" stroke="#EFEFEA"/>
+  <!-- manage button -->
+  <rect x="12" y="359" width="252" height="42" rx="10" fill="#0B5E34"/>
+  <text x="138" y="384" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="white">Manage clients &#8594;</text>
+  <!-- summary note -->
+  <text x="138" y="420" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#737065">6 of 8 clients fully filed</text>
+  <text x="138" y="436" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#D97706">2 deadlines need attention this week</text>
+</svg>

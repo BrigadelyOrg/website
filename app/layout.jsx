@@ -87,9 +87,9 @@ const greycliffRegular = localFont({
 });
 
 export const metadata = {
-  title: "Brigadely — Hire, Pay & Manage Global Teams From One Platform",
+  title: "Brigadely — Nigerian Payroll and Statutory Compliance",
   description:
-    "Brigadely is the all-in-one people platform for African businesses. Run payroll in 25+ currencies, hire across 40+ countries, and manage HR operations — fully compliant, from one dashboard.",
+    "Brigadely automates PAYE, Pension, NHF, NSITF, and ITF on every payroll run. Compliant Nigerian payroll for growing businesses — from one dashboard.",
 };
 
 export default function RootLayout({ children }) {

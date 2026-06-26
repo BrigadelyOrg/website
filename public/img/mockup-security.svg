@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" fill="none">
+  <rect width="680" height="380" rx="16" fill="white" stroke="#e5e7eb"/>
+  <!-- Header -->
+  <rect x="0" y="0" width="680" height="52" rx="16" fill="#f9fafb"/>
+  <rect x="0" y="40" width="680" height="12" fill="#f9fafb"/>
+  <text x="20" y="31" font-family="sans-serif" font-size="13" font-weight="600" fill="#374151">Access controls</text>
+  <rect x="556" y="14" width="104" height="24" rx="12" fill="#e0f3ec"/>
+  <text x="608" y="30" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#007a3d">Verified</text>
+  <!-- Row 1 Finance Lead -->
+  <rect x="16" y="68" width="36" height="36" rx="8" fill="#f3f4f6"/>
+  <rect x="25" y="77" width="18" height="18" rx="4" fill="#d1d5db"/>
+  <text x="64" y="83" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">Finance Lead</text>
+  <text x="64" y="100" font-family="sans-serif" font-size="11" fill="#9ca3af">Run Payroll · Approve · Reports</text>
+  <rect x="592" y="70" width="68" height="22" rx="11" fill="#d1fae5"/>
+  <text x="626" y="85" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#007a3d">Full</text>
+  <line x1="0" y1="120" x2="680" y2="120" stroke="#f3f4f6"/>
+  <!-- Row 2 HR Admin -->
+  <rect x="16" y="132" width="36" height="36" rx="8" fill="#f3f4f6"/>
+  <rect x="25" y="141" width="18" height="18" rx="4" fill="#d1d5db"/>
+  <text x="64" y="147" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">HR Admin</text>
+  <text x="64" y="164" font-family="sans-serif" font-size="11" fill="#9ca3af">Employees · Benefits · Onboarding</text>
+  <rect x="580" y="134" width="80" height="22" rx="11" fill="#f3f4f6"/>
+  <text x="620" y="149" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#6b7280">Limited</text>
+  <line x1="0" y1="184" x2="680" y2="184" stroke="#f3f4f6"/>
+  <!-- Row 3 Employee -->
+  <rect x="16" y="196" width="36" height="36" rx="8" fill="#f3f4f6"/>
+  <rect x="25" y="205" width="18" height="18" rx="4" fill="#d1d5db"/>
+  <text x="64" y="211" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">Employee</text>
+  <text x="64" y="228" font-family="sans-serif" font-size="11" fill="#9ca3af">Payslips · Leave requests</text>
+  <rect x="572" y="198" width="88" height="22" rx="11" fill="#f3f4f6"/>
+  <text x="616" y="213" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#6b7280">Self only</text>
+  <line x1="0" y1="248" x2="680" y2="248" stroke="#f3f4f6"/>
+  <!-- Row 4 Auditor -->
+  <rect x="16" y="260" width="36" height="36" rx="8" fill="#f3f4f6"/>
+  <rect x="25" y="269" width="18" height="18" rx="4" fill="#d1d5db"/>
+  <text x="64" y="275" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">Auditor</text>
+  <text x="64" y="292" font-family="sans-serif" font-size="11" fill="#9ca3af">Reports · Audit trail</text>
+  <rect x="568" y="262" width="92" height="22" rx="11" fill="#f3f4f6"/>
+  <text x="614" y="277" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#6b7280">Read only</text>
+  <!-- Footer -->
+  <rect x="0" y="316" width="680" height="64" fill="#f9fafb"/>
+  <rect x="0" y="316" width="680" height="8" fill="#f9fafb"/>
+  <text x="20" y="352" font-family="sans-serif" font-size="12" font-weight="600" fill="#007a3d">Manage roles</text>
+  <text x="560" y="352" font-family="sans-serif" font-size="12" fill="#9ca3af">4 roles configured</text>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" fill="none">
+  <defs>
+    <clipPath id="card">
+      <rect width="680" height="460" rx="16"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="680" height="460" fill="white"/>
+    <!-- Chrome -->
+    <rect x="0" y="0" width="680" height="44" fill="#f9fafb"/>
+    <line x1="0" y1="44" x2="680" y2="44" stroke="#e5e7eb"/>
+    <circle cx="20" cy="22" r="5" fill="#ff5f57"/>
+    <circle cx="34" cy="22" r="5" fill="#febc2e"/>
+    <circle cx="48" cy="22" r="5" fill="#28c840"/>
+    <rect x="180" y="11" width="320" height="22" rx="5" fill="white" stroke="#e5e7eb"/>
+    <text x="340" y="26" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9ca3af">app.brigadely.com/entities</text>
+    <!-- Page header -->
+    <text x="20" y="68" font-family="sans-serif" font-size="14" font-weight="600" fill="#111111">Entity Overview — Threadline Group</text>
+    <text x="20" y="85" font-family="sans-serif" font-size="11" fill="#9ca3af">4 entities · May 2025 payroll cycle</text>
+    <rect x="536" y="55" width="128" height="24" rx="12" fill="#d1fae5"/>
+    <text x="600" y="71" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="600" fill="#007a3d">All compliant</text>
+    <!-- Column headers -->
+    <rect x="0" y="96" width="680" height="30" fill="#f9fafb"/>
+    <text x="20" y="116" font-family="sans-serif" font-size="10" font-weight="700" fill="#6b7280">Entity</text>
+    <text x="264" y="116" font-family="sans-serif" font-size="10" font-weight="700" fill="#6b7280">Employees</text>
+    <text x="360" y="116" font-family="sans-serif" font-size="10" font-weight="700" fill="#6b7280">Payroll Total</text>
+    <text x="486" y="116" font-family="sans-serif" font-size="10" font-weight="700" fill="#6b7280">Statutory</text>
+    <text x="582" y="116" font-family="sans-serif" font-size="10" font-weight="700" fill="#6b7280">Status</text>
+    <line x1="0" y1="126" x2="680" y2="126" stroke="#e5e7eb"/>
+    <!-- HQ Lagos -->
+    <text x="20" y="150" font-family="sans-serif" font-size="12" font-weight="500" fill="#111111">HQ Lagos</text>
+    <text x="20" y="165" font-family="sans-serif" font-size="10" fill="#9ca3af">Headquarters · Victoria Island</text>
+    <text x="264" y="154" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">142</text>
+    <text x="360" y="154" font-family="sans-serif" font-size="12" font-weight="600" fill="#111111">&#8358;14.2M</text>
+    <text x="486" y="154" font-family="sans-serif" font-size="12" fill="#374151">&#8358;2.16M</text>
+    <rect x="572" y="143" width="80" height="20" rx="10" fill="#d1fae5"/>
+    <text x="612" y="157" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#007a3d">Compliant</text>
+    <line x1="0" y1="180" x2="680" y2="180" stroke="#f3f4f6"/>
+    <!-- Port Harcourt Branch -->
+    <text x="20" y="202" font-family="sans-serif" font-size="12" font-weight="500" fill="#111111">Port Harcourt Branch</text>
+    <text x="20" y="217" font-family="sans-serif" font-size="10" fill="#9ca3af">Operations · Rivers State</text>
+    <text x="264" y="206" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">56</text>
+    <text x="360" y="206" font-family="sans-serif" font-size="12" font-weight="600" fill="#111111">&#8358;4.1M</text>
+    <text x="486" y="206" font-family="sans-serif" font-size="12" fill="#374151">&#8358;624K</text>
+    <rect x="572" y="195" width="80" height="20" rx="10" fill="#d1fae5"/>
+    <text x="612" y="209" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#007a3d">Compliant</text>
+    <line x1="0" y1="230" x2="680" y2="230" stroke="#f3f4f6"/>
+    <!-- Abuja Office -->
+    <text x="20" y="252" font-family="sans-serif" font-size="12" font-weight="500" fill="#111111">Abuja Office</text>
+    <text x="20" y="267" font-family="sans-serif" font-size="10" fill="#9ca3af">Government relations · FCT</text>
+    <text x="264" y="256" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">32</text>
+    <text x="360" y="256" font-family="sans-serif" font-size="12" font-weight="600" fill="#111111">&#8358;2.6M</text>
+    <text x="486" y="256" font-family="sans-serif" font-size="12" fill="#374151">&#8358;396K</text>
+    <rect x="572" y="245" width="80" height="20" rx="10" fill="#d1fae5"/>
+    <text x="612" y="259" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#007a3d">Compliant</text>
+    <line x1="0" y1="280" x2="680" y2="280" stroke="#f3f4f6"/>
+    <!-- Kano Unit -->
+    <text x="20" y="302" font-family="sans-serif" font-size="12" font-weight="500" fill="#111111">Kano Unit</text>
+    <text x="20" y="317" font-family="sans-serif" font-size="10" fill="#9ca3af">Northern operations · Kano State</text>
+    <text x="264" y="306" font-family="sans-serif" font-size="13" font-weight="600" fill="#111111">18</text>
+    <text x="360" y="306" font-family="sans-serif" font-size="12" font-weight="600" fill="#111111">&#8358;1.4M</text>
+    <text x="486" y="306" font-family="sans-serif" font-size="12" fill="#374151">&#8358;213K</text>
+    <rect x="572" y="295" width="80" height="20" rx="10" fill="#d1fae5"/>
+    <text x="612" y="309" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#007a3d">Compliant</text>
+    <line x1="0" y1="334" x2="680" y2="334" stroke="#e5e7eb"/>
+    <!-- Totals row -->
+    <rect x="0" y="334" width="680" height="44" fill="#f9fafb"/>
+    <text x="20" y="362" font-family="sans-serif" font-size="12" font-weight="700" fill="#111111">Combined total</text>
+    <text x="264" y="362" font-family="sans-serif" font-size="13" font-weight="700" fill="#111111">248</text>
+    <text x="360" y="362" font-family="sans-serif" font-size="13" font-weight="700" fill="#111111">&#8358;22.3M</text>
+    <text x="486" y="362" font-family="sans-serif" font-size="13" font-weight="700" fill="#007a3d">&#8358;3.39M</text>
+    <line x1="0" y1="378" x2="680" y2="378" stroke="#e5e7eb"/>
+    <!-- Compliance roll-up -->
+    <rect x="0" y="378" width="680" height="82" fill="#f9fafb"/>
+    <text x="20" y="402" font-family="sans-serif" font-size="11" font-weight="700" fill="#9ca3af" letter-spacing="1">COMPLIANCE ROLL-UP · MAY 2025</text>
+    <line x1="16" y1="412" x2="664" y2="412" stroke="#f3f4f6"/>
+    <!-- 3 compliance items inline -->
+    <circle cx="32" cy="432" r="8" fill="#d1fae5"/>
+    <path d="M28 432 L31 435 L37 428" stroke="#007a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="48" y="436" font-family="sans-serif" font-size="11" fill="#374151">All PAYE filed</text>
+    <circle cx="196" cy="432" r="8" fill="#d1fae5"/>
+    <path d="M192 432 L195 435 L201 428" stroke="#007a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="212" y="436" font-family="sans-serif" font-size="11" fill="#374151">Pension remitted</text>
+    <circle cx="380" cy="432" r="8" fill="#d1fae5"/>
+    <path d="M376 432 L379 435 L385 428" stroke="#007a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="396" y="436" font-family="sans-serif" font-size="11" fill="#374151">NHF, NSITF, ITF filed</text>
+  </g>
+  <rect width="680" height="460" rx="16" fill="none" stroke="#e5e7eb"/>
+</svg>

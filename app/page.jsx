@@ -1,31 +1,21 @@
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
-import ProductsGrid from "@/components/ProductsGrid";
-import About from "@/components/About";
-import Features from "@/components/Features";
-import ComingSoon from "@/components/ComingSoon";
-import OnboardingTimeline from "@/components/OnboardingTimeline";
-import ROISection from "@/components/ROISection";
-import Testimonials from "@/components/Testimonials";
+import ProductTour from "@/components/ProductTour";
+import WhoItsFor from "@/components/WhoItsFor";
+import ComplianceTable from "@/components/ComplianceTable";
 import HowItWorks from "@/components/HowItWorks";
 import FAQ from "@/components/Faq";
-import CTABanner from "@/components/CTABanner";
+import ClosingCTA from "@/components/ClosingCTA";
 
 export default function Home() {
   return (
     <div>
       <Hero />
-      <TrustBar />
-      <ProductsGrid />
-      <About />
-      <Features />
-      <ComingSoon />
-      <OnboardingTimeline />
-      <ROISection />
-      <Testimonials />
+      <ProductTour />
+      <WhoItsFor />
+      <ComplianceTable />
       <HowItWorks />
       <FAQ />
-      <CTABanner />
+      <ClosingCTA />
     </div>
   );
 }
