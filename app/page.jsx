@@ -14,7 +14,7 @@ const softwareSchema = {
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   description:
-    "Nigerian payroll and statutory compliance platform that automates PAYE, Pension, NHF, NSITF, and ITF on every payroll run, with a verifiable audit trail for each filing.",
+    "The financial operating system for African businesses — payroll, statutory compliance, vendor payments, and more, built for All.",
   url: "https://brigadely.com",
   offers: {
     "@type": "Offer",
@@ -88,7 +88,7 @@ const faqSchema = {
 };
 
 export const metadata = {
-  title: "Brigadely — Nigerian Payroll & Statutory Compliance Software",
+  title: "Brigadely — The financial operating system for African businesses",
   description:
     "Brigadely automates PAYE, Pension, NHF, NSITF, and ITF on every payroll run. Compliant Nigerian payroll for growing businesses — from one dashboard.",
   alternates: {

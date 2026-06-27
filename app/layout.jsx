@@ -119,11 +119,11 @@ const greycliffRegular = localFont({
 export const metadata = {
   metadataBase: new URL("https://brigadely.com"),
   title: {
-    default: "Brigadely — Nigerian Payroll & Statutory Compliance Software",
+    default: "Brigadely — The financial operating system for African businesses",
     template: "%s | Brigadely",
   },
   description:
-    "Brigadely automates PAYE, Pension, NHF, NSITF, and ITF on every payroll run. Compliant Nigerian payroll for growing businesses — from one dashboard.",
+    "Brigadely handles all your financial operations in one platform — payroll, statutory compliance, vendor payments, and more, built for African businesses.",
   keywords: [
     "payroll software Nigeria",
     "Nigerian payroll software",
@@ -138,6 +138,12 @@ export const metadata = {
     "payroll for accountants Nigeria",
     "payroll compliance software Africa",
     "financial operating system Africa",
+    "Vendor manageement and payments Nigeria",
+    "expense management software Nigeria",
+    "stablecoin payroll Nigeria",
+    "Assest management software Nigeria",
+    "Workforce management software Nigeria",
+    "Leave management software Nigeria",
   ],
   authors: [{ name: "Brigadely Technologies Limited" }],
   creator: "Brigadely Technologies Limited",
@@ -158,7 +164,7 @@ export const metadata = {
     locale: "en_NG",
     url: "https://brigadely.com",
     siteName: "Brigadely",
-    title: "Brigadely — Nigerian Payroll & Statutory Compliance Software",
+    title: "Brigadely — The financial operating system for African businesses",
     description:
       "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments — built for Nigeria.",
     images: [
@@ -166,7 +172,7 @@ export const metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Brigadely — Nigerian Payroll and Statutory Compliance Platform",
+        alt: "Brigadely — The financial operating system for African businesses",
       },
     ],
   },
