@@ -15,7 +15,7 @@ const footerLinks = {
   Company: [
     { label: "About us", href: "#" },
     { label: "Careers", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Blog", href: "/resources" },
     { label: "Contact", href: "mailto:info@brigadely.com" },
   ],
   Resources: [

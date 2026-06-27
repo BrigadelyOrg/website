@@ -3,6 +3,36 @@ import { Inter, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Brigadely Technologies Limited",
+  url: "https://brigadely.com",
+  logo: "https://brigadely.com/img/logo1.png",
+  description:
+    "The financial operating system for African businesses — payroll, statutory compliance, vendor payments, and more, built for All.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Ibadan",
+    addressRegion: "Oyo State",
+    addressCountry: "NG",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: "info@brigadely.com",
+  },
+   sameAs: ["https://www.linkedin.com/company/brigadely"], 
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Brigadely",
+  url: "https://brigadely.com",
+};
 
 // --- Google fonts (primary system, matches Bujeti design standard) ---
 const inter = Inter({
@@ -87,14 +117,88 @@ const greycliffRegular = localFont({
 });
 
 export const metadata = {
-  title: "Brigadely — Nigerian Payroll and Statutory Compliance",
+  metadataBase: new URL("https://brigadely.com"),
+  title: {
+    default: "Brigadely — Nigerian Payroll & Statutory Compliance Software",
+    template: "%s | Brigadely",
+  },
   description:
     "Brigadely automates PAYE, Pension, NHF, NSITF, and ITF on every payroll run. Compliant Nigerian payroll for growing businesses — from one dashboard.",
+  keywords: [
+    "payroll software Nigeria",
+    "Nigerian payroll software",
+    "online payroll Nigeria",
+    "PAYE remittance Nigeria",
+    "PAYE filing software Nigeria",
+    "multi-state PAYE Nigeria",
+    "pension remittance Nigeria",
+    "PenCom compliant payroll",
+    "statutory compliance Nigeria",
+    "NHF NSITF ITF filing",
+    "payroll for accountants Nigeria",
+    "payroll compliance software Africa",
+    "financial operating system Africa",
+  ],
+  authors: [{ name: "Brigadely Technologies Limited" }],
+  creator: "Brigadely Technologies Limited",
+  publisher: "Brigadely Technologies Limited",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: "https://brigadely.com",
+    siteName: "Brigadely",
+    title: "Brigadely — Nigerian Payroll & Statutory Compliance Software",
+    description:
+      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments — built for Nigeria.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Brigadely — Nigerian Payroll and Statutory Compliance Platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The financial operating system for African businesses — payroll, statutory compliance, vendor payments, and more, built for All.",
+    description:
+      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments — built for Nigeria.",
+    images: ["/og-image.png"],
+    creator: "@brigadely",
+  },
+  alternates: {
+    canonical: "https://brigadely.com",
+  },
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  // verification: {
+  //   google: "[VERIFY: paste Google Search Console HTML tag token here]",
+  //   other: { "msvalidate.01": "[VERIFY: Bing Webmaster Tools token]" },
+  // },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en-NG">
       <body
         className={`
           ${inter.variable}
@@ -113,6 +217,8 @@ export default function RootLayout({ children }) {
           antialiased
         `}
       >
+        <JsonLd schema={organizationSchema} />
+        <JsonLd schema={websiteSchema} />
         <Header />
         {children}
         <Footer />
