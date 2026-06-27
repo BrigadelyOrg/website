@@ -29,7 +29,7 @@ const faqItems = [
   {
     question: "Is my data secure?",
     answer:
-      "All payroll and employee data is encrypted in transit and at rest using AES-256 and TLS. Access is controlled by role, so each team member sees only what they need. [VERIFY: SOC 2 Type II, NDPR, and ISO 27001 certification status]",
+      "All payroll and employee data is encrypted in transit and at rest using AES-256 and TLS. Access is controlled by role, so each team member sees only what they need.",
   },
   {
     question: "Is there a free trial?",

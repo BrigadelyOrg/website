@@ -42,7 +42,7 @@ const platformModules = [
   {
     Chip: CircleChip,
     title: "Payroll",
-    body: "Run payroll for your whole workforce every pay cycle, in NGN. [VERIFY: and USD]",
+    body: "Run payroll for your whole workforce every pay cycle. ",
   },
   {
     Chip: SquareChip,

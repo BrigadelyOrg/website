@@ -7,7 +7,7 @@ const GREEN = "#007a3d";
 
 const statutoryItems = ["PAYE", "PENSION", "NHF", "NSITF", "TAX"];
 
-// [VERIFY: replace with actual customer names and swap placeholder boxes for
+
 // real logo <Image> files at 80–120px wide, 32px tall, with className="opacity-40 brightness-0"]
 const trustedCompanies = [
   { name: "Tender Cash" },

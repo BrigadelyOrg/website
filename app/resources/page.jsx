@@ -85,7 +85,7 @@ const articles = [
     tag:      "Tax bands",
     title:    "Nigeria Personal Income Tax Bands and Rates for 2025",
     excerpt:
-      "The current PITA tax bands and reliefs used to calculate PAYE for employees in 2025, including the consolidated relief allowance and relevant NTA updates. [VERIFY: confirm with FIRS for latest guidance]",
+      "The current PITA tax bands and reliefs used to calculate PAYE for employees in 2025, including the consolidated relief allowance and relevant NTA updates.",
     keywords: ["Nigeria income tax bands 2025", "PITA rates Nigeria", "NTA tax update 2025"],
     status:   "coming-soon",
   },
