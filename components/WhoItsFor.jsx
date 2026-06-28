@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
+
 /* ── Brand tokens ─────────────────────────────────────────────────── */
 const BONE       = "#F2EDE4";
 const NEAR_BLACK = "#16160F";
@@ -10,26 +11,10 @@ const MUTED      = "#737065";
 const GREEN_DARK = "#0B5E34";
 const GREEN_MID  = "#1A8D49";
 const GREEN_MINT = "#DCEFE0";
-const PHONE_BLK  = "#0E0E0C";
-const SCREEN_BG  = "#FAF9F6";
-const BORDER     = "#EFEFEA";
 const PILL_EDGE  = "#DEDAD4";
 
 /* ── Personas ─────────────────────────────────────────────────────── */
 const personas = [
-  {
-    pill:      "CFOs",
-    chipLabel: "CFOs & finance leads",
-    headline:  "Every Kobo, accounted for.",
-    copy:      "Own the full picture: every payment leaving the business - staff, vendors, and statutory obligations reconciled to the last kobo and auditable from one dashboard.",
-    benefits:  [
-      "All outgoing payments on one ledger",
-      "Reconciliation status by pay period",
-      "Audit trail for every statutory filing",
-    ],
-    src: "/img/who-phone-cfo.svg",
-    alt: "Finance overview screen showing disbursed total, statutory deductions, and recent activity",
-  },
   {
     pill:      "Founders",
     chipLabel: "Founders & business owners",
@@ -40,9 +25,23 @@ const personas = [
       "PAYE, Pension, NHF, NSITF, ITF filed on every run",
       "No compliance consultants or spreadsheets",
     ],
-    src: "/img/who-phone-founder.svg",
+    src: "/img/payment.png",
     alt: "Payroll run screen with five statutory deductions auto-calculated and ready",
   },
+  {
+    pill:      "CFOs",
+    chipLabel: "CFOs & finance leads",
+    headline:  "Every Kobo, accounted for.",
+    copy:      "Own the full picture: every payment leaving the business - staff, vendors, and statutory obligations reconciled to the last kobo and auditable from one dashboard.",
+    benefits:  [
+      "All outgoing payments on one ledger",
+      "Reconciliation status by pay period",
+      "Audit trail for every statutory filing",
+    ],
+    src: "/img/account.png",
+    alt: "Finance overview screen showing disbursed total, statutory deductions, and recent activity",
+  },
+  
   {
     pill:      "Finance teams",
     chipLabel: "Finance & accounting teams",
@@ -53,21 +52,8 @@ const personas = [
       "Reconciliation status per statutory obligation",
       "Audit-ready records for every filing",
     ],
-    src: "/img/who-phone-finance.svg",
+    src: "/img/multi-image.png",
     alt: "Statutory ledger showing PAYE, Pension, NHF, NSITF, ITF with filed status and books reconciled",
-  },
-  {
-    pill:      "Multi-state",
-    chipLabel: "Multi-state employers",
-    headline:  "Every state, filed right.",
-    copy:      "Brigadely routes each employee's PAYE to the correct State IRS automatically, across all 36 states and the FCT. No manual routing, no missed filings.",
-    benefits:  [
-      "PAYE filed to the correct state authority per employee",
-      "All 36 states and the FCT supported",
-      "Per-state filing status in one view",
-    ],
-    src: "/img/who-phone-multistate.svg",
-    alt: "PAYE routing screen listing state IRS authorities with employee counts and filing status",
   },
   {
     pill:      "Accountants",
@@ -79,163 +65,11 @@ const personas = [
       "Remittance records ready to export per client",
       "Deadline alerts so nothing slips",
     ],
-    src: "/img/who-phone-accountant.svg",
+    src: "/img/account.png",
     alt: "Multi-client dashboard showing companies with per-client filing status and next deadlines",
   },
-  {
-    pill:      "Multi-entity",
-    chipLabel: "Multi-entity groups",
-    headline:  "Every entity, rolled up.",
-    copy:      "Run payroll across subsidiaries and related companies from a single account. See a consolidated view of compliance and a unified payment ledger across all entities.",
-    benefits:  [
-      "Per-entity payroll totals in one view",
-      "Consolidated statutory compliance roll-up",
-      "Unified ledger across all subsidiaries",
-    ],
-    src: "/img/who-phone-entity.svg",
-    alt: "Entity overview showing subsidiaries with per-entity payroll totals and a group compliance roll-up",
-  },
 ];
 
-/* ── Status bar icons ─────────────────────────────────────────────── */
-const SignalIcon = () => (
-  <svg width="13" height="10" viewBox="0 0 13 10" fill="none">
-    <rect x="0"  y="6"   width="3" height="4"   rx="0.8" fill={NEAR_BLACK}/>
-    <rect x="5"  y="3.5" width="3" height="6.5" rx="0.8" fill={NEAR_BLACK}/>
-    <rect x="10" y="1"   width="3" height="9"   rx="0.8" fill={NEAR_BLACK}/>
-  </svg>
-);
-
-const WifiIcon = () => (
-  <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
-    <circle cx="7.5" cy="10" r="1.5" fill={NEAR_BLACK}/>
-    <path d="M3.8 6.6C5 5.4 6.2 4.8 7.5 4.8s2.5.6 3.7 1.8"
-          stroke={NEAR_BLACK} strokeWidth="1.3" strokeLinecap="round"/>
-    <path d="M1.2 3.8C3 1.6 5.1.8 7.5.8s4.5.8 6.3 3"
-          stroke={NEAR_BLACK} strokeWidth="1.3" strokeLinecap="round"/>
-  </svg>
-);
-
-const BatteryIcon = () => (
-  <svg width="24" height="11" viewBox="0 0 24 11" fill="none">
-    <rect x="0" y="1" width="19" height="9" rx="2.5" stroke={NEAR_BLACK} strokeWidth="1.3"/>
-    <rect x="1.5" y="2.5" width="14" height="6" rx="1.5" fill={NEAR_BLACK}/>
-    <path d="M20.5 3.5v4" stroke={NEAR_BLACK} strokeWidth="1.3" strokeLinecap="round"/>
-  </svg>
-);
-
-/* ── Tab bar icons ────────────────────────────────────────────────── */
-const HomeIcon   = ({ color }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-       stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M2 8l8-6 8 6v10a1 1 0 01-1 1H3a1 1 0 01-1-1z"/>
-    <path d="M7 19v-8h6v8"/>
-  </svg>
-);
-const LedgerIcon = ({ color }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-       stroke={color} strokeWidth="1.4" strokeLinecap="round">
-    <rect x="4" y="2" width="12" height="16" rx="1.5"/>
-    <line x1="7" y1="7"    x2="13" y2="7"/>
-    <line x1="7" y1="10.5" x2="13" y2="10.5"/>
-    <line x1="7" y1="14"   x2="10" y2="14"/>
-  </svg>
-);
-const PeopleIcon = ({ color }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-       stroke={color} strokeWidth="1.4" strokeLinecap="round">
-    <circle cx="10" cy="7" r="3.5"/>
-    <path d="M3 18c0-3.9 3.1-7 7-7s7 3.1 7 7"/>
-  </svg>
-);
-const MoreIcon   = ({ color }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <circle cx="5"  cy="10" r="1.5" fill={color}/>
-    <circle cx="10" cy="10" r="1.5" fill={color}/>
-    <circle cx="15" cy="10" r="1.5" fill={color}/>
-  </svg>
-);
-
-const TAB_ICONS = [
-  { Icon: HomeIcon,   label: "Home"   },
-  { Icon: LedgerIcon, label: "Ledger" },
-  { Icon: PeopleIcon, label: "People" },
-  { Icon: MoreIcon,   label: "More"   },
-];
-
-/* ── Phone frame ──────────────────────────────────────────────────── */
-const PhoneFrame = ({ src, alt }) => (
-  <div
-    className="relative mx-auto flex-shrink-0 select-none"
-    style={{
-      width: 300, height: 600,
-      backgroundColor: PHONE_BLK,
-      borderRadius: 48,
-      padding: 12,
-    }}
-  >
-    <div
-      className="relative w-full h-full overflow-hidden"
-      style={{ backgroundColor: SCREEN_BG, borderRadius: 38 }}
-    >
-      {/* Dynamic island */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{
-          top: 10, width: 108, height: 30,
-          backgroundColor: PHONE_BLK,
-          borderRadius: 16, zIndex: 10,
-        }}
-      />
-      {/* Status bar */}
-      <div
-        className="absolute left-0 right-0 flex justify-between items-center px-5"
-        style={{ top: 10, height: 30, zIndex: 5 }}
-      >
-        <span style={{
-          fontSize: 11, fontWeight: 600,
-          fontFamily: "sans-serif", color: NEAR_BLACK,
-        }}>
-          9:41
-        </span>
-        <div className="flex items-center gap-1.5">
-          <SignalIcon/>
-          <WifiIcon/>
-          <BatteryIcon/>
-        </div>
-      </div>
-      {/* Screen content — SVG image fills content area */}
-      <div className="absolute" style={{ top: 52, left: 0, right: 0, bottom: 60 }}>
-        <Image
-          src={src}
-          alt={alt}
-          width={276}
-          height={464}
-          className="w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "top" }}
-        />
-      </div>
-      {/* Tab bar */}
-      <div
-        className="absolute bottom-0 left-0 right-0 flex items-end justify-around px-3 pb-2"
-        style={{ height: 60, backgroundColor: "white", borderTop: `1px solid ${BORDER}` }}
-      >
-        {TAB_ICONS.map(({ Icon, label }, i) => {
-          const active = i === 0;
-          const color  = active ? GREEN_DARK : "#C0BDB8";
-          return (
-            <div key={label} className="flex flex-col items-center gap-0.5">
-              <Icon color={color}/>
-              <span style={{ fontSize: 9, color, fontFamily: "sans-serif", fontWeight: active ? 600 : 400 }}>
-                {label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </div>
-);
 
 /* ── Check icon ───────────────────────────────────────────────────── */
 const Check = () => (
@@ -401,9 +235,15 @@ const WhoItsFor = () => {
             </ul>
           </div>
 
-          {/* Phone frame */}
+          {/* Product screenshot */}
           <div className="w-full lg:w-auto order-2 flex justify-center lg:justify-end">
-            <PhoneFrame src={p.src} alt={p.alt}/>
+            <Image
+              src={p.src}
+              alt={p.alt}
+              width={420}
+              height={560}
+              className="rounded-2xl object-cover object-top w-full max-w-sm lg:max-w-md h-auto"
+            />
           </div>
 
         </div>

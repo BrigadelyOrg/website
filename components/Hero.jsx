@@ -81,11 +81,11 @@ const Hero = () => {
               }}
             >
               <Image
-                src="/img/payroll-table.jpeg"
+                src="/img/multi-image.png"
                 alt="Brigadely payroll dashboard"
                 width={900}
                 height={600}
-                className="rounded-xl shadow-2xl border border-gray-200 w-full h-auto"
+                className="rounded-xl w-full h-auto"
                 priority
               />
             </div>
