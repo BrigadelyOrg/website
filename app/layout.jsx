@@ -196,10 +196,10 @@ export const metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
-  // verification: {
-  //   google: "[VERIFY: paste Google Search Console HTML tag token here]",
-  //   other: { "msvalidate.01": "[VERIFY: Bing Webmaster Tools token]" },
-  // },
+  verification: {
+    google: "lxaQGgB1OXE_xWT41exVTkpQFJ7TOCk0zklIov8Bjcc",
+    // other: { "msvalidate.01": "[VERIFY: Bing Webmaster Tools token]" },
+  },
 };
 
 export default function RootLayout({ children }) {
