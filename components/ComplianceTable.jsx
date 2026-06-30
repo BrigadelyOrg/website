@@ -66,18 +66,16 @@ const ComplianceTable = () => {
     <section id="compliance" className="bg-white py-24 px-4">
       <div className="container mx-auto">
 
-        {/* Eyebrow */}
-        <p
-          className="font-sans text-[11px] font-bold tracking-[0.18em] uppercase mb-6"
-          style={{ color: GREEN }}
-        >
-          Compliance
-        </p>
-
-        {/* Headline */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+        {/* Eyebrow + Headline */}
+        <div className="flex flex-col items-center text-center mb-12">
+          <p
+            className="font-sans text-[11px] font-bold tracking-[0.18em] uppercase mb-6"
+            style={{ color: GREEN }}
+          >
+            Compliance
+          </p>
           <h2
-            className="text-4xl md:text-4xl text-[#111111] max-w-2xl"
+            className="text-4xl md:text-5xl text-[#111111] max-w-2xl mb-6"
             style={{
               fontFamily: "var(--font-inter)",
               fontWeight: 900,
@@ -85,11 +83,13 @@ const ComplianceTable = () => {
               letterSpacing: "-0.025em",
             }}
           >
-            Every statutory deduction, on one{" "}
-            <span style={{ color: GREEN }}>platform.</span>
+            Every statutory obligation, on one{" "}
+            <span style={{ color: GREEN }}>ledger.</span>
           </h2>
-          <p className="font-sans text-base text-gray-500 leading-relaxed max-w-xs">
-            Stay compliant with Brigadely.
+          <p className="font-sans text-base text-gray-500 leading-relaxed max-w-md">
+            Brigadely calculates, remits, and files every statutory deduction
+            your jurisdiction requires on each payroll run — with a verifiable
+            audit trail for every filing. Currently live for Nigerian compliance.
           </p>
         </div>
 

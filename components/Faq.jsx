@@ -7,39 +7,44 @@ const BONE = "#F4EFE4";
 
 const faqItems = [
   {
-    question: "What is Brigadely?",
+    question: "Where does Brigadely operate?",
     answer:
-      "Brigadely is the financial operating system for African businesses. It runs payroll, calculates and files PAYE, Pension, NHF, NSITF, and ITF, processes vendor and contractor payments, and keeps a full audit trail all from one ledger, built for how Nigerian businesses actually move money.",
+      "Brigadely is live in Nigeria today, where we serve businesses across all 36 states and the FCT. Kenya, Ghana, and South Africa are in our pipeline. The ledger is built to handle multi-currency, multi-jurisdiction compliance, and cross-border payments — so as your business expands across Africa, Brigadely expands with it.",
   },
   {
-    question: "Which countries and states do you support?",
+    question: "Can I use Brigadely if my business operates outside Nigeria?",
     answer:
-      "Brigadely is Nigeria-first. We support payroll and statutory filings across all 36 Nigerian states and the FCT, with state-level PAYE routing to the correct State IRS or FIRS.",
+      "Today, our compliance modules are configured for Nigerian regulation, so businesses operating fully outside Nigeria aren't yet a fit. If you're a multi-country African business with Nigerian operations, the ledger already supports that. If you'd like to be first in line when we launch in your market, join the waitlist.",
   },
   {
-    question: "Can I pay employees in multiple currencies?",
+    question: "Do you support payments in currencies other than the naira?",
     answer:
-      "No. this feature is not yet available. Brigadely currently supports payroll in NGN only.",
+      "Yes. The ledger is currency-agnostic. Naira is supported today for local payments and statutory remittance; stablecoin (USDC) is supported for cross-border payouts, contractor payments, and diaspora hires. Additional African currencies will follow as we expand.",
   },
   {
-    question: "How long does setup take?",
+    question: "What does the 60-day free trial include?",
     answer:
-      "Most teams complete initial setup in under a day and run their first payroll within a week. There are no migration consultants required. You import your employee records, link your bank account, and Brigadely handles the rest.",
+      "Everything. You get full access to the ledger — payroll, compliance, vendor payments, expense management, and stablecoin payouts — for 60 days at no cost. No credit card required. You can run live payroll during the trial period.",
+  },
+  {
+    question: "Who is Brigadely built for?",
+    answer:
+      "Brigadely is built for operators running African businesses — founders managing their first payroll, CFOs overseeing multi-entity groups, finance teams closing month-end, and accountants managing compliance across a client portfolio. If your business has employees or contractors and statutory obligations, the ledger is for you.",
+  },
+  {
+    question: "How does Brigadely differ from accounting software?",
+    answer:
+      "Accounting software records what has already happened. Brigadely executes it. When payroll runs, deductions are calculated, filed, and remitted — not just posted to a journal entry. When a vendor is paid, the ledger updates in the same action. Brigadely is an operating layer, not a record-keeping layer.",
   },
   {
     question: "Is my data secure?",
     answer:
-      "All payroll and employee data is encrypted in transit and at rest using AES-256 and TLS. Access is controlled by role, so each team member sees only what they need.",
+      "All financial and employee data is encrypted in transit and at rest. Access is role-controlled — each team member sees only what their role permits. Brigadely maintains a full audit log of every action taken on the ledger.",
   },
   {
-    question: "Is there a free trial?",
+    question: "How long does onboarding take?",
     answer:
-      "Yes. Brigadely offers a 60-days free trial with no setup fees and no commitment required. You can run real payroll during the trial period.",
-  },
-  {
-    question: "Do you support contractors and employees on the same payroll?",
-    answer:
-      "Yes. You can run full-time employees and contractors on the same payroll run. Brigadely applies the correct withholding tax to contractors and the standard statutory deductions to employees automatically.",
+      "Most teams complete setup in under a day and run their first payroll within a week. There are no implementation consultants required. You import your employee records, connect your payment accounts, and Brigadely handles the rest.",
   },
 ];
 
@@ -68,6 +73,7 @@ const FAQ = () => {
           }}
         >
           Common <span style={{ color: GREEN }}>questions.</span>
+
         </h2>
 
         <div className="divide-y divide-gray-100">

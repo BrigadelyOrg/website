@@ -2,26 +2,25 @@ import React from "react";
 import Link from "next/link";
 
 const GREEN = "#007a3d";
-const BONE = "#F4EFE4";
 
 const steps = [
   {
     number: "01",
-    title: "Connect your team.",
-    body: "Import your employee roster, configure your org structure, and link your bank and statutory accounts. Most teams complete setup in under a day, with no migration consultant required.",
-    detail: ["Import employee records", "Configure departments and roles", "Link bank accounts", "Set up approval chains"],
+    title: "Connect your business.",
+    body: "Import your employee roster, configure your org structure, and link your bank and statutory accounts. Most teams are operational in under a day — no implementation consultant required.",
+    detail: ["Import employee records", "Configure departments and roles", "Link bank and payment accounts", "Set up approval chains"],
   },
   {
     number: "02",
     title: "Run your first payroll.",
-    body: "Select your pay period, review the automated PAYE, Pension, NHF, NSITF, and ITF calculations, and approve. Payslips go to employees automatically. Filing schedules are generated for each deduction.",
-    detail: ["Automated statutory calculations", "Payslip generation and delivery", "Remittance schedule created"],
+    body: "Select your pay period, review the automated deduction calculations, and approve. Payslips go to employees automatically. Every statutory obligation is queued for remittance.",
+    detail: ["Automated statutory calculations", "Payslip generation and delivery", "Remittance schedule created", "Audit trail started"],
   },
   {
     number: "03",
     title: "Expand what you run on Brigadely.",
-    body: "Every subsequent pay cycle, Brigadely files your remittances and updates your audit trail. As your business grows, bring vendor payments, contractor payroll, expense approvals, and cross-border transfers into the same ledger — with the same statutory precision on every transaction.",
-    detail: ["Automatic remittance filing", "Full audit trail by pay period", "Vendor and contractor payments", "Compliance change alerts"],
+    body: "Every subsequent cycle, Brigadely files your remittances and updates your ledger. As your business grows, bring vendor payments, contractor payroll, expense approvals, and cross-border payouts into the same operating layer.",
+    detail: ["Automatic remittance filing", "Full audit trail by pay period", "Vendor and contractor payments", "Cross-border USDC payouts"],
   },
 ];
 
@@ -106,7 +105,7 @@ const HowItWorks = () => {
               Start free trial
             </button>
           </Link>
-          <p className="font-sans text-sm text-gray-400">90 days free. No commitment required.</p>
+          <p className="font-sans text-sm text-gray-400">60 days free. No commitment required.</p>
         </div>
 
       </div>

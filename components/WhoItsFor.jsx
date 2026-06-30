@@ -31,8 +31,8 @@ const personas = [
   {
     pill:      "CFOs",
     chipLabel: "CFOs & finance leads",
-    headline:  "Every Kobo, accounted for.",
-    copy:      "Own the full picture: every payment leaving the business - staff, vendors, and statutory obligations reconciled to the last kobo and auditable from one dashboard.",
+    headline:  "Every payment, accounted for.",
+    copy:      "Own the full picture: every payment leaving the business — staff, vendors, and statutory obligations — reconciled to the last cent and auditable from one dashboard.",
     benefits:  [
       "All outgoing payments on one ledger",
       "Reconciliation status by pay period",
@@ -145,8 +145,8 @@ const WhoItsFor = () => {
                 color: NEAR_BLACK,
               }}
             >
-              Built for everyone in{" "}
-              <span style={{ color: GREEN_MID }}>mind.</span>
+              Built for every operator{" "}
+              <span style={{ color: GREEN_MID }}>running a business.</span>
             </h2>
           </div>
         </div>
@@ -240,9 +240,11 @@ const WhoItsFor = () => {
             <Image
               src={p.src}
               alt={p.alt}
-              width={420}
-              height={560}
-              className="rounded-2xl object-cover object-top w-full max-w-sm lg:max-w-md h-auto"
+              width={1200}
+              height={900}
+              quality={95}
+              sizes="(max-width: 1024px) 100vw, 600px"
+              className="rounded-2xl w-full max-w-md lg:max-w-xl h-auto"
             />
           </div>
 

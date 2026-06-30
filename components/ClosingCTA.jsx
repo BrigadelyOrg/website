@@ -27,15 +27,16 @@ const ClosingCTA = () => {
             letterSpacing: "-0.03em",
           }}
         >
-          One platform for all your business financial <br />
-          <span style={{ color: GREEN }}>operations</span>
+          One ledger. Every payment<br />
+          out of your{" "}
+          <span style={{ color: GREEN }}>business.</span>
         </h2>
 
         {/* Subhead */}
-        <p className="font-sans text-md text-gray-600 mb-10 max-w-md leading-relaxed">
-          Start with payroll. Add compliance, vendor payments, and
-          cross-border transfers as you grow. Every payment accounted
-          for, every filing on time.
+        <p className="font-sans text-base text-gray-600 mb-10 max-w-md leading-relaxed">
+          Start with payroll and compliance. Add vendor payments, expenses,
+          and cross-border payouts as your operation grows. Every payment
+          tracked, every obligation met.
         </p>
 
         {/* CTAs */}
@@ -45,7 +46,7 @@ const ClosingCTA = () => {
               className="px-8 py-4 rounded-full font-sans font-semibold text-sm text-white transition duration-200 hover:opacity-90"
               style={{ backgroundColor: GREEN }}
             >
-              Start free trial
+              Start free — 60 days
             </button>
           </Link>
           <Link href="https://app.brigadely.com/signup" target="_blank">

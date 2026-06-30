@@ -42,42 +42,42 @@ const platformModules = [
   {
     Chip: CircleChip,
     title: "Payroll",
-    body: "Run payroll for your whole workforce every pay cycle. ",
+    body: "Run payroll for your entire workforce — full-time staff and contractors — on every cycle, with gross-to-net calculations handled automatically.",
   },
   {
     Chip: SquareChip,
     title: "Statutory compliance",
-    body: "PAYE, Pension, NHF, NSITF, and TAX calculated, remitted, and filed with a full audit trail on every run.",
+    body: "Every statutory obligation your jurisdiction requires: calculated on each payroll run, remitted to the right authority, and filed on time — with a full audit trail.",
   },
   {
     Chip: DiamondChip,
     title: "People & benefits",
-    body: "Employees, contractors, onboarding, and benefits enrolment in one place.",
+    body: "Employee records, onboarding, leave management, and benefits enrolment — in the same system as payroll, so HR and finance share the same data.",
   },
   {
     Chip: CircleChip,
     title: "Expense management",
-    body: "Capture expenses, route approvals, enforce policy, and reimburse without leaving Brigadely.",
+    body: "Capture expenses, route approvals, enforce policy limits, and reimburse employees — without leaving the ledger.",
   },
   {
     Chip: SquareChip,
     title: "Vendor & supplier payments",
-    body: "Pay counterparties alongside staff, with withholding tax applied correctly.",
+    body: "Pay suppliers and service providers directly from the ledger. Every outgoing payment is linked to its invoice, cost code, and withholding classification.",
   },
   {
     Chip: DiamondChip,
-    title: "Assest Management",
-    body: "Manage company assets, track depreciation, and maintain a full audit trail.",
+    title: "Asset management",
+    body: "Track company assets, record depreciation, manage assignments, and maintain a permanent disposal log — all tied to the same ledger.",
   },
   {
     Chip: CircleChip,
-    title: "Stablecoin / USDC payroll",
-    body: "Pay in USDC over compliant rails.",
+    title: "Stablecoin / USDC payouts",
+    body: "Pay contractors, remote hires, and diaspora employees in USDC — settled instantly, at near-zero cost, without a correspondent banking chain. Proof that the ledger operates beyond a single currency.",
   },
   {
     Chip: SquareChip,
     title: "Support",
-    body: "24/7 support for all your payroll and compliance needs.",
+    body: "Dedicated support for payroll, compliance, and payment questions — from a team that understands how African businesses actually operate.",
   },
 ];
 
@@ -109,13 +109,13 @@ const ProductTour = () => {
             letterSpacing: "-0.025em",
           }}
         >
-          Every naira that leaves your business,<br className="hidden md:block" /> on one{" "}
+          Every payment that leaves your business,<br className="hidden md:block" /> on one{" "}
           <span style={{ color: GREEN }}>ledger.</span>
         </h2>
 
         {/* Connective paragraph */}
         <p className="font-sans text-base text-gray-500 leading-relaxed max-w-xl mb-16">
-          Brigadely is one record of everyone and everything you pay - staff, contractors,
+          Brigadely is one record of everyone and everything you pay — staff, contractors,
           vendors, and every statutory obligation. One place it actually happens: the money
           moves, the remittances file, and the audit trail writes itself.
         </p>

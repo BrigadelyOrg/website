@@ -30,7 +30,7 @@ const Hero = () => {
               className="font-sans text-[11px] font-bold tracking-[0.18em] uppercase mb-7"
               style={{ color: GREEN }}
             >
-              The financial OS for African businesses
+              The financial operating system for African businesses
             </p>
 
             <h1
@@ -48,9 +48,9 @@ const Hero = () => {
             </h1>
 
             <p className="font-sans text-lg leading-relaxed text-gray-600 mb-10 max-w-md">
-              Staff, contractors, vendors, and every statutory obligation
-              PAYE, Pension, NHF, NSITF, and TAX on a single ledger that
-              calculates, remits, and files itself on every pay cycle.
+              Staff, contractors, vendors, and every statutory obligation your
+              jurisdiction requires — on a single ledger that calculates,
+              remits, and files itself on every cycle.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -59,16 +59,16 @@ const Hero = () => {
                   className="px-8 py-4 rounded-full font-sans font-semibold text-sm text-white transition duration-200 hover:opacity-90"
                   style={{ backgroundColor: GREEN }}
                 >
-                  Start free trial
+                  Start free — 60 days
                 </button>
               </Link>
               <Link href="https://app.brigadely.com/signup" target="_blank">
                 <button className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent">
-                  Get a demo
+                  Book a call
                 </button>
               </Link>
             </div>
-            <p className="font-sans text-xs text-gray-400">60 days free. No commitment required.</p>
+            <p className="font-sans text-xs text-gray-400">No commitment required.</p>
           </div>
 
           {/* Right: dashboard screenshot */}
@@ -97,7 +97,7 @@ const Hero = () => {
       {/* Trusted by — 6 companies */}
       <div className="border-t border-gray-100 pt-6 pb-10 px-6">
         <p className="font-sans text-[10px] font-bold tracking-[0.18em] uppercase text-center text-black-300 mb-7">
-          Trusted by businesses across Nigeria
+          Trusted by operators across Africa
         </p>
         <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
           {trustedCompanies.map((company) => (
