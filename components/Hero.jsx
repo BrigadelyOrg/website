@@ -8,14 +8,12 @@ const GREEN = "#007a3d";
 const statutoryItems = ["PAYE", "PENSION", "NHF", "NSITF", "TAX"];
 
 
-// real logo <Image> files at 80–120px wide, 32px tall, with className="opacity-40 brightness-0"]
 const trustedCompanies = [
-  { name: "Tender Cash" },
-  { name: "FBIS Tech" },
-  { name: "Juno Inc" },
-  { name: "CustomierHQ" },
-  { name: "Qomat School" },
-  { name: "Berry Valley" },
+  { name: "Tender Cash",src: "/img/tender-logo.svg"  },
+  { name: "FBIS Tech",  src: "/img/fbis-logo.webp"    },
+  { name: "Ogentic AI", src: "/img/ogentic-logo.svg"     },
+  { name: "Qomat School", src: "/img/qomat-logo.jpeg"       },
+  { name: "Uphiva", src: "/img/uphiva-logo.jpg" },
 ];
 
 const Hero = () => {
@@ -99,20 +97,14 @@ const Hero = () => {
         <p className="font-sans text-[10px] font-bold tracking-[0.18em] uppercase text-center text-black-300 mb-7">
           Trusted by operators across Africa
         </p>
-        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6">
           {trustedCompanies.map((company) => (
-            <span
+            <img
               key={company.name}
-              className="text-xl md:text-2xl select-none"
-              style={{
-                fontFamily: "var(--font-inter)",
-                fontWeight: 900,
-                color: "#080909",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              {company.name}
-            </span>
+              src={company.src}
+              alt={company.name}
+              className="h-8 w-auto object-contain opacity-50 grayscale hover:opacity-80 hover:grayscale-0 transition-all duration-200"
+            />
           ))}
         </div>
       </div>
