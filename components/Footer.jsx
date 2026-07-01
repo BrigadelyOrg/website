@@ -53,8 +53,8 @@ const Footer = () => {
             </Link>
             <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
               The financial operating system for African businesses. Payroll,
-              statutory compliance, vendor payments, and more — on one ledger,
-              built for Nigeria.
+              statutory compliance, vendor payments, and more on one ledger,
+              built for business.
             </p>
             <div className="space-y-1.5">
               <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Contact</p>

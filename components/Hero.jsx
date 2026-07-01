@@ -49,7 +49,7 @@ const Hero = () => {
 
             <p className="font-sans text-lg leading-relaxed text-gray-600 mb-10 max-w-md">
               Staff, contractors, vendors, and every statutory obligation your
-              jurisdiction requires — on a single ledger that calculates,
+              business requires on a single ledger that calculates,
               remits, and files itself on every cycle.
             </p>
 
@@ -59,7 +59,7 @@ const Hero = () => {
                   className="px-8 py-4 rounded-full font-sans font-semibold text-sm text-white transition duration-200 hover:opacity-90"
                   style={{ backgroundColor: GREEN }}
                 >
-                  Start free — 60 days
+                  Start free - 60 days
                 </button>
               </Link>
               <Link href="https://app.brigadely.com/signup" target="_blank">
