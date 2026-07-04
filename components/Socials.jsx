@@ -4,10 +4,10 @@ import { FaFacebookF, FaLinkedinIn, FaInstagram, FaWhatsapp } from "react-icons/
 
 const Socials = ({ iconStyles }) => {
   const socialLinks = [
-    { name: "Facebook", icon: <FaFacebookF />, url: "" },
-    { name: "LinkedIn", icon: <FaLinkedinIn />, url: "" },
-    { name: "Instagram", icon: <FaInstagram />, url: "" },
-    { name: "WhatsApp", icon: <FaWhatsapp />, url: "" },
+    { name: "Facebook", icon: <FaFacebookF />, url: "https://www.facebook.com/people/Brigadely/61591625181991/" },
+    { name: "LinkedIn", icon: <FaLinkedinIn />, url: "https://www.linkedin.com/company/brigadely" },
+    { name: "Instagram", icon: <FaInstagram />, url: "https://www.instagram.com/getbrigadely/" },
+    
   ];
 
   return (
