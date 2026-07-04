@@ -143,7 +143,97 @@ const sections = [
     ),
   },
   {
-    title: "6. Acceptable Use",
+    title: "6. Dedicated Virtual Accounts and Identity Verification",
+    content: (
+      <>
+        <p className="mb-4">
+          To issue a
+          dedicated virtual bank account to a business, employee, or contractor
+          on the platform for the purpose of receiving salary payments,
+          contractor fees, statutory remittances, or any other disbursement.
+          Brigadely is required by applicable regulation to first collect and
+          validate the personal identity information of the account holder. A
+          virtual account cannot be generated without this verification step.
+        </p>
+        <div
+          className="rounded-lg p-4 mb-4"
+          style={{ backgroundColor: "#fffbeb", border: "1px solid #fcd34d" }}
+        >
+          <p
+            className="text-sm font-semibold mb-1 flex items-center gap-2"
+            style={{ color: "#92400e" }}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              style={{ flexShrink: 0 }}
+            >
+              <path
+                d="M8 1.5L1 13.5h14L8 1.5z"
+                stroke="#d97706"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+                fill="#fef3c7"
+              />
+              <path
+                d="M8 6v4M8 11.5v.5"
+                stroke="#d97706"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+            Consent Required Before Virtual Account Generation
+          </p>
+          <p className="text-sm" style={{ color: "#78350f" }}>
+            Generating a dedicated virtual account requires the personal/business identity
+            information of the account holder. By using this feature, you confirm
+            that you have authorised Brigadely to collect and use this information
+            for account generation purposes and where the account is being
+            created for an employee or contractor, that you have obtained their
+            express, informed consent before proceeding.
+          </p>
+        </div>
+        <p className="mb-4">
+          The following identity information is collected to generate a virtual
+          account, depending on the account holder type:
+        </p>
+        <ul className="list-disc ml-6 space-y-2 mb-4">
+          <li>
+            <strong>Businesses:</strong> CAC registration number, business
+            name, and director identity details
+          </li>
+          <li>
+            <strong>Employees and contractors:</strong> BVN, NIN, full legal
+            name, and date of birth, as required by applicable regulation
+          </li>
+        </ul>
+        <p className="mb-4">
+          By submitting identity information through the platform whether
+          your own or on behalf of an employee or contractor, you confirm that:
+        </p>
+        <ul className="list-disc ml-6 space-y-2 mb-4">
+          <li>The information provided is accurate and up to date</li>
+          <li>
+            The individual whose data is being submitted has given their
+            express consent for it to be used to generate a virtual account
+          </li>
+          <li>
+            You are authorised to submit that information on their behalf
+          </li>
+        </ul>
+        <p>
+          Brigadely is not liable for delays, account creation failures, or
+          regulatory penalties arising from inaccurate or unverified identity
+          data. We reserve the right to decline or suspend virtual account
+          generation where identity verification cannot be completed.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "7. Acceptable Use",
     content: (
       <>
         <p className="mb-4">You agree not to use the Services to:</p>
@@ -171,7 +261,7 @@ const sections = [
     ),
   },
   {
-    title: "7. Intellectual Property",
+    title: "8. Intellectual Property",
     content: (
       <>
         <p className="mb-4">
@@ -195,7 +285,7 @@ const sections = [
     ),
   },
   {
-    title: "8. Confidentiality",
+    title: "9. Confidentiality",
     content: (
       <p>
         Each party agrees to keep confidential any non-public information
@@ -208,7 +298,7 @@ const sections = [
     ),
   },
   {
-    title: "9. Warranties and Disclaimers",
+    title: "10. Warranties and Disclaimers",
     content: (
       <>
         <p className="mb-4">
@@ -237,7 +327,7 @@ const sections = [
     ),
   },
   {
-    title: "10. Limitation of Liability",
+    title: "11. Limitation of Liability",
     content: (
       <>
         <p className="mb-4">
@@ -262,7 +352,7 @@ const sections = [
     ),
   },
   {
-    title: "11. Indemnification",
+    title: "12. Indemnification",
     content: (
       <p>
         You agree to indemnify, defend, and hold harmless Brigadely, its
@@ -275,7 +365,7 @@ const sections = [
     ),
   },
   {
-    title: "12. Termination",
+    title: "13. Termination",
     content: (
       <>
         <p className="mb-4">
@@ -294,7 +384,7 @@ const sections = [
     ),
   },
   {
-    title: "13. Governing Law and Disputes",
+    title: "14. Governing Law and Disputes",
     content: (
       <>
         <p className="mb-4">
@@ -312,7 +402,7 @@ const sections = [
     ),
   },
   {
-    title: "14. Changes to These Terms",
+    title: "15. Changes to These Terms",
     content: (
       <p>
         We reserve the right to update these Terms at any time. We will notify
@@ -324,7 +414,7 @@ const sections = [
     ),
   },
   {
-    title: "15. Contact Us",
+    title: "16. Contact Us",
     content: (
       <p>
         If you have any questions about these Terms, please contact us at{" "}
