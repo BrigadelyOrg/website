@@ -209,6 +209,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en-NG">
       <head>
+        <link
+          href="https://assets.calendly.com/assets/external/widget.css"
+          rel="stylesheet"
+        />
+        <Script
+          src="https://assets.calendly.com/assets/external/widget.js"
+          strategy="afterInteractive"
+        />
         <Script
           id="gtm-script"
           strategy="afterInteractive"

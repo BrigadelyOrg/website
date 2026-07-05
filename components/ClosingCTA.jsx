@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import CalendlyButton from "@/components/CalendlyButton";
 
 const GREEN = "#007a3d";
 const BONE = "#F4EFE4";
@@ -49,11 +50,7 @@ const ClosingCTA = () => {
               Start free — 60 days
             </button>
           </Link>
-          <Link href="https://app.brigadely.com/signup" target="_blank">
-            <button className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent">
-              Book a call
-            </button>
-          </Link>
+          <CalendlyButton className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent cursor-pointer" />
         </div>
         <p className="font-sans text-xs text-gray-400">No commitment required.</p>
 

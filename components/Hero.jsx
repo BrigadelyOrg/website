@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import CalendlyButton from "@/components/CalendlyButton";
 
 const BONE = "#F4EFE4";
 const GREEN = "#007a3d";
@@ -19,7 +20,7 @@ const trustedCompanies = [
 const Hero = () => {
   return (
     <section style={{ backgroundColor: BONE }} className="w-full overflow-hidden">
-      <div className="container -mb-[90px] mx-auto px-6 md:px-12 lg:px-16 pt-32 lg:pt-36">
+      <div className="container md:-mb-[90px] mx-auto px-6 md:px-12 lg:px-16 pt-32 lg:pt-36">
         <div className="flex flex-col lg:flex-row items-start gap-16 lg:gap-8">
 
           {/* Left: text */}
@@ -60,11 +61,7 @@ const Hero = () => {
                   Start free - 60 days
                 </button>
               </Link>
-              <Link href="https://app.brigadely.com/signup" target="_blank">
-                <button className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent">
-                  Book a call
-                </button>
-              </Link>
+              <CalendlyButton className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent cursor-pointer" />
             </div>
             <p className="font-sans text-xs text-gray-400">No commitment required.</p>
           </div>
