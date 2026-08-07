@@ -10,7 +10,7 @@ const statutoryItems = ["PAYE", "PENSION", "NHF", "NSITF", "TAX"];
 
 
 const trustedCompanies = [
-  { name: "Tender Cash",src: "/img/tender-logo.svg"  },
+  { name: "Alveum",src: "/img/alveum.png"  },
   { name: "FBIS Tech",  src: "/img/fbis-logo.webp"    },
   { name: "Ogentic AI", src: "/img/ogentic-logo.svg"     },
   { name: "Qomat School", src: "/img/qomat-logo.jpeg"       },
