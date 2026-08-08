@@ -1,441 +1,430 @@
 import Link from "next/link";
 import React from "react";
-import { GoArrowUpRight } from "react-icons/go";
+import CalendlyButton from "@/components/CalendlyButton";
 
 export const metadata = {
   title: "Pricing | Brigadely",
   description:
-    "Simple, transparent pricing that scales with your team. No hidden fees, no surprises.",
+    "Simple, transparent pricing for payroll, statutory compliance and payments built for African businesses. Every plan includes full statutory compliance.",
 };
 
-const tiers = [
-  {
-    id: "basic",
-    name: "Basic",
-    tagline: "Essential tools for small teams and startups",
-    price: "₦10,000",
-    unit: "per employee / month",
-    popular: false,
-    trial: "90-day free trial",
-    cta: "Start Free Trial",
-    ctaStyle: "outline",
-    features: [
-      "NGN payroll processing",
-      "PAYE, PENCOM & NHF deductions (coming soon)",
-      "NSITF & ITF contributions (coming soon)",
-      "Payslip generation & delivery",
-      "Employee self-service portal",
-      "Basic HR records management",
-      "Email support",
-    ],
-  },
-  {
-    id: "starter",
-    name: "Starter",
-    tagline: "Essential tools for scaling businesses",
-    price: "₦20,000",
-    unit: "per employee / month",
-    popular: true,
-    trial: "90-day free trial",
-    cta: "Start Free Trial",
-    ctaStyle: "solid",
-    features: [
-      "Everything in Basic",
-      "NGN & USD contractor payments",
-      "Benefits administration",
-      "Expense tracking & reimbursement",
-      "Custom approval workflows",
-      "Compliance reports & audit trails",
-      "Priority email & chat support",
-    ],
-  },
-  {
-    id: "growth",
-    name: "Growth",
-    tagline: "Essential tools for established enterprises",
-    price: "₦30,000",
-    unit: "per employee / month",
-    popular: false,
-    trial: "90-day free trial",
-    cta: "Start Free Trial",
-    ctaStyle: "outline",
-    features: [
-      "Everything in Starter",
-      "Multi-location payroll management",
-      "Workforce analytics & dashboards",
-      "API access",
-      "Dedicated account manager",
-      "Quarterly compliance reviews",
-      "SLA-backed uptime guarantee",
-    ],
-  },
-  {
-    id: "scale",
-    name: "Scale",
-    tagline: "For organisations that need full control and customisation",
-    price: "Custom",
-    unit: "enterprise contract",
-    popular: false,
-    trial: null,
-    cta: "Contact sales",
-    ctaStyle: "ghost",
-    features: [
-      "Everything in Growth",
-      "Unlimited locations",
-      "Custom integrations & webhooks",
-      "White-label reporting",
-      "24/7 dedicated support",
-      "On-site onboarding & training",
-      "Custom SLA & data agreements",
-    ],
-  },
-];
+const GREEN      = "#007a3d";
+const GREEN_DARK = "#0B5E34";
+const BONE       = "#F4EFE4";
+const NEAR_BLACK = "#0e0e0e";
 
-const Check = ({ color = "#007a3d" }) => (
-  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true">
-    <path d="M1.5 6L5.5 10L13.5 1.5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+const CheckIcon = () => (
+  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true" style={{ display: "inline" }}>
+    <path d="M1.5 6L5.5 10L13.5 1.5" stroke={GREEN} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-const Cross = () => (
-  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+const CrossIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style={{ display: "inline" }}>
     <path d="M2 2L11 11M11 2L2 11" stroke="#d1d5db" strokeWidth="1.75" strokeLinecap="round" />
   </svg>
 );
 
-const comparisonCategories = [
-  {
-    name: "Payroll Disbursement",
-    rows: [
-      {
-        label: "Pay-in fees",
-        values: ["0.5% capped ₦500", "0.25% capped ₦400", "0.15% capped ₦200", "Negotiable"],
-      },
-      {
-        label: "Payout fees*",
-        values: ["₦150", "₦100", "₦75", "Negotiable"],
-      },
-    ],
-  },
-  {
-    name: "Payroll & Compliance",
-    rows: [
-      { label: "PAYE calculation", values: ["Soon", "Soon", "Soon", "Soon"] },
-      { label: "PENCOM contributions", values: ["Soon", "Soon", "Soon", "Soon"] },
-      { label: "NHF deductions", values: ["Soon", "Soon", "Soon", "Soon"] },
-      { label: "NSITF & ITF contributions", values: ["Soon", "Soon", "Soon", "Soon"] },
-      { label: "Payslip generation & delivery", values: [true, true, true, true] },
-      { label: "NGN & USD payroll", values: [false, true, true, true] },
-      { label: "Contractor payments", values: [false, true, true, true] },
-      { label: "Custom payment schedules", values: [false, false, true, true] },
-    ],
-  },
-  {
-    name: "HR Operations",
-    rows: [
-      { label: "Employee records", values: [true, true, true, true] },
-      { label: "Onboarding workflows", values: [true, true, true, true] },
-      { label: "Leave management", values: [true, true, true, true] },
-      { label: "Expense tracking", values: [false, true, true, true] },
-      { label: "Benefits administration", values: [false, true, true, true] },
-      { label: "Approval levels", values: ["2", "5", "10", "Unlimited"] },
-      { label: "Multi-location management", values: [false, false, true, true] },
-    ],
-  },
-  {
-    name: "Reporting & Analytics",
-    rows: [
-      { label: "Payroll reports", values: [true, true, true, true] },
-      { label: "Compliance audit trail", values: [true, true, true, true] },
-      { label: "Workforce analytics", values: [false, true, true, true] },
-      { label: "Custom reports", values: [false, false, true, true] },
-      { label: "API access", values: [false, false, true, true] },
-    ],
-  },
-  {
-    name: "Support",
-    rows: [
-      { label: "Email support", values: [true, true, true, true] },
-      { label: "Chat support", values: [false, true, true, true] },
-      { label: "Dedicated account manager", values: [false, false, true, true] },
-      { label: "Quarterly compliance reviews", values: [false, false, true, true] },
-      { label: "24/7 priority support", values: [false, false, false, true] },
-      { label: "Custom SLA", values: [false, false, false, true] },
-    ],
-  },
-];
-
-function CellValue({ value, isPopular }) {
-  if (value === true) return <Check color={isPopular ? "#007a3d" : "#007a3d"} />;
-  if (value === false) return <Cross />;
-  if (value === "Soon") return (
-    <span className="text-xs font-semibold font-sans text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full">Soon</span>
-  );
-  return (
-    <span className="text-xs font-semibold font-sans text-gray-700">{value}</span>
-  );
-}
+const ContactSales = () => (
+  <CalendlyButton
+    className="text-sm font-semibold bg-transparent border-none p-0 cursor-pointer"
+    style={{ color: GREEN }}
+  >
+    Contact sales
+  </CalendlyButton>
+);
 
 export default function PricingPage() {
   return (
     <div className="bg-white min-h-screen">
 
-      {/* Hero — light bg like Bujeti */}
-      <div className="pt-36 pb-16 px-6 text-center bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-[#007a3d] font-semibold font-sans mb-5">
+      {/* Hero */}
+      <div className="pt-36 pb-14 px-6" style={{ backgroundColor: BONE }}>
+        <div className="max-w-3xl mx-auto">
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.18em] mb-5 font-sans"
+            style={{ color: GREEN }}
+          >
             Pricing
           </p>
-          <h1 className="text-4xl lg:text-6xl text-gray-900 leading-tight mb-5">
-            Find the right plan <br />
-            <em className="text-[#007a3d]">for your business</em>
+          <h1
+            className="text-5xl lg:text-6xl text-gray-900 mb-6"
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontWeight: 900,
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Pricing &amp; <span style={{ color: GREEN }}>Plans</span>
           </h1>
-          <p className="text-gray-500 font-sans text-base leading-relaxed max-w-md mx-auto">
-            We believe Brigadely should be accessible to every African business,
-            no matter the size.
+          <p className="font-sans text-base text-gray-700 leading-relaxed mb-3 max-w-2xl">
+            Simple, transparent pricing for payroll, statutory compliance and
+            payments - built for smart businesses.{" "}
+            <strong>
+              Every plan includes full statutory compliance no hidden
+              compliance upsells.
+            </strong>
           </p>
-          <div className="inline-flex items-center gap-2 bg-[#f0faf4] border border-[#c3e8d4] text-[#007a3d] text-sm font-semibold font-sans px-5 py-2.5 rounded-full mt-6">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm8.75-3.25a.75.75 0 00-1.5 0v3.5l2.25 2.25a.75.75 0 001.06-1.06L8.75 7.69V4.75z" fill="#007a3d"/></svg>
-            90-day free trial on all plans — no credit card required
-          </div>
+          <p className="font-sans text-sm text-gray-400 italic">
+            All prices are in Nigerian Naira (₦) and exclusive of 7.5% VAT.
+          </p>
         </div>
       </div>
 
-      {/* Pricing cards */}
-      <div className="px-6 pb-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-gray-200 rounded-2xl overflow-hidden">
-            {tiers.map((tier, i) => (
-              <div
-                key={tier.id}
-                className={`relative flex flex-col ${
-                  i < tiers.length - 1 ? "lg:border-r border-gray-200" : ""
-                } ${tier.popular ? "shadow-xl shadow-gray-200/80 z-10" : ""}`}
-              >
-                {/* Popular banner */}
-                {tier.popular ? (
-                  <div className="bg-[#0e0e0e] px-6 py-3 text-center">
-                    <span className="text-white text-xs font-semibold font-sans uppercase tracking-widest">
-                      Most popular
-                    </span>
-                  </div>
-                ) : (
-                  <div className="h-[40px] bg-white border-b border-gray-100" />
-                )}
-
-                <div className="p-7 flex flex-col flex-1 gap-5 bg-white">
-
-                  {/* Name & tagline */}
-                  <div>
-                    <h3 className="text-lg font-semibold font-sans text-gray-900 mb-1">
-                      {tier.name}
-                    </h3>
-                    <p className="text-sm font-sans text-gray-400 leading-relaxed">
-                      {tier.tagline}
-                    </p>
-                  </div>
-
-                  {/* Price */}
-                  <div>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-bold font-sans text-gray-900 leading-none">
-                        {tier.price}
-                      </span>
-                    </div>
-                    <p className="text-xs font-sans text-gray-400 mt-1.5">
-                      {tier.unit}
-                    </p>
-                    {tier.trial && (
-                      <p className="text-xs font-semibold font-sans mt-2 text-[#007a3d]">
-                        {tier.trial} included
-                      </p>
-                    )}
-                  </div>
-
-                  {/* CTA */}
-                  <Link
-                    href="https://app.brigadely.com/signup"
-                    target="_blank"
-                    className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-sm font-semibold font-sans transition duration-200 ${
-                      tier.ctaStyle === "solid"
-                        ? "bg-[#007a3d] text-white hover:bg-[#005a2d]"
-                        : tier.ctaStyle === "ghost"
-                        ? "border border-gray-300 text-gray-600 hover:border-gray-500 hover:text-gray-900"
-                        : "border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
-                    }`}
-                  >
-                    {tier.cta}
-                  </Link>
-
-                  {/* Divider */}
-                  <div className="h-px bg-gray-100" />
-
-                  {/* Features */}
-                  <ul className="space-y-3 flex-1">
-                    {tier.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-sm font-sans text-gray-600">
-                        <span className="mt-0.5 text-[#007a3d] flex-shrink-0">
-                          <Check />
-                        </span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Transaction fee note */}
-      <div className="px-6 pt-6 pb-2">
-        <div className="max-w-6xl mx-auto bg-[#f0faf4] border border-[#c3e8d4] rounded-2xl px-7 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <p className="text-sm font-semibold text-[#007a3d] font-sans mb-0.5">
-              Transaction fees apply on every payroll disbursement
-            </p>
-            <p className="text-xs text-gray-500 font-sans">
-              Covers payment processing and bank transfer costs. Rates reduce at higher tiers. E.g. ₦10M payroll on Basic = ₦50,000 fee.
-            </p>
-          </div>
-          <Link href="https://app.brigadely.com/signup" target="_blank"
-            className="text-xs font-semibold font-sans text-[#007a3d] hover:underline whitespace-nowrap flex-shrink-0">
-            Questions? Talk to us →
-          </Link>
-        </div>
-      </div>
-
-      {/* Feature comparison table */}
+      {/* Pricing table */}
       <div className="px-6 py-16">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl text-gray-900 text-center mb-12">
-            Compare <em className="text-[#007a3d]">all features</em>
-          </h2>
+        <div className="max-w-5xl mx-auto">
 
-          {/* Sticky header row */}
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.18em] mb-6 font-sans"
+            style={{ color: GREEN }}
+          >
+            Plans
+          </p>
+
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse" style={{ border: "1px solid #e5e7eb" }}>
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-4 pr-6 w-[35%]" />
-                  {tiers.map((tier) => (
-                    <th key={tier.id} className="text-center py-4 px-3 w-[16.25%]">
-                      <p className={`text-sm font-semibold font-sans mb-2 ${
-                        tier.popular ? "text-[#007a3d]" : "text-gray-900"
-                      }`}>
-                        {tier.name}
-                      </p>
-                      <Link
-                        href="https://app.brigadely.com/signup"
-                        target="_blank"
-                        className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition duration-200 ${
-                          tier.popular
-                            ? "bg-[#007a3d] text-white hover:bg-[#005a2d]"
-                            : "border border-gray-300 text-gray-700 hover:border-gray-500"
-                        }`}
-                      >
-                        {tier.cta}
-                      </Link>
+                <tr>
+                  {/* Label cell */}
+                  <th
+                    className="p-4 text-left font-sans w-[28%]"
+                    style={{ border: "1px solid #e5e7eb", backgroundColor: GREEN_DARK }}
+                  >
+                    <span className="text-xs font-bold uppercase tracking-widest text-green-200">
+                      Plan
+                    </span>
+                  </th>
+                  {[
+                    { name: "Basic",      range: "5 – 20 staff" },
+                    { name: "Starter",    range: "21 – 50 staff" },
+                    { name: "Growth",     range: "51 – 150 staff" },
+                    { name: "Enterprise", range: "150+ staff" },
+                  ].map((p) => (
+                    <th
+                      key={p.name}
+                      className="p-4 text-center"
+                      style={{ border: "1px solid #1a6e3a", backgroundColor: GREEN_DARK }}
+                    >
+                      <p className="font-bold text-white font-sans text-base">{p.name}</p>
+                      <p className="text-xs font-sans mt-0.5 text-green-200">{p.range}</p>
                     </th>
                   ))}
                 </tr>
               </thead>
 
               <tbody>
-                {comparisonCategories.map((cat) => (
-                  <React.Fragment key={cat.name}>
-                    {/* Category heading row */}
-                    <tr>
-                      <td colSpan={5} className="pt-8 pb-2">
-                        <span className="text-xs font-semibold font-sans text-[#007a3d] uppercase tracking-wider">
-                          {cat.name}
-                        </span>
-                      </td>
-                    </tr>
+                {/* Best for */}
+                <tr>
+                  <td className="p-4 text-sm font-semibold text-gray-700 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    Best for
+                  </td>
+                  {["Micro-businesses", "Growing SMEs", "Established mid-market", "Large employers"].map((v) => (
+                    <td key={v} className="p-4 text-sm text-center text-gray-600 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                      {v}
+                    </td>
+                  ))}
+                </tr>
 
-                    {/* Feature rows */}
-                    {cat.rows.map((row, ri) => (
-                      <tr
-                        key={row.label}
-                        className={`border-b border-gray-100 ${
-                          ri % 2 === 0 ? "bg-white" : "bg-gray-50/50"
-                        }`}
-                      >
-                        <td className="py-3.5 pr-6 text-sm text-gray-600 font-sans">
-                          {row.label}
-                        </td>
-                        {row.values.map((val, vi) => (
-                          <td key={vi} className="py-3.5 px-3 text-center">
-                            <div className="flex justify-center">
-                              <CellValue value={val} isPopular={tiers[vi].popular} />
-                            </div>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
+                {/* Platform fee */}
+                <tr style={{ backgroundColor: "#f9fafb" }}>
+                  <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    <p className="text-sm font-semibold text-gray-700">Platform fee</p>
+                    <p className="text-xs text-gray-400">per business / month</p>
+                  </td>
+                  {["₦15,000", "₦20,000", "₦30,000"].map((v) => (
+                    <td key={v} className="p-4 text-center font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                      <span className="text-base font-bold text-gray-900">{v}</span>
+                    </td>
+                  ))}
+                  <td className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                    <ContactSales />
+                  </td>
+                </tr>
+
+                {/* Per active employee */}
+                <tr>
+                  <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    <p className="text-sm font-semibold text-gray-700">Per active employee / contractor</p>
+                    <p className="text-xs text-gray-400">per person / month</p>
+                  </td>
+                  {[
+                    { val: "₦2,000", green: true },
+                    { val: "₦1,500", green: true },
+                    { val: "₦1,000", green: true },
+                  ].map(({ val, green }) => (
+                    <td key={val} className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                      <span className="text-base font-bold" style={{ color: green ? GREEN : undefined }}>{val}</span>
+                    </td>
+                  ))}
+                  <td className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                    <ContactSales />
+                  </td>
+                </tr>
+
+                {/* Admin & manager seats */}
+                <tr style={{ backgroundColor: "#f9fafb" }}>
+                  <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    <p className="text-sm font-semibold text-gray-700">Admin &amp; manager seats</p>
+                    <p className="text-xs text-gray-400">per seat / month</p>
+                  </td>
+                  {["₦1,000", "₦900", "₦700"].map((v) => (
+                    <td key={v} className="p-4 text-center font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                      <span className="text-base font-bold text-gray-900">{v}</span>
+                    </td>
+                  ))}
+                  <td className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                    <ContactSales />
+                  </td>
+                </tr>
+
+                {/* Full statutory compliance */}
+                <tr>
+                  <td className="p-4 text-sm font-semibold text-gray-700 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    Full statutory compliance
+                  </td>
+                  {[0, 1, 2, 3].map((i) => (
+                    <td key={i} className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                      <span className="text-sm font-semibold font-sans" style={{ color: GREEN }}>
+                        Included
+                      </span>
+                    </td>
+                  ))}
+                </tr>
+
+                {/* ── Support header ── */}
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="px-4 py-3 text-xs font-bold font-sans"
+                    style={{ backgroundColor: "#dcefe0", color: GREEN }}
+                  >
+                    Support
+                  </td>
+                </tr>
+
+                {/* Support level */}
+                <tr>
+                  <td className="p-4 text-sm font-semibold text-gray-700 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    Support level
+                  </td>
+                  {["Basic", "Standard", "Priority and dedicated manager", "Priority and dedicated manager"].map((v, i) => (
+                    <td key={i} className="p-4 text-sm text-center text-gray-600 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                      {v}
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Help centre */}
+                <tr style={{ backgroundColor: "#f9fafb" }}>
+                  <td className="p-4 text-sm text-gray-700 font-sans" style={{ border: "1px solid #e5e7eb" }}>Help centre</td>
+                  {[true, true, true, true].map((v, i) => (
+                    <td key={i} className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                      <CheckIcon />
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Email */}
+                <tr>
+                  <td className="p-4 text-sm text-gray-700 font-sans" style={{ border: "1px solid #e5e7eb" }}>Email</td>
+                  {[true, true, true, true].map((v, i) => (
+                    <td key={i} className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                      <CheckIcon />
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Slack / WhatsApp */}
+                <tr style={{ backgroundColor: "#f9fafb" }}>
+                  <td className="p-4 text-sm text-gray-700 font-sans" style={{ border: "1px solid #e5e7eb" }}>Slack / WhatsApp</td>
+                  <td className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}><CrossIcon /></td>
+                  {[true, true, true].map((v, i) => (
+                    <td key={i} className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                      <CheckIcon />
+                    </td>
+                  ))}
+                </tr>
+
+                {/* ── Transaction fees header ── */}
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="px-4 py-3 text-xs font-bold uppercase tracking-widest text-white font-sans"
+                    style={{ backgroundColor: "#dcefe0", color: GREEN }}
+                  >
+                    Transaction Fees
+                  </td>
+                </tr>
+
+                {/* Salary disbursement */}
+                <tr>
+                  <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    <p className="text-sm font-semibold text-gray-700">Salary disbursement</p>
+                    <p className="text-xs text-gray-400">single credit &lt; ₦10M</p>
+                  </td>
+                  {["₦75", "₦50", "₦25"].map((v) => (
+                    <td key={v} className="p-4 text-center font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                      <span className="text-sm font-bold text-gray-900">{v}</span>
+                    </td>
+                  ))}
+                  <td className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                    <ContactSales />
+                  </td>
+                </tr>
+
+                {/* Pay-in / wallet funding */}
+                <tr style={{ backgroundColor: "#f9fafb" }}>
+                  <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    <p className="text-sm font-semibold text-gray-700">Pay-in / wallet funding</p>
+                    <p className="text-xs text-gray-400">on amount funded</p>
+                  </td>
+                  {[
+                    { pct: "1.0%", cap: "cap ₦550" },
+                    { pct: "1.0%", cap: "cap ₦550" },
+                    { pct: "0.7%", cap: "cap ₦450" },
+                  ].map(({ pct, cap }, i) => (
+                    <td key={i} className="p-4 text-center font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                      <p className="text-sm font-bold text-gray-900">{pct}</p>
+                      <p className="text-xs text-gray-400">{cap}</p>
+                    </td>
+                  ))}
+                  <td className="p-4 text-center" style={{ border: "1px solid #e5e7eb" }}>
+                    <ContactSales />
+                  </td>
+                </tr>
+
+                {/* Large payout — spans all plan columns */}
+                <tr>
+                  <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
+                    <p className="text-sm font-semibold text-gray-700">Large payout</p>
+                    <p className="text-xs text-gray-400">single transfer ≥ ₦10M</p>
+                  </td>
+                  <td
+                    colSpan={4}
+                    className="p-4 text-center font-sans"
+                    style={{ border: "1px solid #e5e7eb" }}
+                  >
+                    <p className="text-sm font-bold text-gray-900">0.5% of the transfer</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      minimum ₦50,000 · maximum ₦150,000
+                    </p>
+                    <p className="text-xs font-semibold italic mt-0.5" style={{ color: GREEN }}>
+                      PAYE &amp; pension remittances exempt
+                    </p>
+                  </td>
+                </tr>
               </tbody>
             </table>
+          </div>
+
+          {/* Choosing a plan */}
+          <p className="font-sans text-sm text-gray-600 leading-relaxed mt-8">
+            <strong>Choosing a plan:</strong> plans are guided by your headcount, but you can
+            start on any tier. As you grow, the{" "}
+            <strong>per-employee rate falls at each level</strong> larger teams pay less
+            per head.
+          </p>
+
+          {/* Worked example callout */}
+          <div
+            className="mt-6 rounded-lg p-5"
+            style={{ backgroundColor: "#fffbeb", border: "1px solid #fcd34d" }}
+          >
+            <p
+              className="text-[10px] font-bold uppercase tracking-widest mb-3 font-sans"
+              style={{ color: "#d97706" }}
+            >
+              Worked Example
+            </p>
+            <p className="font-sans text-sm text-gray-700 mb-2">
+              A <strong>Starter</strong> business with <strong>40 employees</strong> and{" "}
+              <strong>2 admin users</strong>:
+            </p>
+            <p className="font-sans text-sm text-gray-700">
+              ₦20,000 platform + 40 × ₦1,500 people + 2 × ₦900 seats ={" "}
+              <strong>₦81,800 / month</strong>{" "}
+              <span className="text-gray-400">(ex-VAT)</span>
+            </p>
           </div>
         </div>
       </div>
 
-      {/* FAQ */}
-      <div className="px-6 py-16 bg-gray-50">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl text-gray-900 text-center mb-10">
-            Pricing <em className="text-[#007a3d]">questions answered</em>
-          </h2>
-          <div className="divide-y divide-gray-200">
+      {/* What every plan includes */}
+      <div className="px-6 py-16" style={{ backgroundColor: BONE }}>
+        <div className="max-w-5xl mx-auto">
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.18em] mb-8 font-sans"
+            style={{ color: GREEN }}
+          >
+            What Every Plan Includes
+          </p>
+          <p className="font-sans text-base font-semibold text-gray-900 mb-6">
+            Full statutory compliance — on every tier, at no extra cost:
+          </p>
+          <ul className="space-y-4">
             {[
               {
-                q: "Is there a free trial?",
-                a: "Yes — every plan includes a 90-day free trial with no credit card required. You get full access to all features on your chosen plan so you can run payroll and manage your team before paying anything.",
+                label: "PAYE",
+                text: "calculation, payslips and remittance across all 36 states and the FCT",
               },
               {
-                q: "Can I change plans as my team grows?",
-                a: "Yes. Plans are based on your active employee count and adjust automatically. You will be notified before any tier change takes effect.",
+                label: "Pension",
+                text: "contributions computed and routed to PFAs via a licensed pension payment service provider",
               },
               {
-                q: "What counts as an active employee?",
-                a: "Any employee or contractor who receives a payment through Brigadely in a given month counts toward your headcount for that month.",
+                label: "NHF, NSITF & ITF",
+                text: "deductions and statutory schedules",
               },
               {
-                q: "Are there any setup or onboarding fees?",
-                a: "No. There are no setup fees on any plan. Onboarding support is included at all tiers.",
+                label: "Statutory reports",
+                text: "and remittance schedules generated automatically for each pay run",
               },
-              {
-                q: "How does the transaction fee work for USD payments?",
-                a: "The 0.5% fee applies to the NGN-equivalent value of all disbursements, including USD contractor payments converted at the prevailing exchange rate.",
-              },
-            ].map(({ q, a }) => (
-              <div key={q} className="py-5">
-                <p className="font-semibold text-gray-900 font-sans text-sm mb-1.5">{q}</p>
-                <p className="text-gray-500 font-sans text-sm leading-relaxed">{a}</p>
-              </div>
+            ].map(({ label, text }) => (
+              <li key={label} className="flex items-start gap-3 font-sans text-sm text-gray-700">
+                <span
+                  className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
+                  style={{ backgroundColor: GREEN }}
+                />
+                <span>
+                  <strong>{label}</strong> {text}
+                </span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
 
       {/* Bottom CTA */}
-      <div className="bg-[#0e0e0e] py-20 px-6 text-center">
+      <div className="py-20 px-6 text-center" style={{ backgroundColor: NEAR_BLACK }}>
         <div className="max-w-xl mx-auto">
-          <h2 className="text-3xl text-white mb-4">
+          <h2
+            className="text-4xl text-white mb-4"
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontWeight: 900,
+              lineHeight: 0.95,
+              letterSpacing: "-0.025em",
+            }}
+          >
             Not sure which plan is right for you?
           </h2>
           <p className="text-gray-400 font-sans text-sm leading-relaxed mb-8">
-            Start your 90-day free trial today, or talk to us and we will walk you through the right fit for your team size,
-            compliance needs, and budget.
+            Start your 60 day free trial today, or talk to us and we will walk you through
+            the right fit for your team size, compliance needs, and budget.
           </p>
-          <Link href="https://app.brigadely.com/signup" target="_blank">
-            <button className="inline-flex items-center gap-2 bg-[#007a3d] text-white px-8 py-3.5 rounded-full font-semibold font-sans hover:bg-[#005a2d] transition duration-200 text-sm">
-              Start Free Trial <GoArrowUpRight size={15} />
-            </button>
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link href="https://app.brigadely.com/signup" target="_blank">
+              <button
+                className="px-8 py-3.5 rounded-full font-semibold font-sans text-white text-sm transition duration-200 hover:opacity-90"
+                style={{ backgroundColor: GREEN }}
+              >
+                Start free - 60 days
+              </button>
+            </Link>
+            <CalendlyButton className="border border-white/20 text-white px-8 py-3.5 rounded-full font-semibold font-sans text-sm hover:border-white/50 transition duration-200 bg-transparent cursor-pointer" />
+          </div>
         </div>
       </div>
 
