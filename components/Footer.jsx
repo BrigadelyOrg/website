@@ -13,22 +13,17 @@ const footerLinks = {
     { label: "For accountants", href: "#who" },
   ],
   Company: [
-    { label: "About us", href: "#" },
-    { label: "Careers", href: "#" },
     { label: "Blog", href: "/resources" },
     { label: "Contact", href: "mailto:info@brigadely.com" },
   ],
   Resources: [
     { label: "Help centre", href: "#" },
-    { label: "API docs", href: "#" },
     { label: "Pricing", href: "/pricing" },
     { label: "FAQ", href: "#faqs" },
   ],
   Legal: [
     { label: "Privacy policy", href: "/privacy" },
     { label: "Terms of service", href: "/terms" },
-    { label: "Cookie policy", href: "#" },
-    { label: "NDPR notice", href: "#" },
   ],
 };
 
