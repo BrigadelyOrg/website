@@ -18,7 +18,6 @@ const footerLinks = {
   ],
   Resources: [
     { label: "Help centre", href: "#" },
-    { label: "Pricing", href: "/pricing" },
     { label: "FAQ", href: "#faqs" },
   ],
   Legal: [
