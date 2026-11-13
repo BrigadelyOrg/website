@@ -1,0 +1,10 @@
+# Netlify settings kept in the repo. The build command, publish directory and the
+# secret environment variables (DATABASE_URI, PAYLOAD_SECRET, S3_*) stay in the
+# Netlify UI.
+
+[build.environment]
+  # Netlify's secrets scanner fails the build if any env var's value appears in
+  # the build output. S3_REGION (e.g. "us-east-2") is a public AWS region name
+  # that also occurs inside the AWS SDK's own code, so it is not a secret. The
+  # real secrets (DATABASE_URI, PAYLOAD_SECRET, S3 keys) are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "S3_REGION"

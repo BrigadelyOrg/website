@@ -19,7 +19,7 @@
     "generate:importmap": "payload generate:importmap"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^5.15.5",
+    "@netlify/plugin-nextjs": "^5.16.6",
     "@payloadcms/db-postgres": "3.93.0",
     "@payloadcms/next": "3.93.0",
     "@payloadcms/plugin-seo": "3.93.0",
