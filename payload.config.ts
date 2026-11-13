@@ -78,6 +78,10 @@ export default buildConfig({
     }),
     s3Storage({
       enabled: s3Enabled,
+      // Keep the plugin's columns (media._object_key, media.prefix) in the
+      // schema even when S3 is disabled, so migrations generated with or
+      // without S3 env vars match the production database.
+      alwaysInsertFields: true,
       collections: {
         media: true,
       },

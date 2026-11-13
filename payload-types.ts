@@ -184,6 +184,7 @@ export interface Media {
    * Describe the image for screen readers and search engines.
    */
   alt: string;
+  prefix?: string | null;
   _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -369,6 +370,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
