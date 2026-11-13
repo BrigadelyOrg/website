@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 
+# Blog images (also used as social preview images) are served from here.
+Allow: /api/media/file/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/

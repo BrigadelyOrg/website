@@ -3,22 +3,24 @@ import Link from "next/link";
 import React from "react";
 import Socials from "./Socials";
 
+// Section anchors are prefixed with "/" so they resolve to the home page from
+// any route (e.g. /blog), not to a missing anchor on the current page.
 const footerLinks = {
   Platform: [
-    { label: "Payroll", href: "#product" },
-    { label: "Statutory compliance", href: "#compliance" },
-    { label: "People & benefits", href: "#product" },
-    { label: "Expense management", href: "#product" },
-    { label: "Payments", href: "#product" },
-    { label: "For accountants", href: "#who" },
+    { label: "Payroll", href: "/#product" },
+    { label: "Statutory compliance", href: "/#compliance" },
+    { label: "People & benefits", href: "/#product" },
+    { label: "Expense management", href: "/#product" },
+    { label: "Payments", href: "/#product" },
+    { label: "For accountants", href: "/#who" },
   ],
   Company: [
-    { label: "Blog", href: "/resources" },
+    { label: "Blog", href: "/blog" },
     { label: "Contact", href: "mailto:info@brigadely.com" },
   ],
   Resources: [
     { label: "Help centre", href: "#" },
-    { label: "FAQ", href: "#faqs" },
+    { label: "FAQ", href: "/#faqs" },
   ],
   Legal: [
     { label: "Privacy policy", href: "/privacy" },

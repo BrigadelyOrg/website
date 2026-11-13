@@ -1,5 +1,8 @@
+import typography from "@tailwindcss/typography";
+import tailwindcssAnimate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -53,7 +56,30 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      // Brand colour theme for article content: `prose prose-brigadely`.
+      typography: {
+        brigadely: {
+          css: {
+            "--tw-prose-body": "#374151",
+            "--tw-prose-headings": "#111111",
+            "--tw-prose-lead": "#4b5563",
+            "--tw-prose-links": "#007a3d",
+            "--tw-prose-bold": "#111111",
+            "--tw-prose-counters": "#007a3d",
+            "--tw-prose-bullets": "#007a3d",
+            "--tw-prose-hr": "#e5e7eb",
+            "--tw-prose-quotes": "#111111",
+            "--tw-prose-quote-borders": "#007a3d",
+            "--tw-prose-captions": "#6b7280",
+            "--tw-prose-code": "#111111",
+            "--tw-prose-th-borders": "#d1d5db",
+            "--tw-prose-td-borders": "#e5e7eb",
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate, typography],
 };
+
+export default config;

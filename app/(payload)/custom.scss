@@ -1,0 +1,32 @@
+// Brigadely branding for the admin panel (/admin). Only app/(payload)/layout.tsx
+// imports this file, so none of it reaches the public site.
+// Logo, icon, favicon and the light theme are set in payload.config.ts (admin).
+
+$brand-green: #007a3d;
+$brand-green-dark: #005a2d;
+$brand-bone: #f4efe4;
+
+// Login, create-first-user and password screens: the site's bone background.
+.template-minimal {
+  min-height: 100vh;
+  background-color: $brand-bone;
+}
+
+// The create-first-user screen has no logo slot, so add the wordmark here.
+.create-first-user::before {
+  content: "";
+  display: block;
+  align-self: flex-start;
+  width: 200px;
+  height: 51px;
+  margin-bottom: calc(var(--base) * 1.5);
+  background: url("/img/logo1.png") no-repeat left center / contain;
+}
+
+// Primary actions (Save, Create, Log in, ...) in brand green. Payload's
+// disabled-state rules are more specific, so disabled buttons stay grey.
+.btn--style-primary {
+  --bg-color: #{$brand-green};
+  --hover-bg: #{$brand-green-dark};
+  --color: #fff;
+}

@@ -1,0 +1,7 @@
+# Keep secrets, local builds and host-specific binaries out of the Docker build context.
+.env
+.env*.local
+node_modules
+.next
+media
+.git

@@ -2,6 +2,9 @@
 
 const CALENDLY_URL = "https://calendly.com/brigadely-info/30min";
 
+/**
+ * @param {{ className?: string, style?: import("react").CSSProperties, children?: import("react").ReactNode }} props
+ */
 const CalendlyButton = ({ className, style, children = "Book a call" }) => {
   const open = (e) => {
     e.preventDefault();
