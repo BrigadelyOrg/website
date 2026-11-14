@@ -89,7 +89,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Trusted by — 6 companies */}
+      {/* Trusted by - 6 companies */}
       <div className="border-t border-gray-100 pt-6 pb-10 px-6">
         <p className="font-sans text-[10px] font-bold tracking-[0.18em] uppercase text-center text-black-300 mb-7">
           Trusted by operators across Africa

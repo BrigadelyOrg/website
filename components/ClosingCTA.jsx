@@ -47,7 +47,7 @@ const ClosingCTA = () => {
               className="px-8 py-4 rounded-full font-sans font-semibold text-sm text-white transition duration-200 hover:opacity-90"
               style={{ backgroundColor: GREEN }}
             >
-              Start free — 60 days
+              Start free - 60 days
             </button>
           </Link>
           <CalendlyButton className="border border-[#111111]/20 text-[#111111] px-8 py-4 rounded-full font-sans font-semibold text-sm hover:border-[#111111]/50 transition duration-200 bg-transparent cursor-pointer" />

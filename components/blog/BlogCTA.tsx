@@ -38,7 +38,7 @@ export default function BlogCTA({ className }: BlogCTAProps) {
             rel="noopener"
             className="rounded-full bg-[#007a3d] px-8 py-4 font-sans text-sm font-semibold text-white transition duration-200 hover:bg-[#005a2d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007a3d] focus-visible:ring-offset-2"
           >
-            Start free — 60 days
+            Start free - 60 days
           </Link>
           <CalendlyButton className="cursor-pointer rounded-full border border-[#111111]/20 bg-transparent px-8 py-4 font-sans text-sm font-semibold text-[#111111] transition duration-200 hover:border-[#111111]/50" />
         </div>

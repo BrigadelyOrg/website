@@ -88,7 +88,7 @@ const ComplianceTable = () => {
           </h2>
           <p className="font-sans text-base text-gray-500 leading-relaxed max-w-md">
             Brigadely calculates, remits, and files every statutory deduction
-            your jurisdiction requires on each payroll run — with a verifiable
+            your jurisdiction requires on each payroll run - with a verifiable
             audit trail for every filing. Currently live for Nigerian compliance.
           </p>
         </div>

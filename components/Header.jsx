@@ -45,7 +45,7 @@ const Header = () => {
               />
             </Link>
 
-            {/* Desktop nav — centred */}
+            {/* Desktop nav - centred */}
             <div className="hidden lg:flex flex-1 justify-center">
               <Nav />
             </div>

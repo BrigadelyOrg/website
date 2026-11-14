@@ -28,9 +28,9 @@ export function formatRate(rate: number): string {
   return `${(Number.isFinite(rate) ? rate * 100 : 0).toFixed(1)}%`;
 }
 
-/** Average Google position: 8.37 -> "8.4"; "—" when there were no impressions. */
+/** Average Google position: 8.37 -> "8.4"; "-" when there were no impressions. */
 export function formatPosition(position: number): string {
-  return position > 0 ? position.toFixed(1) : "—";
+  return position > 0 ? position.toFixed(1) : "-";
 }
 
 /** 0.4231 -> "42%". Shares that would round to 0% but aren't zero read "<1%". */

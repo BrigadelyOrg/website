@@ -23,7 +23,7 @@ const organizationSchema = {
   url: "https://brigadely.com",
   logo: "https://brigadely.com/img/logo1.png",
   description:
-    "The financial operating system for African businesses — payroll, statutory compliance, vendor payments, and more, built for All.",
+    "The financial operating system for African businesses - payroll, statutory compliance, vendor payments, and more, built for All.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Ibadan",
@@ -130,11 +130,11 @@ const greycliffRegular = localFont({
 export const metadata = {
   metadataBase: new URL("https://brigadely.com"),
   title: {
-    default: "Brigadely — The financial operating system for African businesses",
+    default: "Brigadely - The financial operating system for African businesses",
     template: "%s | Brigadely",
   },
   description:
-    "Brigadely handles all your financial operations in one platform — payroll, statutory compliance, vendor payments, and more, built for African businesses.",
+    "Brigadely handles all your financial operations in one platform - payroll, statutory compliance, vendor payments, and more, built for African businesses.",
   keywords: [
     "payroll software Nigeria",
     "Nigerian payroll software",
@@ -175,23 +175,23 @@ export const metadata = {
     locale: "en_NG",
     url: "https://brigadely.com",
     siteName: "Brigadely",
-    title: "Brigadely — The financial operating system for African businesses",
+    title: "Brigadely - The financial operating system for African businesses",
     description:
-      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments — built for Nigeria.",
+      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments - built for Nigeria.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Brigadely — The financial operating system for African businesses",
+        alt: "Brigadely - The financial operating system for African businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The financial operating system for African businesses — payroll, statutory compliance, vendor payments, and more, built for All.",
+    title: "The financial operating system for African businesses - payroll, statutory compliance, vendor payments, and more, built for All.",
     description:
-      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments — built for Nigeria.",
+      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments - built for Nigeria.",
     images: ["/og-image.png"],
     creator: "@brigadely",
   },

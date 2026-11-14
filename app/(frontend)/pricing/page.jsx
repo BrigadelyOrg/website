@@ -295,7 +295,7 @@ export default function PricingPage() {
                   </td>
                 </tr>
 
-                {/* Large payout — spans all plan columns */}
+                {/* Large payout - spans all plan columns */}
                 <tr>
                   <td className="p-4 font-sans" style={{ border: "1px solid #e5e7eb" }}>
                     <p className="text-sm font-semibold text-gray-700">Large payout</p>
@@ -361,7 +361,7 @@ export default function PricingPage() {
             What Every Plan Includes
           </p>
           <p className="font-sans text-base font-semibold text-gray-900 mb-6">
-            Full statutory compliance — on every tier, at no extra cost:
+            Full statutory compliance - on every tier, at no extra cost:
           </p>
           <ul className="space-y-4">
             {[

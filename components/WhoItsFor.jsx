@@ -32,7 +32,7 @@ const personas = [
     pill:      "CFOs",
     chipLabel: "CFOs & finance leads",
     headline:  "Every payment, accounted for.",
-    copy:      "Own the full picture: every payment leaving the business — staff, vendors, and statutory obligations — reconciled to the last cent and auditable from one dashboard.",
+    copy:      "Own the full picture: every payment leaving the business - staff, vendors, and statutory obligations - reconciled to the last cent and auditable from one dashboard.",
     benefits:  [
       "All outgoing payments on one ledger",
       "Reconciliation status by pay period",
@@ -46,7 +46,7 @@ const personas = [
     pill:      "Finance teams",
     chipLabel: "Finance & accounting teams",
     headline:  "Close your books faster.",
-    copy:      "A full statutory deduction ledger, automatic reconciliation, and clean audit trails across every pay period — so month-end close is never a scramble.",
+    copy:      "A full statutory deduction ledger, automatic reconciliation, and clean audit trails across every pay period - so month-end close is never a scramble.",
     benefits:  [
       "Deduction ledger exportable by pay period",
       "Reconciliation status per statutory obligation",

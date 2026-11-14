@@ -41,7 +41,7 @@ export default function GlossaryCTA({ term }: { term: string }) {
           rel="noopener"
           className="rounded-full bg-primary px-7 py-3.5 font-sans text-sm font-semibold text-white transition duration-200 hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
-          Start free — 60 days
+          Start free - 60 days
         </Link>
         <span className="font-sans text-xs text-gray-500">No commitment required.</span>
       </div>

@@ -9,7 +9,7 @@ const faqItems = [
   {
     question: "Where does Brigadely operate?",
     answer:
-      "Brigadely is live in Nigeria today, where we serve businesses across all 36 states and the FCT. Kenya, Ghana, and South Africa are in our pipeline. The ledger is built to handle multi-currency, multi-jurisdiction compliance, and cross-border payments — so as your business expands across Africa, Brigadely expands with it.",
+      "Brigadely is live in Nigeria today, where we serve businesses across all 36 states and the FCT. Kenya, Ghana, and South Africa are in our pipeline. The ledger is built to handle multi-currency, multi-jurisdiction compliance, and cross-border payments - so as your business expands across Africa, Brigadely expands with it.",
   },
   {
     question: "Can I use Brigadely if my business operates outside Nigeria?",
@@ -24,22 +24,22 @@ const faqItems = [
   {
     question: "What does the 60-day free trial include?",
     answer:
-      "Everything. You get full access to the ledger — payroll, compliance, vendor payments, expense management, and stablecoin payouts — for 60 days at no cost. No credit card required. You can run live payroll during the trial period.",
+      "Everything. You get full access to the ledger - payroll, compliance, vendor payments, expense management, and stablecoin payouts - for 60 days at no cost. No credit card required. You can run live payroll during the trial period.",
   },
   {
     question: "Who is Brigadely built for?",
     answer:
-      "Brigadely is built for operators running African businesses — founders managing their first payroll, CFOs overseeing multi-entity groups, finance teams closing month-end, and accountants managing compliance across a client portfolio. If your business has employees or contractors and statutory obligations, the ledger is for you.",
+      "Brigadely is built for operators running African businesses - founders managing their first payroll, CFOs overseeing multi-entity groups, finance teams closing month-end, and accountants managing compliance across a client portfolio. If your business has employees or contractors and statutory obligations, the ledger is for you.",
   },
   {
     question: "How does Brigadely differ from accounting software?",
     answer:
-      "Accounting software records what has already happened. Brigadely executes it. When payroll runs, deductions are calculated, filed, and remitted — not just posted to a journal entry. When a vendor is paid, the ledger updates in the same action. Brigadely is an operating layer, not a record-keeping layer.",
+      "Accounting software records what has already happened. Brigadely executes it. When payroll runs, deductions are calculated, filed, and remitted - not just posted to a journal entry. When a vendor is paid, the ledger updates in the same action. Brigadely is an operating layer, not a record-keeping layer.",
   },
   {
     question: "Is my data secure?",
     answer:
-      "All financial and employee data is encrypted in transit and at rest. Access is role-controlled — each team member sees only what their role permits. Brigadely maintains a full audit log of every action taken on the ledger.",
+      "All financial and employee data is encrypted in transit and at rest. Access is role-controlled - each team member sees only what their role permits. Brigadely maintains a full audit log of every action taken on the ledger.",
   },
   {
     question: "How long does onboarding take?",

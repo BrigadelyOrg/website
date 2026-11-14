@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 // Descriptions match the pages' own metadata.
 const SUMMARY =
-  "Brigadely handles all your financial operations in one platform — payroll, statutory compliance, vendor payments, and more, built for African businesses.";
+  "Brigadely handles all your financial operations in one platform - payroll, statutory compliance, vendor payments, and more, built for African businesses.";
 const DETAILS =
   "Brigadely calculates, deducts and remits PAYE, pension, NHF, NSITF and ITF on every payroll run. The glossary below explains, in plain English, the Nigerian payroll, tax, compliance, cross-border payment and finance terms behind those obligations; each entry links to a full page with worked examples and FAQs.";
 

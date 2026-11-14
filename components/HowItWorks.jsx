@@ -7,7 +7,7 @@ const steps = [
   {
     number: "01",
     title: "Connect your business.",
-    body: "Import your employee roster, configure your org structure, and link your bank and statutory accounts. Most teams are operational in under a day — no implementation consultant required.",
+    body: "Import your employee roster, configure your org structure, and link your bank and statutory accounts. Most teams are operational in under a day - no implementation consultant required.",
     detail: ["Import employee records", "Configure departments and roles", "Link bank and payment accounts", "Set up approval chains"],
   },
   {

@@ -134,7 +134,7 @@ const sections = [
           <li><span className="font-semibold text-gray-800">Compliance & legal:</span> to meet tax filing, statutory payroll, and regulatory reporting obligations in the jurisdictions you operate in</li>
           <li><span className="font-semibold text-gray-800">Security:</span> to detect fraud, unauthorised access, and protect the integrity of the platform</li>
           <li><span className="font-semibold text-gray-800">Communications:</span> to send product updates, billing notices, and support responses</li>
-          <li><span className="font-semibold text-gray-800">Marketing (with consent):</span> to share relevant product news, guides, and offers — you may opt out at any time</li>
+          <li><span className="font-semibold text-gray-800">Marketing (with consent):</span> to share relevant product news, guides, and offers - you may opt out at any time</li>
           <li><span className="font-semibold text-gray-800">Analytics:</span> to understand usage patterns and improve product features using anonymised, aggregated data</li>
         </ul>
       </>
@@ -252,7 +252,7 @@ const sections = [
           Once a retention period expires, data is securely deleted or
           irreversibly anonymised. Where you close your account, we typically
           apply a minimum 7-year retention window for payroll and financial
-          records to satisfy statutory audit and tax requirements — after which
+          records to satisfy statutory audit and tax requirements - after which
           deletion is carried out automatically. You may request early deletion
           of data not subject to a legal hold by contacting{" "}
           <Link href="mailto:privacy@brigadely.com" className="text-[#007a3d] hover:underline">
@@ -272,7 +272,7 @@ const sections = [
           our Services. These fall into the following categories:
         </p>
         <ul className="list-disc ml-5 space-y-2 text-sm text-gray-600">
-          <li><span className="font-semibold text-gray-800">Strictly necessary:</span> essential for authentication, security, and core platform function — always active</li>
+          <li><span className="font-semibold text-gray-800">Strictly necessary:</span> essential for authentication, security, and core platform function - always active</li>
           <li><span className="font-semibold text-gray-800">Functional:</span> remember your preferences and settings to personalise your experience</li>
           <li><span className="font-semibold text-gray-800">Analytics:</span> help us understand how users navigate the platform so we can improve it (requires consent)</li>
           <li><span className="font-semibold text-gray-800">Marketing:</span> used to measure the effectiveness of campaigns (requires consent)</li>
@@ -401,7 +401,7 @@ const PrivacyPage = () => {
         <p className="text-base leading-relaxed mb-12 font-sans text-gray-600 border-l-4 border-[#007a3d] pl-5">
           Your privacy matters to us. This policy explains exactly what personal
           data Brigadely collects, why we collect it, how we protect it, and the
-          rights you have over it — in plain language.
+          rights you have over it - in plain language.
         </p>
 
         <div className="space-y-12">
