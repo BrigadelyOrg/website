@@ -42,6 +42,8 @@ export default buildConfig({
     components: {
       // GA4 blog analytics above the collection cards on the dashboard.
       beforeDashboard: ["/cms/admin/analytics/BlogAnalyticsDashboard#BlogAnalyticsDashboard"],
+      // "Dashboard" link at the top of the sidebar (Payload lists only collections there).
+      beforeNavLinks: ["/cms/admin/DashboardNavLink#DashboardNavLink"],
       graphics: {
         Logo: "/cms/admin/BrandLogo#BrandLogo",
         Icon: "/cms/admin/BrandIcon#BrandIcon",
