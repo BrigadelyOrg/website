@@ -15,7 +15,7 @@ const nextConfig = {
   // The GA4 Data API client loads Google's API definitions from its own files at
   // runtime, so require it (and the auth library it shares) from node_modules
   // instead of bundling them.
-  serverExternalPackages: ["@google-analytics/data", "google-auth-library"],
+  serverExternalPackages: ["@google-analytics/data", "@googleapis/searchconsole", "google-auth-library"],
   async headers() {
     return [
       {

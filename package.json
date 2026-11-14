@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@google-analytics/data": "7.3.0",
+    "@googleapis/searchconsole": "11.0.1",
     "@netlify/plugin-nextjs": "^5.16.6",
     "@next/third-parties": "16.4.6",
     "@payloadcms/db-postgres": "3.93.0",

@@ -14,7 +14,8 @@ const CalendlyButton = ({ className, style, children = "Book a call" }) => {
   };
 
   return (
-    <button onClick={open} className={className} style={style}>
+    // data-track-cta: counted as a GA4 `cta_click` whatever its text (see lib/analytics/cta.ts).
+    <button onClick={open} className={className} style={style} data-track-cta="">
       {children}
     </button>
   );

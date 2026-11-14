@@ -1,114 +1,107 @@
 /**
- * Server only: reads blog traffic from the GA4 Data API for the /admin dashboard.
+ * Server only: site-wide growth, conversions and blog performance from the GA4
+ * Data API, for the /admin dashboard.
  *
- * payload.config.ts imports this file (through cms/endpoints/blogAnalytics.ts),
- * so it must stay cheap to load: the Google SDK is imported on first use only.
+ * payload.config.ts imports this (through the analytics endpoint), so it must
+ * stay cheap to load: the Google SDK is imported on first use only.
  */
 import type { BetaAnalyticsDataClient, protos } from "@google-analytics/data";
-import { unstable_cache } from "next/cache";
+import type { JWT } from "google-auth-library";
 
 import { SITE_URL } from "../site";
+import { cachedReport } from "./cache";
+import { CTA_EVENT } from "./cta";
+import {
+  describeCommonGoogleError,
+  GoogleConfigError,
+  grpcCodeOf,
+  messageOf,
+  readServiceAccount,
+  serviceAccountClient,
+  type GoogleProblem,
+  type ServiceAccount,
+  type ServiceAccountKey,
+} from "./google";
 import { ANALYTICS_RANGES, type AnalyticsRange } from "./ranges";
-import { reportWindow, toDailyTraffic, toOverview, toTopArticles, toTrafficSources } from "./report";
-import type { BlogAnalyticsError, BlogAnalyticsStats, Ga4EnvKey } from "./types";
+import {
+  CURRENT_PERIOD,
+  PREVIOUS_PERIOD,
+  reportWindow,
+  toBlogDaily,
+  toBlogOverview,
+  toConvertingPages,
+  toDeviceSplit,
+  toPageStats,
+  toPlaces,
+  toSiteDaily,
+  toSiteOverview,
+  toTopArticles,
+  toTrafficSources,
+} from "./report";
+import type { Ga4Stats } from "./types";
 
-/** Google is asked at most once per 15 minutes per range; every admin shares the answer. */
-export const GA4_CACHE_SECONDS = 15 * 60;
-export const GA4_CACHE_TAG = "ga4";
+export type Ga4EnvKey = "GA4_PROPERTY_ID" | ServiceAccountKey;
 
-export interface Ga4Credentials {
-  /** Numeric GA4 property ID, e.g. "412345678". */
-  propertyId: string;
-  clientEmail: string;
-  privateKey: string;
-}
-
-export type Ga4Settings = ({ configured: true } & Ga4Credentials) | { configured: false; missing: Ga4EnvKey[] };
+export type Ga4Settings =
+  | { configured: true; propertyId: string; account: ServiceAccount }
+  | { configured: false; missing: Ga4EnvKey[] };
 
 export function readGa4Settings(env: NodeJS.ProcessEnv = process.env): Ga4Settings {
   const propertyId = (env.GA4_PROPERTY_ID ?? "").trim().replace(/^properties\//, "");
-  const clientEmail = (env.GA4_CLIENT_EMAIL ?? "").trim();
-  const privateKey = normalizePrivateKey(env.GA4_PRIVATE_KEY ?? "");
-
-  const missing = (
-    [
-      ["GA4_PROPERTY_ID", propertyId],
-      ["GA4_CLIENT_EMAIL", clientEmail],
-      ["GA4_PRIVATE_KEY", privateKey],
-    ] as const
-  )
-    .filter(([, value]) => value === "")
-    .map(([key]) => key);
-
+  const { clientEmail, privateKey, missing: accountMissing } = readServiceAccount(env);
+  const missing: Ga4EnvKey[] = propertyId ? accountMissing : ["GA4_PROPERTY_ID", ...accountMissing];
   return missing.length > 0
     ? { configured: false, missing }
-    : { configured: true, propertyId, clientEmail, privateKey };
+    : { configured: true, propertyId, account: { clientEmail, privateKey } };
 }
 
-/**
- * Accepts the key the way people paste it: with real line breaks, or with the
- * literal "\n" escapes from the JSON key file, with or without wrapping quotes.
- */
-function normalizePrivateKey(raw: string): string {
-  let key = raw.trim();
-  const quote = key[0];
-  if (key.length > 1 && (quote === '"' || quote === "'") && key.endsWith(quote)) {
-    key = key.slice(1, -1);
-  }
-  return key.replace(/\\n/g, "\n").replace(/\r\n/g, "\n").trim();
-}
-
-/**
- * Blog analytics for a range, cached for 15 minutes (Next.js data cache, shared
- * by all server instances), which keeps the dashboard fast and the API usage far
- * below Google's free quota.
- */
-export async function getBlogAnalytics(
-  credentials: Ga4Credentials,
+/** GA4 numbers for a range, cached for 15 minutes (see cache.ts). */
+export function getGa4Report(
+  settings: Extract<Ga4Settings, { configured: true }>,
   range: AnalyticsRange,
-): Promise<BlogAnalyticsStats> {
-  const cached = await unstable_cache(
-    () => fetchBlogAnalytics(credentials, range),
-    ["ga4-blog-analytics", credentials.propertyId, range],
-    { revalidate: GA4_CACHE_SECONDS, tags: [GA4_CACHE_TAG] },
-  )();
-
-  // Once an entry is older than 15 minutes the cache still returns it one more
-  // time while it refreshes in the background. After a quiet night that could
-  // be yesterday's numbers, so fetch fresh ones instead of showing them.
-  if (Date.now() - Date.parse(cached.fetchedAt) < GA4_CACHE_SECONDS * 1000) return cached;
-  try {
-    return await fetchBlogAnalytics(credentials, range);
-  } catch {
-    return cached; // Google unavailable: older numbers (with their timestamp) beat an error
-  }
+  refresh = false,
+): Promise<Ga4Stats> {
+  return cachedReport({
+    key: ["ga4", settings.propertyId, range],
+    fetcher: () => fetchGa4Report(settings, range),
+    refresh,
+  });
 }
 
-async function fetchBlogAnalytics(
-  { propertyId, clientEmail, privateKey }: Ga4Credentials,
+const ANALYTICS_SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
+
+async function fetchGa4Report(
+  { propertyId, account }: Extract<Ga4Settings, { configured: true }>,
   range: AnalyticsRange,
-): Promise<BlogAnalyticsStats> {
+): Promise<Ga4Stats> {
   if (!/^\d+$/.test(propertyId)) {
-    throw new Ga4ConfigError(
+    throw new GoogleConfigError(
       `GA4_PROPERTY_ID "${propertyId}" isn't a GA4 property ID.`,
       "Use the numeric Property ID from GA4 → Admin → Property details (for example 412345678), not the G-… measurement ID.",
     );
   }
 
   const { days } = ANALYTICS_RANGES[range];
-  const [sdk, authLibrary] = await Promise.all([import("@google-analytics/data"), import("google-auth-library")]);
-  const client = dataClient(sdk, authLibrary, clientEmail, privateKey);
-  // One round trip for all four reports.
-  const [response] = await client.batchRunReports(
-    {
-      property: `properties/${propertyId}`,
-      requests: blogReportRequests(days, sdk.protos.google.analytics.data.v1beta.MetricAggregation.TOTAL),
-    },
-    { timeout: 8_000 },
-  );
-  const [overview, daily, articles, sources] = response.reports ?? [];
+  const [sdk, authClient] = await Promise.all([
+    import("@google-analytics/data"),
+    serviceAccountClient(account, ANALYTICS_SCOPE),
+  ]);
+  const client = dataClient(sdk, account.clientEmail, authClient);
+  const requests = reportRequests(days, sdk.protos.google.analytics.data.v1beta.MetricAggregation.TOTAL);
+  const run = async (batch: ReportRequest[]) => {
+    const [response] = await client.batchRunReports(
+      { property: `properties/${propertyId}`, requests: batch },
+      { timeout: 10_000 },
+    );
+    return response.reports ?? [];
+  };
 
-  const timeZone = daily?.metadata?.timeZone || overview?.metadata?.timeZone || "UTC";
+  // Three batches (GA4 allows five reports per batch), in parallel.
+  const [[kpis, siteDaily, cta, visitors, devices], [countries, cities, topPages, converting], blog] =
+    await Promise.all([run(requests.site), run(requests.siteDetail), run(requests.blog)]);
+  const [blogOverview, blogDaily, articles, sources] = blog;
+
+  const timeZone = siteDaily?.metadata?.timeZone || blogDaily?.metadata?.timeZone || "UTC";
   const { startDate, endDate } = reportWindow(days, timeZone);
 
   return {
@@ -117,96 +110,152 @@ async function fetchBlogAnalytics(
     endDate,
     timeZone,
     fetchedAt: new Date().toISOString(),
-    overview: toOverview(overview),
-    daily: toDailyTraffic(daily, startDate, days),
-    topArticles: toTopArticles(articles),
-    sources: toTrafficSources(sources),
+    site: {
+      overview: toSiteOverview(kpis, cta, visitors),
+      daily: toSiteDaily(siteDaily, cta, startDate, days),
+      countries: toPlaces(countries),
+      cities: toPlaces(cities),
+      topPages: toPageStats(topPages),
+      convertingPages: toConvertingPages(converting),
+      devices: toDeviceSplit(devices),
+    },
+    blog: {
+      overview: toBlogOverview(blogOverview),
+      daily: toBlogDaily(blogDaily, startDate, days),
+      topArticles: toTopArticles(articles),
+      sources: toTrafficSources(sources),
+    },
   };
 }
 
 type Sdk = typeof import("@google-analytics/data");
-type AuthLibrary = typeof import("google-auth-library");
 type FilterExpression = protos.google.analytics.data.v1beta.IFilterExpression;
 type ReportRequest = protos.google.analytics.data.v1beta.IRunReportRequest;
 type MetricAggregation = protos.google.analytics.data.v1beta.MetricAggregation;
 
 const stringFilter = (
   fieldName: string,
-  matchType: "FULL_REGEXP" | "BEGINS_WITH",
+  matchType: "EXACT" | "BEGINS_WITH" | "FULL_REGEXP",
   value: string,
 ): FilterExpression => ({ filter: { fieldName, stringFilter: { matchType, value } } });
+const allOf = (...expressions: FilterExpression[]): FilterExpression => ({ andGroup: { expressions } });
+const not = (expression: FilterExpression): FilterExpression => ({ notExpression: expression });
 
 // Production traffic only. The GTM tag also fires on localhost and on Netlify
 // deploy previews; those visits must not count. Matches brigadely.com and www.
 const siteDomain = new URL(SITE_URL).hostname.replace(/^www\./, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const onSite = (pages: FilterExpression): FilterExpression => ({
-  andGroup: { expressions: [stringFilter("hostName", "FULL_REGEXP", `(www\\.)?${siteDomain}`), pages] },
-});
+const ON_SITE = stringFilter("hostName", "FULL_REGEXP", `(www\\.)?${siteDomain}`);
+/** /blog itself and every page under it (full-match RE2 expression). */
+const BLOG_PATH = stringFilter("pagePath", "FULL_REGEXP", "/blog(/.*)?");
 
-/** /blog itself and every page under it (full-match RE2 expressions). */
-const BLOG_PAGES = onSite(stringFilter("pagePath", "FULL_REGEXP", "/blog(/.*)?"));
-/** Individual articles only: /blog/[slug]. */
-const ARTICLE_PAGES = onSite(stringFilter("pagePath", "BEGINS_WITH", "/blog/"));
+const BLOG_PAGES = allOf(ON_SITE, BLOG_PATH);
+const ARTICLE_PAGES = allOf(ON_SITE, stringFilter("pagePath", "BEGINS_WITH", "/blog/"));
+const NON_BLOG_PAGES = allOf(ON_SITE, not(BLOG_PATH));
+const CTA_CLICKS = allOf(ON_SITE, stringFilter("eventName", "EXACT", CTA_EVENT));
+const KNOWN_COUNTRY = allOf(ON_SITE, not(stringFilter("country", "EXACT", "(not set)")));
+const KNOWN_CITY = allOf(ON_SITE, not(stringFilter("city", "EXACT", "(not set)")));
 
-/** Each range is N full days ending yesterday, like GA4's "Last N days". */
-function blogReportRequests(days: number, total: MetricAggregation): ReportRequest[] {
-  const dateRanges = [{ startDate: `${days}daysAgo`, endDate: "yesterday" }];
-  return [
-    // 1. Overview: total views, unique readers, engagement time.
+const names = (...list: string[]) => list.map((name) => ({ name }));
+const byMetric = (metricName: string) => [{ metric: { metricName }, desc: true }];
+
+/** Each range is N full days ending yesterday (like GA4's "Last N days"), against the N days before. */
+function reportRequests(days: number, total: MetricAggregation) {
+  const current = { name: CURRENT_PERIOD, startDate: `${days}daysAgo`, endDate: "yesterday" };
+  const previous = { name: PREVIOUS_PERIOD, startDate: `${days * 2}daysAgo`, endDate: `${days + 1}daysAgo` };
+  const both = [current, previous];
+  const now = [current];
+  const engagement = names("screenPageViews", "activeUsers", "userEngagementDuration");
+
+  const site: ReportRequest[] = [
+    // KPIs, this period and the one before.
+    { dateRanges: both, dimensionFilter: ON_SITE, metrics: names("activeUsers", "screenPageViews", "engagementRate") },
+    // Daily trend.
     {
-      dateRanges,
-      dimensionFilter: BLOG_PAGES,
-      metrics: [{ name: "screenPageViews" }, { name: "activeUsers" }, { name: "userEngagementDuration" }],
-    },
-    // 2. Daily trend.
-    {
-      dateRanges,
-      dimensionFilter: BLOG_PAGES,
-      dimensions: [{ name: "date" }],
-      metrics: [{ name: "screenPageViews" }, { name: "activeUsers" }],
+      dateRanges: now,
+      dimensionFilter: ON_SITE,
+      dimensions: names("date"),
+      metrics: names("activeUsers", "screenPageViews", "engagementRate"),
       limit: 100,
     },
-    // 3. Top 10 articles by views.
+    // CTA clicks per day, both periods.
+    { dateRanges: both, dimensionFilter: CTA_CLICKS, dimensions: names("date"), metrics: names("eventCount"), limit: 250 },
+    // New vs returning visitors.
+    { dateRanges: now, dimensionFilter: ON_SITE, dimensions: names("newVsReturning"), metrics: names("activeUsers") },
+    // Device split.
+    { dateRanges: now, dimensionFilter: ON_SITE, dimensions: names("deviceCategory"), metrics: names("activeUsers") },
+  ];
+
+  const siteDetail: ReportRequest[] = [
     {
-      dateRanges,
+      dateRanges: now,
+      dimensionFilter: KNOWN_COUNTRY,
+      dimensions: names("country"),
+      metrics: names("activeUsers"),
+      orderBys: byMetric("activeUsers"),
+      metricAggregations: [total],
+      limit: 5,
+    },
+    {
+      dateRanges: now,
+      dimensionFilter: KNOWN_CITY,
+      dimensions: names("city", "country"),
+      metrics: names("activeUsers"),
+      orderBys: byMetric("activeUsers"),
+      metricAggregations: [total],
+      limit: 5,
+    },
+    // Top pages outside the blog.
+    {
+      dateRanges: now,
+      dimensionFilter: NON_BLOG_PAGES,
+      dimensions: names("pagePath"),
+      metrics: engagement,
+      orderBys: byMetric("screenPageViews"),
+      limit: 5,
+    },
+    // Pages where CTA clicks happened.
+    {
+      dateRanges: now,
+      dimensionFilter: CTA_CLICKS,
+      dimensions: names("pagePath"),
+      metrics: names("eventCount"),
+      orderBys: byMetric("eventCount"),
+      metricAggregations: [total],
+      limit: 5,
+    },
+  ];
+
+  const blog: ReportRequest[] = [
+    { dateRanges: both, dimensionFilter: BLOG_PAGES, metrics: engagement },
+    { dateRanges: now, dimensionFilter: BLOG_PAGES, dimensions: names("date"), metrics: engagement, limit: 100 },
+    {
+      dateRanges: now,
       dimensionFilter: ARTICLE_PAGES,
-      dimensions: [{ name: "pagePath" }],
-      metrics: [{ name: "screenPageViews" }, { name: "activeUsers" }, { name: "userEngagementDuration" }],
-      orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }],
+      dimensions: names("pagePath"),
+      metrics: engagement,
+      orderBys: byMetric("screenPageViews"),
       limit: 10,
     },
-    // 4. Where blog sessions came from. TOTAL counts sources beyond the 50 rows.
+    // Where blog sessions came from. TOTAL counts sources beyond the 50 rows.
     {
-      dateRanges,
+      dateRanges: now,
       dimensionFilter: BLOG_PAGES,
-      dimensions: [{ name: "sessionSource" }, { name: "sessionMedium" }, { name: "sessionDefaultChannelGroup" }],
-      metrics: [{ name: "sessions" }],
-      orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+      dimensions: names("sessionSource", "sessionMedium", "sessionDefaultChannelGroup"),
+      metrics: names("sessions"),
+      orderBys: byMetric("sessions"),
       metricAggregations: [total],
       limit: 50,
     },
   ];
+
+  return { site, siteDetail, blog };
 }
 
-const ANALYTICS_READONLY_SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
-
-// One client per server instance; it caches its own access tokens.
+// One SDK client per server instance.
 let cachedClient: { clientEmail: string; client: BetaAnalyticsDataClient } | undefined;
 
-function dataClient(
-  sdk: Sdk,
-  authLibrary: AuthLibrary,
-  clientEmail: string,
-  privateKey: string,
-): BetaAnalyticsDataClient {
+function dataClient(sdk: Sdk, clientEmail: string, authClient: JWT): BetaAnalyticsDataClient {
   if (cachedClient?.clientEmail !== clientEmail) {
-    // A service-account client built from the key. (The SDK's `credentials`
-    // option is deprecated and logs a warning on every cold start.)
-    const authClient = new authLibrary.JWT({
-      email: clientEmail,
-      key: privateKey,
-      scopes: [ANALYTICS_READONLY_SCOPE],
-    });
     const client = new sdk.BetaAnalyticsDataClient({
       authClient,
       // JSON over HTTPS rather than a long-lived gRPC connection, which can go
@@ -218,70 +267,29 @@ function dataClient(
   return cachedClient.client;
 }
 
-/** A setting that is present but unusable. */
-export class Ga4ConfigError extends Error {
-  readonly hint: string;
+/** Turns GA4 SDK and API errors into a message and a concrete next step. */
+export function describeGa4Error(error: unknown): GoogleProblem {
+  const common = describeCommonGoogleError(error, "Google Analytics Data API");
+  if (common) return common;
 
-  constructor(message: string, hint: string) {
-    super(message);
-    this.name = "Ga4ConfigError";
-    this.hint = hint;
-  }
-}
-
-// gRPC status codes, which the SDK reports for REST calls too.
-const INVALID_ARGUMENT = 3;
-const DEADLINE_EXCEEDED = 4;
-const NOT_FOUND = 5;
-const PERMISSION_DENIED = 7;
-const RESOURCE_EXHAUSTED = 8;
-const UNAUTHENTICATED = 16;
-
-/** Turns SDK and Google API errors into a message and a concrete next step. */
-export function describeGa4Error(error: unknown): BlogAnalyticsError {
-  if (error instanceof Ga4ConfigError) return { error: error.message, hint: error.hint };
-
-  const message = error instanceof Error ? error.message : String(error);
-  const code = typeof error === "object" && error !== null && "code" in error ? error.code : undefined;
-
-  if (/DECODER routines|PEM|private key|no start line|asn1/i.test(message)) {
-    return {
-      error: "GA4_PRIVATE_KEY couldn't be read.",
-      hint: "Copy the private_key value from the service account's JSON key exactly, including the BEGIN and END lines.",
-    };
-  }
-  if (/has not been used|is disabled|SERVICE_DISABLED/i.test(message)) {
-    return {
-      error: "The Google Analytics Data API isn't enabled for the service account's Google Cloud project.",
-      hint: "Google Cloud console → APIs & Services → enable “Google Analytics Data API”, then try again in a few minutes.",
-    };
-  }
-  if (code === UNAUTHENTICATED || /invalid_grant|invalid jwt|account not found/i.test(message)) {
-    return {
-      error: "Google rejected the service account credentials.",
-      hint: "Check that GA4_CLIENT_EMAIL and GA4_PRIVATE_KEY come from the same JSON key and that the key hasn't been deleted.",
-    };
-  }
-  if (code === PERMISSION_DENIED) {
+  const code = grpcCodeOf(error);
+  if (code === 7) {
     return {
       error: "The service account can't read this GA4 property.",
       hint: "GA4 → Admin → Property access management: add GA4_CLIENT_EMAIL as a Viewer. Also check GA4_PROPERTY_ID.",
     };
   }
-  if (code === INVALID_ARGUMENT || code === NOT_FOUND) {
+  if (code === 3 || code === 5) {
     return {
       error: "Google Analytics rejected the request.",
       hint: "Check GA4_PROPERTY_ID: the numeric Property ID from GA4 → Admin → Property details.",
     };
   }
-  if (code === RESOURCE_EXHAUSTED) {
+  if (code === 8) {
     return {
       error: "The Google Analytics API quota for this property is used up.",
       hint: "It resets within the hour (daily quota at midnight Pacific time).",
     };
   }
-  if (code === DEADLINE_EXCEEDED || /timed? ?out|deadline/i.test(message)) {
-    return { error: "Google Analytics took too long to respond.", hint: "Try again in a moment." };
-  }
-  return { error: "Couldn't load data from Google Analytics.", hint: message.slice(0, 300) };
+  return { error: "Couldn't load data from Google Analytics.", hint: messageOf(error).slice(0, 300) };
 }

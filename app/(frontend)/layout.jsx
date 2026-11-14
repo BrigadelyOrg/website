@@ -6,6 +6,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import { CtaTracker } from "./CtaTracker";
 
 const GTM_ID = "GTM-NQPV8M79";
 
@@ -264,6 +265,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </noscript>
         <JsonLd schema={organizationSchema} />
         <JsonLd schema={websiteSchema} />
+        {/* GA4 `cta_click` conversion events for sign-up and booking clicks. */}
+        <CtaTracker />
         <Header />
         {children}
         <Footer />

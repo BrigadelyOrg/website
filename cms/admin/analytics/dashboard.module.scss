@@ -1,27 +1,53 @@
-// Blog analytics dashboard (/admin). Built on Payload's theme variables, so it
-// follows the admin's light and dark themes. The only colour of our own is the
-// Brigadely green: #007a3d on light, #2fa86a on dark, each checked for >= 3:1
-// contrast against Payload's card surface in its mode.
+// Brigadely Growth & Content Intelligence (/admin dashboard).
+//
+// Built on Payload's theme variables, so light and dark mode follow the admin.
+// The only colours of our own: the Brigadely green plus a blue and an orange for
+// segmented bars. Each was checked for >= 3:1 contrast on Payload's background
+// and for colour-blind separation between neighbours, in both modes. Badge text
+// colours clear 4.5:1 on their tinted backgrounds.
 
 .root {
-  --ba-accent: #007a3d;
-  --ba-context: var(--theme-elevation-500); // the "Readers" line and "Other sources"
-  --ba-surface: var(--theme-elevation-50);
-  --ba-border: var(--theme-border-color);
-  --ba-grid: var(--theme-elevation-150);
-  --ba-axis: var(--theme-elevation-300);
-  --ba-text: var(--theme-text);
-  --ba-text-secondary: var(--theme-elevation-600);
-  --ba-segment: var(--theme-elevation-0);
+  --gd-bg: var(--theme-bg);
+  --gd-card: var(--theme-bg);
+  --gd-well: var(--theme-elevation-50);
+  --gd-border: var(--theme-border-color);
+  --gd-divider: var(--theme-elevation-100);
+  --gd-text: var(--theme-text);
+  --gd-text-2: var(--theme-elevation-600);
+  --gd-grid: var(--theme-elevation-150);
+  --gd-radius: 12px;
+  --gd-radius-sm: 8px;
+  --gd-shadow: 0 1px 2px rgb(16 24 40 / 0.05);
+  --gd-segment-selected: var(--theme-bg);
+
+  --gd-accent: #007a3d;
+  --gd-s2: #2a78d6;
+  --gd-s3: #eb6834;
+  --gd-context: var(--theme-elevation-500);
+  --gd-danger: #d92d20;
+  --gd-good: #0b6b3a;
+  --gd-good-bg: #e6f2ec;
+  --gd-bad: #b42318;
+  --gd-bad-bg: #fbeae9;
+  --gd-flat: var(--theme-elevation-600);
+  --gd-flat-bg: var(--theme-elevation-100);
 
   container-type: inline-size;
-  margin-bottom: calc(var(--base) * 2);
-  color: var(--ba-text);
+  margin-bottom: calc(var(--base) * 2.5);
+  color: var(--gd-text);
 }
 
 :global(html[data-theme="dark"]) .root {
-  --ba-accent: #2fa86a;
-  --ba-segment: var(--theme-elevation-250);
+  --gd-shadow: none;
+  --gd-segment-selected: var(--theme-elevation-150);
+  --gd-accent: #2fa86a;
+  --gd-s2: #3987e5;
+  --gd-s3: #d95926;
+  --gd-danger: #ff6b61;
+  --gd-good: #5fd398;
+  --gd-good-bg: #192f23;
+  --gd-bad: #ff8b84;
+  --gd-bad-bg: #3a1d1e;
 }
 
 .srOnly {
@@ -36,103 +62,303 @@
   border: 0;
 }
 
-// --- Header and timeframe switcher ---------------------------------------------
+.root code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--gd-well);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+%focus-ring {
+  outline: 2px solid var(--gd-accent);
+  outline-offset: 2px;
+}
+
+// --- Header ------------------------------------------------------------------------
 
 .header {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 12px 24px;
-  margin-bottom: 16px;
+  gap: 16px 24px;
+  margin-bottom: 20px;
+}
+
+.titleBlock {
+  min-width: 0;
 }
 
 .title {
   margin: 0;
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 22px;
+  line-height: 30px;
   font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
-.subtitle {
-  margin: 2px 0 0;
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 10px;
   font-size: 13px;
   line-height: 20px;
-  color: var(--ba-text-secondary);
+  color: var(--gd-text-2);
 }
 
-.switcher {
+.metaDivider {
+  width: 1px;
+  height: 14px;
+  background: var(--gd-border);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--gd-border);
+  border-radius: 999px;
+  background: var(--gd-card);
+  color: var(--gd-text-2);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--theme-elevation-400);
+}
+
+.pill[data-state="ok"] .pillDot {
+  background: var(--gd-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gd-accent) 20%, transparent);
+}
+
+.pill[data-state="error"] .pillDot {
+  background: var(--gd-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gd-danger) 20%, transparent);
+}
+
+.pill[data-state="loading"] .pillDot {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.segmented {
   display: inline-flex;
   gap: 2px;
-  padding: 2px;
-  border-radius: var(--style-radius-m);
-  background: var(--theme-elevation-100);
+  padding: 3px;
+  border: 1px solid var(--gd-border);
+  border-radius: 999px;
+  background: var(--gd-well);
 
   button {
+    min-width: 48px;
+    height: 28px;
     margin: 0;
-    padding: 6px 12px;
+    padding: 0 12px;
     border: 0;
-    border-radius: var(--style-radius-s);
+    border-radius: 999px;
     background: transparent;
-    color: var(--ba-text-secondary);
+    color: var(--gd-text-2);
     font: inherit;
-    font-size: 13px;
-    line-height: 18px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     cursor: pointer;
     transition:
-      background-color 0.1s ease,
-      color 0.1s ease;
+      background-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease;
 
     &:hover {
-      color: var(--ba-text);
+      color: var(--gd-text);
     }
 
     &[aria-pressed="true"] {
-      background: var(--ba-segment);
-      color: var(--ba-text);
-      box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
+      background: var(--gd-segment-selected);
+      color: var(--gd-text);
+      box-shadow:
+        0 1px 2px rgb(0 0 0 / 0.08),
+        0 0 0 1px var(--gd-border);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--ba-accent);
-      outline-offset: 1px;
+      @extend %focus-ring;
     }
   }
 }
 
-// --- Layout ------------------------------------------------------------------------
+.refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  margin: 0;
+  padding: 0 14px 0 12px;
+  border: 1px solid var(--gd-border);
+  border-radius: 999px;
+  background: var(--gd-card);
+  color: var(--gd-text-2);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 
-.body {
+  &:hover:not(:disabled) {
+    border-color: var(--theme-elevation-300);
+    background: var(--gd-well);
+    color: var(--gd-text);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    @extend %focus-ring;
+  }
+
+  &[data-busy] svg {
+    animation: spin 0.9s linear infinite;
+  }
+}
+
+.refreshError {
+  font-size: 12px;
+  color: var(--gd-bad);
+}
+
+// --- Tabs ----------------------------------------------------------------------------
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--gd-border);
+  scrollbar-width: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 -1px;
+  padding: 10px 14px 12px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 8px 8px 0 0;
+  background: none;
+  color: var(--gd-text-2);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  svg {
+    flex-shrink: 0;
+    color: var(--theme-elevation-500);
+    transition: color 0.15s ease;
+  }
+
+  &:hover {
+    background: var(--gd-well);
+    color: var(--gd-text);
+  }
+
+  &[aria-selected="true"] {
+    border-bottom-color: var(--gd-accent);
+    color: var(--gd-text);
+
+    svg {
+      color: var(--gd-accent);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gd-accent);
+    outline-offset: -2px;
+  }
+}
+
+// --- Layout ------------------------------------------------------------------------------
+
+.panel {
   display: grid;
   gap: 16px;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.2s ease;
 
-  // A new timeframe is loading: keep the previous numbers on screen, dimmed.
+  // A new timeframe (or a refresh) is loading: the previous numbers stay, dimmed.
   &[data-refreshing] {
     opacity: 0.55;
   }
 }
 
-.breakdown {
+.grid2,
+.gridWide,
+.gridTables {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: 16px;
   align-items: start;
 }
 
-@container (max-width: 900px) {
-  .breakdown {
+.grid2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gridWide {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+
+.gridTables {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container (min-width: 1240px) {
+  .gridTables {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 960px) {
+  .grid2,
+  .gridWide {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .card {
   min-width: 0;
-  padding: 16px 20px 20px;
-  border: 1px solid var(--ba-border);
-  border-radius: var(--style-radius-m);
-  background: var(--ba-surface);
+  padding: 20px;
+  border: 1px solid var(--gd-border);
+  border-radius: var(--gd-radius);
+  background: var(--gd-card);
+  box-shadow: var(--gd-shadow);
 }
 
 .cardHeader {
@@ -155,85 +381,160 @@
   margin: 2px 0 0;
   font-size: 12px;
   line-height: 18px;
-  color: var(--ba-text-secondary);
+  color: var(--gd-text-2);
 }
 
-.cardFooter {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 4px;
-}
-
-.empty {
-  margin: 0;
-  padding: 32px 0;
-  text-align: center;
-  font-size: 13px;
-  color: var(--ba-text-secondary);
-}
-
-// --- KPI tiles ------------------------------------------------------------------
+// --- KPI cards ---------------------------------------------------------------------------
 
 .kpis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  gap: 16px;
   margin: 0;
 }
 
-@container (max-width: 900px) {
+@container (max-width: 960px) {
   .kpis {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@container (max-width: 420px) {
+@container (max-width: 480px) {
   .kpis {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .kpi {
-  min-height: 108px;
-  padding: 16px;
-  border: 1px solid var(--ba-border);
-  border-radius: var(--style-radius-m);
-  background: var(--ba-surface);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "label delta"
+    "value value"
+    "caption caption"
+    "trend trend";
+  // Cards in a row share its height; keep content at the top of shorter ones.
+  align-content: start;
+  align-items: center;
+  min-width: 0;
+  padding: 20px 22px 16px;
+  border: 1px solid var(--gd-border);
+  border-radius: var(--gd-radius);
+  background: var(--gd-card);
+  box-shadow: var(--gd-shadow);
 }
 
 .kpiLabel {
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--ba-text-secondary);
+  grid-area: label;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--gd-text-2);
 }
 
-// Proportional figures: tabular digits look loose at this size.
+.kpiDelta {
+  grid-area: delta;
+  margin: 0 0 0 8px;
+}
+
 .kpiValue {
-  margin: 6px 0 4px;
-  font-size: 28px;
-  line-height: 34px;
+  grid-area: value;
+  margin: 12px 0 2px;
+  font-size: 30px;
+  line-height: 36px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .kpiCaption {
+  grid-area: caption;
   margin: 0;
+  overflow: hidden;
   font-size: 12px;
   line-height: 18px;
-  color: var(--ba-text-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--gd-text-2);
 }
 
-// --- Daily traffic chart ----------------------------------------------------------
+.kpiTrend {
+  grid-area: trend;
+  height: 36px;
+  margin: 14px 0 0;
+}
+
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  &[data-tone="good"] {
+    background: var(--gd-good-bg);
+    color: var(--gd-good);
+  }
+
+  &[data-tone="bad"] {
+    background: var(--gd-bad-bg);
+    color: var(--gd-bad);
+  }
+
+  &[data-tone="neutral"] {
+    background: var(--gd-flat-bg);
+    color: var(--gd-flat);
+  }
+}
+
+.sparkline {
+  display: block;
+  width: 100%;
+  height: 36px;
+  overflow: visible;
+}
+
+.sparkLine {
+  fill: none;
+  stroke: var(--gd-accent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.fillTop {
+  stop-color: var(--gd-accent);
+  stop-opacity: 0.22;
+}
+
+.fillBottom {
+  stop-color: var(--gd-accent);
+  stop-opacity: 0;
+}
+
+// --- Trend chart --------------------------------------------------------------------------
 
 .legend {
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 6px 16px;
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: 12px;
   line-height: 20px;
-  color: var(--ba-text-secondary);
+  color: var(--gd-text-2);
 
   li {
     display: inline-flex;
@@ -242,31 +543,33 @@
   }
 }
 
-.legendKey {
+// Legend keys mirror the marks: an area under its line, and a plain line.
+.keyArea,
+.keyLine {
   display: inline-block;
   width: 14px;
 }
 
-// Legend keys mirror the marks: an area with its line on top, and a plain line.
-.legendViews {
+.keyArea {
   height: 10px;
-  border-top: 2px solid var(--ba-accent);
-  background: color-mix(in srgb, var(--ba-accent) 10%, transparent);
+  border-top: 2px solid var(--gd-accent);
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(color-mix(in srgb, var(--gd-accent) 24%, transparent), transparent);
 }
 
-.legendReaders {
+.keyLine {
   height: 0;
-  border-top: 2px solid var(--ba-context);
+  border-top: 2px solid var(--gd-context);
 }
 
 .chartFrame {
   position: relative;
-  border-radius: var(--style-radius-s);
+  border-radius: var(--gd-radius-sm);
   outline: none;
   touch-action: pan-y;
 
   &:focus-visible {
-    box-shadow: 0 0 0 2px var(--ba-accent);
+    box-shadow: 0 0 0 2px var(--gd-accent);
   }
 }
 
@@ -275,23 +578,22 @@
   overflow: visible;
 }
 
-.gridLine,
+.gridLine {
+  stroke: var(--gd-grid);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  shape-rendering: crispEdges;
+}
+
 .axisLine {
+  stroke: var(--theme-elevation-200);
   stroke-width: 1;
   shape-rendering: crispEdges;
 }
 
-.gridLine {
-  stroke: var(--ba-grid);
-}
-
-.axisLine {
-  stroke: var(--ba-axis);
-}
-
 .tickLabel,
 .endLabel {
-  fill: var(--ba-text-secondary);
+  fill: var(--gd-text-2);
   font-size: 11px;
 }
 
@@ -299,25 +601,20 @@
   font-variant-numeric: tabular-nums;
 }
 
-.viewsArea {
-  fill: var(--ba-accent);
-  fill-opacity: 0.1;
-}
-
-.viewsLine,
-.readersLine {
+.areaLine,
+.contextLine {
   fill: none;
   stroke-width: 2;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 
-.viewsLine {
-  stroke: var(--ba-accent);
+.areaLine {
+  stroke: var(--gd-accent);
 }
 
-.readersLine {
-  stroke: var(--ba-context);
+.contextLine {
+  stroke: var(--gd-context);
 }
 
 .crosshair {
@@ -327,37 +624,38 @@
 }
 
 // The surface-coloured ring keeps a dot legible where it sits on a line.
-.viewsDot,
-.readersDot {
-  stroke: var(--ba-surface);
+.dotArea,
+.dotContext {
+  stroke: var(--gd-card);
   stroke-width: 2;
 }
 
-.viewsDot {
-  fill: var(--ba-accent);
+.dotArea {
+  fill: var(--gd-accent);
 }
 
-.readersDot {
-  fill: var(--ba-context);
+.dotContext {
+  fill: var(--gd-context);
 }
 
 .tooltip {
   position: absolute;
-  z-index: 1;
-  min-width: 136px;
-  padding: 8px 10px;
-  border: 1px solid var(--ba-border);
-  border-radius: var(--style-radius-s);
-  background: var(--theme-elevation-0);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
+  z-index: 2;
+  min-width: 164px;
+  padding: 10px 12px;
+  border: 1px solid var(--gd-border);
+  border-radius: 10px;
+  background: var(--gd-card);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.14);
   font-size: 12px;
   line-height: 20px;
   pointer-events: none;
 }
 
 .tooltipDate {
-  margin: 0 0 4px;
-  color: var(--ba-text-secondary);
+  margin: 0 0 6px;
+  font-weight: 600;
+  color: var(--gd-text);
 }
 
 // Values lead (strong), series names follow.
@@ -368,13 +666,13 @@
   margin: 0;
 
   strong {
-    min-width: 3ch;
+    min-width: 4ch;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
 
   span:last-child {
-    color: var(--ba-text-secondary);
+    color: var(--gd-text-2);
   }
 }
 
@@ -383,12 +681,39 @@
   border-top: 2px solid;
 }
 
-.tooltipKeyViews {
-  border-color: var(--ba-accent);
+.tooltipKeyArea {
+  border-color: var(--gd-accent);
 }
 
-.tooltipKeyReaders {
-  border-color: var(--ba-context);
+.tooltipKeyContext {
+  border-color: var(--gd-context);
+}
+
+.tooltipDetail {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 0;
+  padding-top: 4px;
+  border-top: 1px solid var(--gd-divider);
+  color: var(--gd-text-2);
+
+  & + & {
+    margin-top: 0;
+    border-top: 0;
+  }
+
+  strong {
+    color: var(--gd-text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
 }
 
 .linkButton {
@@ -396,7 +721,7 @@
   padding: 2px 0;
   border: 0;
   background: none;
-  color: var(--ba-text-secondary);
+  color: var(--gd-text-2);
   font: inherit;
   font-size: 12px;
   text-decoration: underline;
@@ -404,12 +729,11 @@
   cursor: pointer;
 
   &:hover {
-    color: var(--ba-text);
+    color: var(--gd-text);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--ba-accent);
-    outline-offset: 2px;
+    @extend %focus-ring;
   }
 }
 
@@ -417,22 +741,22 @@
   max-height: 280px;
   margin-top: 8px;
   overflow: auto;
-  border-top: 1px solid var(--ba-grid);
+  border-top: 1px solid var(--gd-divider);
 
   &:focus-visible {
-    outline: 2px solid var(--ba-accent);
-    outline-offset: 2px;
+    @extend %focus-ring;
   }
 
   thead th {
     position: sticky;
     top: 0;
+    z-index: 1;
     padding-top: 10px;
-    background: var(--ba-surface);
+    background: var(--gd-card);
   }
 }
 
-// --- Tables -------------------------------------------------------------------------
+// --- Tables ----------------------------------------------------------------------------------
 
 .tableScroll {
   overflow-x: auto;
@@ -446,254 +770,440 @@
 
   th,
   td {
-    padding: 10px 8px;
-    border-bottom: 1px solid var(--ba-grid);
+    padding: 11px 8px;
+    border-bottom: 1px solid var(--gd-divider);
     text-align: left;
-    vertical-align: top;
-  }
-
-  th:first-child,
-  td:first-child {
-    padding-left: 0;
-  }
-
-  th:last-child,
-  td:last-child {
-    padding-right: 0;
+    vertical-align: middle;
+    transition: background-color 0.12s ease;
   }
 
   thead th {
     padding-top: 0;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ba-text-secondary);
+    padding-bottom: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--gd-text-2);
   }
 
   tbody th {
     font-weight: 400;
   }
 
+  tbody tr:hover > * {
+    background: var(--gd-well);
+  }
+
   tbody tr:last-child > * {
     border-bottom: 0;
   }
 
-  // Numbers align on the right, digits in columns. Numeric columns shrink to
-  // fit, so the first column takes the spare width.
+  // Numbers align on the right, digits in columns; the label column takes the spare width.
   .num {
     width: 1%;
-    padding-left: 24px;
+    padding-left: 20px;
     text-align: right;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
+
+  .rankCell {
+    width: 1%;
+    padding-right: 4px;
+  }
 }
 
-.articleCell {
-  min-width: 220px;
+.rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--gd-well);
+  color: var(--gd-text-2);
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  &[data-top] {
+    background: var(--gd-good-bg);
+    color: var(--gd-good);
+  }
 }
 
-.articleTitle {
+.rowTitle {
   display: block;
-  color: var(--ba-text);
   font-weight: 500;
+  color: var(--gd-text);
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
-a.articleTitle:hover {
+a.rowTitle:hover {
   text-decoration: underline;
 }
 
-.articlePath {
+.rowMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--gd-text-2);
+}
+
+.rowPath {
+  overflow-wrap: anywhere;
+}
+
+.action {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 2px;
-  font-size: 12px;
-  color: var(--ba-text-secondary);
+  gap: 3px;
+  padding: 1px 7px;
+  border: 1px solid var(--gd-border);
+  border-radius: 6px;
+  color: var(--gd-text-2);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 
   &:hover {
-    color: var(--ba-text);
-    text-decoration: underline;
-  }
-
-  svg {
-    flex-shrink: 0;
+    border-color: var(--theme-elevation-300);
+    background: var(--gd-card);
+    color: var(--gd-text);
   }
 }
 
-.articleTitle:focus-visible,
-.articlePath:focus-visible {
-  outline: 2px solid var(--ba-accent);
-  outline-offset: 2px;
-  border-radius: 2px;
+.rowTitle:focus-visible,
+.action:focus-visible {
+  @extend %focus-ring;
+  border-radius: 4px;
 }
 
-// --- Acquisition channels (ranked meter list) --------------------------------------
+// --- Bar lists (proportion bars behind each row) -----------------------------------------------
 
-.channels {
+.barList {
   display: grid;
-  gap: 14px;
+  // minmax(0, …): a long unbroken label must truncate, not widen the list past its card.
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.channelHead {
+.barRow {
+  position: relative;
+  isolation: isolate;
   display: flex;
-  align-items: baseline;
+  min-width: 0;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 6px;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: var(--gd-radius-sm);
   font-size: 13px;
   line-height: 18px;
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background: var(--gd-well);
+  }
 }
 
-.channelName {
+.barFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  border-radius: var(--gd-radius-sm);
+  background: color-mix(in srgb, var(--gd-accent) 13%, transparent);
+
+  &[data-tone="muted"] {
+    background: color-mix(in srgb, var(--gd-context) 18%, transparent);
+  }
+}
+
+.barLabel {
   min-width: 0;
+  overflow: hidden;
   font-weight: 500;
-  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.channelGroup {
+.barDetail {
   margin-left: 8px;
   font-size: 12px;
   font-weight: 400;
-  color: var(--ba-text-secondary);
+  color: var(--gd-text-2);
 }
 
-.channelFigures {
+.barValue {
   display: inline-flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.barShare {
+  min-width: 4ch;
+  text-align: right;
+  font-weight: 500;
+  color: var(--gd-text-2);
+}
+
+// --- Segmented bars -------------------------------------------------------------------------------
+
+.segmentBar {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.segmentFill {
+  flex: 1 1 0;
+  min-width: 4px;
+}
+
+// Colour follows the category (desktop is always green), never its rank.
+.segmentFill,
+.swatch {
+  &[data-tone="s1"] {
+    background: var(--gd-accent);
+  }
+
+  &[data-tone="s2"] {
+    background: var(--gd-s2);
+  }
+
+  &[data-tone="s3"] {
+    background: var(--gd-s3);
+  }
+
+  &[data-tone="muted"] {
+    background: var(--gd-context);
+  }
+}
+
+.segmentLegend {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.legendShare {
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
-.channelCount {
-  font-size: 12px;
-  color: var(--ba-text-secondary);
-}
-
-.channelShare {
-  min-width: 4ch;
+.legendValue {
+  min-width: 7ch;
   text-align: right;
-  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--gd-text-2);
 }
 
-// Track: a light step of the bar's own colour. Bar: square at the baseline,
-// rounded at the data end.
-.meter {
-  height: 8px;
-  border-radius: 0 4px 4px 0;
-  background: color-mix(in srgb, var(--ba-accent) 14%, transparent);
+// --- Empty, setup and error states --------------------------------------------------------------------
 
-  span {
-    display: block;
-    height: 100%;
-    border-radius: 0 4px 4px 0;
-    background: var(--ba-accent);
-  }
+.empty {
+  margin: 0;
+  padding: 28px 16px;
+  border: 1px dashed var(--gd-border);
+  border-radius: var(--gd-radius-sm);
+  text-align: center;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--gd-text-2);
 }
 
-.meterOther {
-  background: color-mix(in srgb, var(--ba-context) 18%, transparent);
-
-  span {
-    background: var(--ba-context);
-  }
-}
-
-// --- Banners ----------------------------------------------------------------------
-
-.banner {
-  padding: 16px 20px;
-  border: 1px solid var(--ba-border);
-  border-left-width: 4px;
-  border-radius: var(--style-radius-m);
-  background: var(--ba-surface);
+.notice {
+  padding: 24px;
+  border: 1px solid var(--gd-border);
+  border-radius: var(--gd-radius);
+  background: var(--gd-card);
+  box-shadow: var(--gd-shadow);
   font-size: 13px;
   line-height: 20px;
 
   p {
     margin: 8px 0 0;
   }
-
-  code {
-    padding: 1px 4px;
-    border-radius: 3px;
-    background: var(--theme-elevation-100);
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
 }
 
-.bannerSetup {
-  border-left-color: var(--ba-accent);
+.noticeError {
+  border-color: color-mix(in srgb, var(--gd-danger) 45%, var(--gd-border));
 }
 
-.bannerError {
-  border-left-color: var(--theme-error-500);
+.noticeHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.bannerTitle {
+.noticeIcon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--gd-good-bg);
+  color: var(--gd-good);
+}
+
+.noticeError .noticeIcon {
+  background: var(--gd-bad-bg);
+  color: var(--gd-bad);
+}
+
+.noticeTitle {
   margin: 0;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 22px;
   font-weight: 600;
 }
 
 .envList {
-  margin: 8px 0 0;
-  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
 
-  li + li {
-    margin-top: 4px;
+.steps {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+
+  li {
+    position: relative;
+    padding-left: 34px;
+    counter-increment: step;
+
+    &::before {
+      content: counter(step);
+      position: absolute;
+      top: -1px;
+      left: 0;
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gd-well);
+      color: var(--gd-text-2);
+      font-size: 11px;
+      font-weight: 600;
+    }
   }
 }
 
-.bannerActions {
-  margin-top: 12px;
+.noticeActions {
+  margin-top: 16px;
 }
 
-// --- Loading placeholders ------------------------------------------------------------
+// --- Loading -------------------------------------------------------------------------------------------
 
 .skeleton {
-  border-color: transparent;
-  background: linear-gradient(
-    90deg,
-    var(--theme-elevation-100) 25%,
-    var(--theme-elevation-150) 50%,
-    var(--theme-elevation-100) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gd-border);
+  border-radius: var(--gd-radius);
+  background: var(--gd-well);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--theme-elevation-0) 65%, transparent),
+      transparent
+    );
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.skeletonKpi {
+  height: 152px;
 }
 
 .skeletonChart {
-  height: 330px;
-}
-
-.skeletonList {
   height: 360px;
 }
 
+.skeletonCard {
+  height: 300px;
+}
+
 @keyframes shimmer {
-  from {
-    background-position: 100% 0;
-  }
   to {
-    background-position: -100% 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skeleton {
+  .skeleton::after,
+  .refresh[data-busy] svg,
+  .pill[data-state="loading"] .pillDot {
     animation: none;
   }
 
-  .body {
+  .panel,
+  .tab,
+  .segmented button {
     transition: none;
   }
 }

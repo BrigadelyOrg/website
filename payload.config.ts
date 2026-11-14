@@ -12,7 +12,7 @@ import { Media } from "./cms/collections/Media";
 import { Posts } from "./cms/collections/Posts";
 import { Users } from "./cms/collections/Users";
 import { editor } from "./cms/editor";
-import { blogAnalyticsEndpoint } from "./cms/endpoints/blogAnalytics";
+import { analyticsOverviewEndpoint } from "./cms/endpoints/analyticsOverview";
 import { generateDescription, generateTitle, generateURL } from "./cms/seo";
 import { migrations } from "./migrations";
 
@@ -40,8 +40,8 @@ export default buildConfig({
     // Always light: by default the admin follows the OS (dark mode = black UI).
     theme: "light",
     components: {
-      // GA4 blog analytics above the collection cards on the dashboard.
-      beforeDashboard: ["/cms/admin/analytics/BlogAnalyticsDashboard#BlogAnalyticsDashboard"],
+      // Growth, blog and search analytics (GA4 + Search Console) above the collection cards.
+      beforeDashboard: ["/cms/admin/analytics/AnalyticsDashboard#AnalyticsDashboard"],
       // "Dashboard" link at the top of the sidebar (Payload lists only collections there).
       beforeNavLinks: ["/cms/admin/DashboardNavLink#DashboardNavLink"],
       graphics: {
@@ -57,8 +57,8 @@ export default buildConfig({
     },
   },
   collections: [Posts, Categories, Media, Users],
-  // GET /api/analytics/blog: GA4 numbers for the dashboard (signed-in users only).
-  endpoints: [blogAnalyticsEndpoint],
+  // GET /api/analytics/overview: GA4 + Search Console numbers for the dashboard (signed-in users only).
+  endpoints: [analyticsOverviewEndpoint],
   editor,
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {

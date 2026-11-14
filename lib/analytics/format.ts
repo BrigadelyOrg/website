@@ -23,6 +23,16 @@ export function formatDuration(totalSeconds: number): string {
   return `${minutes}m ${String(seconds % 60).padStart(2, "0")}s`;
 }
 
+/** Rates such as engagement rate and CTR: 0.5423 -> "54.2%". */
+export function formatRate(rate: number): string {
+  return `${(Number.isFinite(rate) ? rate * 100 : 0).toFixed(1)}%`;
+}
+
+/** Average Google position: 8.37 -> "8.4"; "—" when there were no impressions. */
+export function formatPosition(position: number): string {
+  return position > 0 ? position.toFixed(1) : "—";
+}
+
 /** 0.4231 -> "42%". Shares that would round to 0% but aren't zero read "<1%". */
 export function formatShare(share: number): string {
   if (share > 0 && share < 0.005) return "<1%";
