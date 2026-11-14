@@ -21,6 +21,7 @@ function todayAtNoonUTC(): string {
 export const Posts: CollectionConfig = {
   slug: "posts",
   admin: {
+    group: "Content",
     useAsTitle: "title",
     defaultColumns: ["title", "category", "status", "publishedDate"],
   },

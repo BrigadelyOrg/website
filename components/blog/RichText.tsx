@@ -21,61 +21,82 @@ const PROSE = [
   "prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-[1.15em]",
   "prose-figure:my-10 prose-img:rounded-2xl",
   "prose-th:bg-[#F4EFE4] prose-th:px-4 prose-th:py-3 prose-td:px-4 prose-td:py-3",
+  // Lexical puts a paragraph in every table cell; its margins would make each row very tall.
+  "[&_td>p]:my-0 [&_th>p]:my-0",
   // Lexical wraps tables in this container: scroll sideways on small screens.
   "[&_.lexical-table-container]:my-10 [&_.lexical-table-container]:overflow-x-auto [&_.lexical-table-container]:rounded-xl [&_.lexical-table-container]:border [&_.lexical-table-container]:border-gray-200 [&_table]:my-0",
 ].join(" ");
+
+/** Collections whose documents have public pages, by link target (see cms/editor.ts). */
+const PAGE_PATHS: Readonly<Record<string, string>> = {
+  posts: "/blog",
+  glossary: "/glossary",
+};
+
+const HEADING_TAGS = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
 
 function isMedia(value: unknown): value is Media {
   return typeof value === "object" && value !== null && "url" in value && "alt" in value;
 }
 
-/** Internal links can only target posts (see cms/editor.ts). */
+/** Internal links point at a post (/blog/<slug>) or a glossary term (/glossary/<slug>). */
 function internalDocToHref({ linkNode }: { linkNode: SerializedLinkNode }): string {
+  const relationTo = linkNode.fields.doc?.relationTo;
+  const section = (relationTo && PAGE_PATHS[relationTo]) || "/blog";
   const value: unknown = linkNode.fields.doc?.value;
-  if (
-    linkNode.fields.doc?.relationTo === "posts" &&
-    typeof value === "object" &&
-    value !== null &&
-    "slug" in value &&
-    typeof value.slug === "string"
-  ) {
-    return `/blog/${value.slug}`;
+  if (typeof value === "object" && value !== null && "slug" in value && typeof value.slug === "string") {
+    return `${section}/${value.slug}`;
   }
-  return "/blog";
+  return section;
 }
 
-const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters }) => ({
-  ...defaultConverters,
-  ...LinkJSXConverter({ internalDocToHref }),
-  // Inline images go through next/image for responsive, optimised delivery.
-  upload: ({ node }) => {
-    const media: unknown = node.value;
-    if (!isMedia(media) || !media.url) return null;
-    return (
-      <figure>
-        <Image
-          src={media.url}
-          alt={media.alt}
-          width={media.width ?? 1600}
-          height={media.height ?? 900}
-          sizes="(min-width: 800px) 768px, 100vw"
-          className="h-auto w-full"
-        />
-      </figure>
-    );
-  },
-});
+function buildConverters(headingIds?: WeakMap<object, string>): JSXConvertersFunction<DefaultNodeTypes> {
+  return ({ defaultConverters }) => ({
+    ...defaultConverters,
+    ...LinkJSXConverter({ internalDocToHref }),
+    // Headings with an anchor id (a table of contents links to them) stop below the fixed header.
+    heading: ({ node, nodesToJSX }) => {
+      const Tag = HEADING_TAGS.has(node.tag) ? node.tag : "h2";
+      const id = headingIds?.get(node);
+      return (
+        <Tag id={id} className={id ? "scroll-mt-28" : undefined}>
+          {nodesToJSX({ nodes: node.children })}
+        </Tag>
+      );
+    },
+    // Inline images go through next/image for responsive, optimised delivery.
+    upload: ({ node }) => {
+      const media: unknown = node.value;
+      if (!isMedia(media) || !media.url) return null;
+      return (
+        <figure>
+          <Image
+            src={media.url}
+            alt={media.alt}
+            width={media.width ?? 1600}
+            height={media.height ?? 900}
+            sizes="(min-width: 800px) 768px, 100vw"
+            className="h-auto w-full"
+          />
+        </figure>
+      );
+    },
+  });
+}
 
 type RichTextProps = {
+  /** Lexical content of a post or a glossary term (both use the same editor). */
   data: Post["content"];
   className?: string;
+  /** Anchor ids for heading nodes, for a table of contents (see lib/glossary/outline.ts). */
+  headingIds?: WeakMap<object, string>;
 };
 
-export default function RichText({ data, className }: RichTextProps) {
+export default function RichText({ data, className, headingIds }: RichTextProps) {
   return (
     <LexicalRichText
       data={data as SerializedEditorState}
-      converters={converters}
+      converters={buildConverters(headingIds)}
       className={cn(PROSE, className)}
     />
   );

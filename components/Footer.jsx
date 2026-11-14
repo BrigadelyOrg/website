@@ -19,6 +19,7 @@ const footerLinks = {
     { label: "Contact", href: "mailto:info@brigadely.com" },
   ],
   Resources: [
+    { label: "Glossary", href: "/glossary" },
     { label: "Help centre", href: "#" },
     { label: "FAQ", href: "/#faqs" },
   ],

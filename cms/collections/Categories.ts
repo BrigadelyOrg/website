@@ -7,6 +7,7 @@ import { revalidateBlogHooks } from "../hooks/revalidateBlog";
 export const Categories: CollectionConfig = {
   slug: "categories",
   admin: {
+    group: "Content",
     useAsTitle: "title",
     defaultColumns: ["title", "slug"],
   },

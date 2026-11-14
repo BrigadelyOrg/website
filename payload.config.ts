@@ -8,6 +8,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 
 import { Categories } from "./cms/collections/Categories";
+import { Glossary } from "./cms/collections/Glossary";
 import { Media } from "./cms/collections/Media";
 import { Posts } from "./cms/collections/Posts";
 import { Users } from "./cms/collections/Users";
@@ -56,7 +57,8 @@ export default buildConfig({
       icons: [{ rel: "icon", type: "image/x-icon", url: "/favicon.ico" }],
     },
   },
-  collections: [Posts, Categories, Media, Users],
+  // Posts, Categories and Glossary share the sidebar's "Content" group.
+  collections: [Posts, Glossary, Categories, Media, Users],
   // GET /api/analytics/overview: GA4 + Search Console numbers for the dashboard (signed-in users only).
   endpoints: [analyticsOverviewEndpoint],
   editor,

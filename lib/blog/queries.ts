@@ -36,7 +36,8 @@ type CardSource = BaseSource & Pick<Post, "author">;
 
 // --- Mapping: Payload documents → view models ---------------------------------
 
-function toImage(value: number | Media | null | undefined): BlogImage | null {
+/** An uploaded image, if it was populated (depth ≥ 1) and has a URL. Also used by the glossary. */
+export function toImage(value: number | Media | null | undefined): BlogImage | null {
   if (typeof value !== "object" || value === null || !value.url) return null;
   return {
     url: value.url,

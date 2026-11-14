@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import BlogCTA from "@/components/blog/BlogCTA";
 import BlogIndex from "@/components/blog/BlogIndex";
@@ -50,6 +51,15 @@ export default async function BlogPage() {
           </h1>
           <p className="mt-6 max-w-xl font-sans text-lg leading-relaxed text-gray-600">
             {DESCRIPTION}
+          </p>
+          <p className="mt-5 font-sans text-sm text-gray-500">
+            New to a term?{" "}
+            <Link
+              href="/glossary"
+              className="rounded-sm font-medium text-primary underline-offset-4 transition-colors hover:text-primary-dark hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              Browse the glossary <span aria-hidden="true">→</span>
+            </Link>
           </p>
         </div>
       </section>

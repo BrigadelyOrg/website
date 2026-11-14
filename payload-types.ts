@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     posts: Post;
+    glossary: GlossaryTerm;
     categories: Category;
     media: Media;
     users: User;
@@ -79,6 +80,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     posts: PostsSelect<false> | PostsSelect<true>;
+    glossary: GlossarySelect<false> | GlossarySelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -248,6 +250,78 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Definitions published at brigadely.com/glossary. Only published terms appear on the site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "glossary".
+ */
+export interface GlossaryTerm {
+  id: number;
+  /**
+   * The term, with its abbreviation if it has one, e.g. "PAYE (Pay-As-You-Earn)". The page title becomes "What is PAYE (Pay-As-You-Earn)?".
+   */
+  term: string;
+  /**
+   * One or two sentences, shown in bold under the title. Define the term directly: search engines often quote this as the answer.
+   */
+  shortDefinition: string;
+  /**
+   * Start each section with an H2 heading: every H2 becomes an entry in the page's table of contents.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Optional. Shown at the end of the page and marked up as FAQs for Google.
+   */
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * Used in the URL. Leave blank to generate it from the term.
+   */
+  slug: string;
+  /**
+   * Only published terms appear on the site.
+   */
+  status: 'draft' | 'published';
+  category: 'payroll-tax' | 'statutory-compliance' | 'cross-border-fx' | 'finance-accounting';
+  /**
+   * Shown as links at the end of the page (published terms only).
+   */
+  relatedTerms?: (number | GlossaryTerm)[] | null;
+  /**
+   * Blog articles suggested after the definition (published articles only).
+   */
+  relatedPosts?: (number | Post)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -274,6 +348,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'glossary';
+        value: number | GlossaryTerm;
       } | null)
     | ({
         relationTo: 'categories';
@@ -351,6 +429,36 @@ export interface PostsSelect<T extends boolean = true> {
   readTime?: T;
   category?: T;
   author?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "glossary_select".
+ */
+export interface GlossarySelect<T extends boolean = true> {
+  term?: T;
+  shortDefinition?: T;
+  content?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  status?: T;
+  category?: T;
+  relatedTerms?: T;
+  relatedPosts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
