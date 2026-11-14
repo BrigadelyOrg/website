@@ -16,6 +16,13 @@ const nextConfig = {
   // runtime, so require it (and the auth library it shares) from node_modules
   // instead of bundling them.
   serverExternalPackages: ["@google-analytics/data", "@googleapis/searchconsole", "google-auth-library"],
+  async redirects() {
+    return [
+      // /resources was retired on 2026-11-14. Old links and search results land
+      // on the blog instead of a 404.
+      { source: "/resources", destination: "/blog", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
