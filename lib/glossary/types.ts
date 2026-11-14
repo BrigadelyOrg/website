@@ -47,3 +47,8 @@ export type GlossarySitemapEntry = {
   slug: string;
   updatedAt: string;
 };
+
+/** A term with its one-paragraph definition, as listed in /llms.txt. */
+export type GlossaryDefinition = GlossaryTermLink & {
+  shortDefinition: string;
+};

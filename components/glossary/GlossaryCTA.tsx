@@ -3,6 +3,16 @@ import Link from "next/link";
 import { shortTermName } from "@/lib/glossary/categories";
 import { SIGNUP_URL } from "@/lib/site";
 
+/**
+ * What the headline offers to automate: the term itself ("Automate PAYE…"), or
+ * payroll and tax for comparison terms, since "Automate Gross Pay vs. Net Pay"
+ * doesn't read as a sentence.
+ */
+function automationSubject(term: string): string {
+  const name = shortTermName(term);
+  return /\bvs\.?(\s|$)/i.test(name) ? "payroll, tax" : name;
+}
+
 /** Conversion card at the end of every glossary term, in the style of the blog's closing CTA. */
 export default function GlossaryCTA({ term }: { term: string }) {
   return (
@@ -17,7 +27,7 @@ export default function GlossaryCTA({ term }: { term: string }) {
         id="glossary-cta-heading"
         className="mt-4 max-w-xl text-balance font-sans text-3xl font-black leading-[1.02] tracking-[-0.03em] text-[#111111] md:text-4xl"
       >
-        Automate {shortTermName(term)} and every statutory obligation on one{" "}
+        Automate {automationSubject(term)} and every statutory obligation on one{" "}
         <span className="text-primary">ledger.</span>
       </h2>
       <p className="mt-4 max-w-lg font-sans text-[15px] leading-relaxed text-gray-600">

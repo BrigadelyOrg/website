@@ -8,6 +8,7 @@ import type { GlossaryTerm, Post } from "@/payload-types";
 
 import { GLOSSARY_CACHE_OPTIONS } from "./cache";
 import type {
+  GlossaryDefinition,
   GlossaryRelatedPost,
   GlossarySitemapEntry,
   GlossaryTermLink,
@@ -110,6 +111,19 @@ async function fetchGlossarySitemapEntries(): Promise<GlossarySitemapEntry[]> {
   return docs.map((doc) => ({ slug: doc.slug, updatedAt: doc.updatedAt }));
 }
 
+async function fetchGlossaryDefinitions(): Promise<GlossaryDefinition[]> {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "glossary",
+    where: PUBLISHED,
+    sort: "term",
+    depth: 0,
+    pagination: false,
+    select: { term: true, slug: true, shortDefinition: true },
+  });
+  return docs.map(({ slug, term, shortDefinition }) => ({ slug, term, shortDefinition }));
+}
+
 // React's `cache` dedupes calls within one request (generateMetadata + page);
 // `unstable_cache` persists results across requests until a CMS save expires them.
 
@@ -127,5 +141,12 @@ export const getGlossaryTerm = cache(
 export const getGlossarySitemapEntries = unstable_cache(
   fetchGlossarySitemapEntries,
   ["glossary", "sitemap-entries"],
+  GLOSSARY_CACHE_OPTIONS,
+);
+
+/** Every published term with its short definition, A–Z, for /llms.txt. */
+export const getGlossaryDefinitions = unstable_cache(
+  fetchGlossaryDefinitions,
+  ["glossary", "definitions"],
   GLOSSARY_CACHE_OPTIONS,
 );
