@@ -12,6 +12,7 @@ import { Media } from "./cms/collections/Media";
 import { Posts } from "./cms/collections/Posts";
 import { Users } from "./cms/collections/Users";
 import { editor } from "./cms/editor";
+import { blogAnalyticsEndpoint } from "./cms/endpoints/blogAnalytics";
 import { generateDescription, generateTitle, generateURL } from "./cms/seo";
 import { migrations } from "./migrations";
 
@@ -39,6 +40,8 @@ export default buildConfig({
     // Always light: by default the admin follows the OS (dark mode = black UI).
     theme: "light",
     components: {
+      // GA4 blog analytics above the collection cards on the dashboard.
+      beforeDashboard: ["/cms/admin/analytics/BlogAnalyticsDashboard#BlogAnalyticsDashboard"],
       graphics: {
         Logo: "/cms/admin/BrandLogo#BrandLogo",
         Icon: "/cms/admin/BrandIcon#BrandIcon",
@@ -52,6 +55,8 @@ export default buildConfig({
     },
   },
   collections: [Posts, Categories, Media, Users],
+  // GET /api/analytics/blog: GA4 numbers for the dashboard (signed-in users only).
+  endpoints: [blogAnalyticsEndpoint],
   editor,
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {

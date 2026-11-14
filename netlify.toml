@@ -1,10 +1,14 @@
 # Netlify settings kept in the repo. The build command, publish directory and the
-# secret environment variables (DATABASE_URI, PAYLOAD_SECRET, S3_*) stay in the
-# Netlify UI.
+# secret environment variables (DATABASE_URI, PAYLOAD_SECRET, S3_*, GA4_*) stay in
+# the Netlify UI.
 
 [build.environment]
-  # Netlify's secrets scanner fails the build if any env var's value appears in
-  # the build output. S3_REGION (e.g. "us-east-2") is a public AWS region name
-  # that also occurs inside the AWS SDK's own code, so it is not a secret. The
-  # real secrets (DATABASE_URI, PAYLOAD_SECRET, S3 keys) are still scanned.
-  SECRETS_SCAN_OMIT_KEYS = "S3_REGION"
+  # Netlify's secrets scanner fails the build if an env var's value appears in
+  # the build output or the repo. These values are not secrets:
+  # - S3_REGION ("us-east-2") also occurs inside the AWS SDK's own code.
+  # - S3_BUCKET is only the bucket's name.
+  # - NEXT_PUBLIC_GA_MEASUREMENT_ID (G-...) is public by design: Next.js inlines
+  #   it into the browser JavaScript so the Google tag can load.
+  # The real secrets (DATABASE_URI, PAYLOAD_SECRET, S3 keys, GA4_PRIVATE_KEY)
+  # are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "S3_REGION,S3_BUCKET,NEXT_PUBLIC_GA_MEASUREMENT_ID"

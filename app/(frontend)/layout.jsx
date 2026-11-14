@@ -1,12 +1,19 @@
 import localFont from "next/font/local";
 import { Inter, Libre_Baskerville } from "next/font/google";
 import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 
 const GTM_ID = "GTM-NQPV8M79";
+
+// Optional GA4 tag (gtag.js), rendered only when NEXT_PUBLIC_GA_MEASUREMENT_ID is
+// set. Only this (frontend) layout loads it, so /admin activity is never tracked.
+// The GTM container above already sends page views to GA4 (G-4ZN7WY06BD): don't
+// set this to that same ID, or every page view is counted twice.
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -272,6 +279,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
       </body>
+      {GA_MEASUREMENT_ID ? <GoogleAnalytics gaId={GA_MEASUREMENT_ID} /> : null}
     </html>
   );
 }
