@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { formatInteger } from "../../../../lib/analytics/format";
 import styles from "../dashboard.module.scss";
 import { IconAlert, IconPlug } from "./icons";
 import { cx } from "./util";
@@ -12,6 +13,23 @@ export function StatusPill({ state, label }: { state: ConnectionState; label: st
     <span className={styles.pill} data-state={state}>
       <span className={styles.pillDot} aria-hidden="true" />
       {label}
+    </span>
+  );
+}
+
+/**
+ * Who's on the site now (GA4 Realtime, last 30 minutes). Realtime skips
+ * Google's processing delay, so this moves before the reports do.
+ */
+export function LivePill({ activeUsers, asOf }: { activeUsers: number; asOf: string }) {
+  return (
+    <span
+      className={styles.pill}
+      data-state={activeUsers > 0 ? "live" : "off"}
+      title={`GA4 Realtime as of ${asOf}. Refresh to update.`}
+    >
+      <span className={styles.pillDot} aria-hidden="true" />
+      {formatInteger(activeUsers)} active {activeUsers === 1 ? "user" : "users"} · last 30 min
     </span>
   );
 }

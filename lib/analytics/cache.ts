@@ -4,36 +4,39 @@
  */
 import { revalidateTag, unstable_cache } from "next/cache";
 
-/** Google is asked at most once per 15 minutes per data source and range. */
+/** Google is asked at most once per 15 minutes per data source and range (Realtime: once a minute). */
 export const ANALYTICS_CACHE_SECONDS = 15 * 60;
 
 /** A manual refresh within a minute of the last fetch reuses it (protects the API quota). */
 const MIN_REFRESH_AGE_MS = 60 * 1000;
 
 /**
- * The cached report for `key`, or a fresh one when it's older than 15 minutes
- * or a manual refresh asks for it.
+ * The cached report for `key`, or a fresh one when it's older than
+ * `maxAgeSeconds` (15 minutes by default) or a manual refresh asks for it.
  */
 export async function cachedReport<T extends { fetchedAt: string }>({
   key,
   fetcher,
   refresh = false,
+  maxAgeSeconds = ANALYTICS_CACHE_SECONDS,
 }: {
   key: string[];
   fetcher: () => Promise<T>;
   refresh?: boolean;
+  maxAgeSeconds?: number;
 }): Promise<T> {
   const tag = `analytics:${key.join(":")}`;
   const cached = await unstable_cache(fetcher, ["analytics", ...key], {
-    revalidate: ANALYTICS_CACHE_SECONDS,
+    revalidate: maxAgeSeconds,
     tags: [tag],
   })();
 
-  // Past its 15 minutes the cache still hands back the old entry once while it
+  // Past its max age the cache still hands back the old entry once while it
   // refreshes in the background. After a quiet night that could be yesterday's
   // numbers, so fetch now instead; same for a manual refresh.
+  const maxAge = maxAgeSeconds * 1000;
   const age = Date.now() - Date.parse(cached.fetchedAt);
-  if (age < (refresh ? MIN_REFRESH_AGE_MS : ANALYTICS_CACHE_SECONDS * 1000)) return cached;
+  if (age < (refresh ? Math.min(MIN_REFRESH_AGE_MS, maxAge) : maxAge)) return cached;
 
   try {
     const fresh = await fetcher();

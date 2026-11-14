@@ -9,14 +9,20 @@ import {
   DEFAULT_ANALYTICS_RANGE,
   type AnalyticsRange,
 } from "../../../lib/analytics/ranges";
-import type { AnalyticsErrorBody, AnalyticsOverviewResponse, SectionState } from "../../../lib/analytics/types";
+import type {
+  AnalyticsErrorBody,
+  AnalyticsOverviewResponse,
+  Ga4Report,
+  LiveVisitors,
+  SectionState,
+} from "../../../lib/analytics/types";
 import styles from "./dashboard.module.scss";
 import { BlogTab } from "./tabs/BlogTab";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { SearchTab } from "./tabs/SearchTab";
-import { Ga4Setup, SearchSetup } from "./tabs/shared";
+import { AwaitingData, Ga4Setup, SearchSetup } from "./tabs/shared";
 import { IconArticle, IconOverview, IconRefresh, IconSearch } from "./ui/icons";
-import { ErrorNotice, StatusPill, TabSkeleton, type ConnectionState } from "./ui/States";
+import { ErrorNotice, LivePill, StatusPill, TabSkeleton, type ConnectionState } from "./ui/States";
 
 const TABS = [
   { id: "overview", label: "Overview & Conversions", Icon: IconOverview },
@@ -57,6 +63,20 @@ function connection(section: SectionState<unknown> | undefined, name: string): {
 }
 
 const timeOf = (iso: string) => new Date(iso).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+/** Every loaded range carries a Realtime count; the newest one is shown (ISO times sort as text). */
+function latestLive(responses: ReadonlyArray<AnalyticsOverviewResponse | undefined>): LiveVisitors | null {
+  let latest: LiveVisitors | null = null;
+  for (const response of responses) {
+    const live = response?.live;
+    if (live && (!latest || live.fetchedAt > latest.fetchedAt)) latest = live;
+  }
+  return latest;
+}
+
+/** No processed visits anywhere on the site in this range (new property, or a tag that isn't sending). */
+const hasNoVisits = (report: Ga4Report) =>
+  report.site.overview.activeUsers.current === 0 && report.site.overview.pageViews.current === 0;
 
 interface DashboardShellProps {
   adminRoute: string;
@@ -158,6 +178,7 @@ export function DashboardShell({ adminRoute, apiRoute, publishedArticles, publis
   const fetchedAt = ga4?.status === "ok" ? ga4.data.fetchedAt : gsc?.status === "ok" ? gsc.data.fetchedAt : undefined;
   const ga4Pill = connection(ga4, "GA4");
   const gscPill = connection(gsc, "Search Console");
+  const live = latestLive(Object.values(results));
 
   function panel() {
     if (!shown) {
@@ -178,17 +199,22 @@ export function DashboardShell({ adminRoute, apiRoute, publishedArticles, publis
     if (ga4.status === "error") {
       return <ErrorNotice title="Google Analytics" error={ga4.error} hint={ga4.hint} onRetry={refresh} retrying={refreshing} />;
     }
-    return tab === "overview" ? (
-      <OverviewTab report={ga4.data} adminRoute={adminRoute} periodLabel={periodLabel} />
-    ) : (
-      <BlogTab
-        report={ga4.data}
-        adminRoute={adminRoute}
-        periodLabel={periodLabel}
-        days={days}
-        publishedArticles={publishedArticles}
-        publishedInPeriod={publishedInRange[shownRange]}
-      />
+    return (
+      <>
+        {hasNoVisits(ga4.data) ? <AwaitingData live={live} /> : null}
+        {tab === "overview" ? (
+          <OverviewTab report={ga4.data} adminRoute={adminRoute} periodLabel={periodLabel} />
+        ) : (
+          <BlogTab
+            report={ga4.data}
+            adminRoute={adminRoute}
+            periodLabel={periodLabel}
+            days={days}
+            publishedArticles={publishedArticles}
+            publishedInPeriod={publishedInRange[shownRange]}
+          />
+        )}
+      </>
     );
   }
 
@@ -201,6 +227,7 @@ export function DashboardShell({ adminRoute, apiRoute, publishedArticles, publis
           </h2>
           <div className={styles.meta}>
             <StatusPill state={ga4Pill.state} label={ga4Pill.label} />
+            {live ? <LivePill activeUsers={live.activeUsers} asOf={timeOf(live.fetchedAt)} /> : null}
             <StatusPill state={gscPill.state} label={gscPill.label} />
             {period ? (
               <>

@@ -158,6 +158,12 @@
   animation: pulse 1.2s ease-in-out infinite;
 }
 
+// Someone's on the site right now (GA4 Realtime).
+.pill[data-state="live"] .pillDot {
+  background: var(--gd-accent);
+  animation: live 2s ease-out infinite;
+}
+
 .segmented {
   display: inline-flex;
   gap: 2px;
@@ -1090,6 +1096,16 @@ a.rowTitle:hover {
   color: var(--gd-bad);
 }
 
+// An explanation above the numbers rather than a whole panel.
+.noticeCompact {
+  padding: 16px 20px;
+}
+
+.noticeNeutral .noticeIcon {
+  background: var(--gd-well);
+  color: var(--gd-text-2);
+}
+
 .noticeTitle {
   margin: 0;
   font-size: 15px;
@@ -1194,11 +1210,25 @@ a.rowTitle:hover {
   }
 }
 
+@keyframes live {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--gd-accent) 45%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--gd-accent) 0%, transparent);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .skeleton::after,
   .refresh[data-busy] svg,
   .pill[data-state="loading"] .pillDot {
     animation: none;
+  }
+
+  .pill[data-state="live"] .pillDot {
+    animation: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gd-accent) 20%, transparent);
   }
 
   .panel,

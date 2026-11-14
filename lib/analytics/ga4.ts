@@ -31,6 +31,7 @@ import {
   toBlogOverview,
   toConvertingPages,
   toDeviceSplit,
+  toLiveVisitors,
   toPageStats,
   toPlaces,
   toSiteDaily,
@@ -38,7 +39,7 @@ import {
   toTopArticles,
   toTrafficSources,
 } from "./report";
-import type { Ga4Stats } from "./types";
+import type { Ga4Stats, LiveVisitors } from "./types";
 
 export type Ga4EnvKey = "GA4_PROPERTY_ID" | ServiceAccountKey;
 
@@ -68,18 +69,47 @@ export function getGa4Report(
   });
 }
 
+/** Visitors in the last 30 minutes (GA4 Realtime), cached for a minute. */
+export function getGa4Live(settings: Extract<Ga4Settings, { configured: true }>, refresh = false): Promise<LiveVisitors> {
+  return cachedReport({
+    key: ["ga4-live", settings.propertyId],
+    fetcher: () => fetchGa4Live(settings),
+    refresh,
+    maxAgeSeconds: 60,
+  });
+}
+
 const ANALYTICS_SCOPE = "https://www.googleapis.com/auth/analytics.readonly";
 
-async function fetchGa4Report(
-  { propertyId, account }: Extract<Ga4Settings, { configured: true }>,
-  range: AnalyticsRange,
-): Promise<Ga4Stats> {
+function assertPropertyId(propertyId: string): void {
   if (!/^\d+$/.test(propertyId)) {
     throw new GoogleConfigError(
       `GA4_PROPERTY_ID "${propertyId}" isn't a GA4 property ID.`,
       "Use the numeric Property ID from GA4 → Admin → Property details (for example 412345678), not the G-… measurement ID.",
     );
   }
+}
+
+async function fetchGa4Live({ propertyId, account }: Extract<Ga4Settings, { configured: true }>): Promise<LiveVisitors> {
+  assertPropertyId(propertyId);
+  const [sdk, authClient] = await Promise.all([
+    import("@google-analytics/data"),
+    serviceAccountClient(account, ANALYTICS_SCOPE),
+  ]);
+  // No minuteRanges: the default, the last 30 minutes, is as far back as a
+  // standard property may look (Google rejects startMinutesAgo above 29).
+  const [response] = await dataClient(sdk, account.clientEmail, authClient).runRealtimeReport(
+    { property: `properties/${propertyId}`, metrics: names("activeUsers", "screenPageViews") },
+    { timeout: 10_000 },
+  );
+  return { ...toLiveVisitors(response), fetchedAt: new Date().toISOString() };
+}
+
+async function fetchGa4Report(
+  { propertyId, account }: Extract<Ga4Settings, { configured: true }>,
+  range: AnalyticsRange,
+): Promise<Ga4Stats> {
+  assertPropertyId(propertyId);
 
   const { days } = ANALYTICS_RANGES[range];
   const [sdk, authClient] = await Promise.all([

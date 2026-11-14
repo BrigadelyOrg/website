@@ -1,12 +1,13 @@
 import type { Endpoint, PayloadRequest } from "payload";
 
-import { describeGa4Error, getGa4Report, readGa4Settings, type Ga4Settings } from "../../lib/analytics/ga4";
+import { describeGa4Error, getGa4Live, getGa4Report, readGa4Settings, type Ga4Settings } from "../../lib/analytics/ga4";
 import { describeSearchConsoleError, getSearchReport, readGscSettings, type GscSettings } from "../../lib/analytics/gsc";
 import { DEFAULT_ANALYTICS_RANGE, isAnalyticsRange, type AnalyticsRange } from "../../lib/analytics/ranges";
 import type {
   AnalyticsErrorBody,
   AnalyticsOverviewResponse,
   Ga4Report,
+  LiveVisitors,
   SearchReport,
   SectionState,
 } from "../../lib/analytics/types";
@@ -18,7 +19,8 @@ import type {
  * performance (Search Console), for the /admin dashboard. Signed-in CMS users
  * only. Each source is reported on its own: { status: "ok" | "unconfigured" | "error" },
  * so a missing GSC_SITE_URL or a Google error never blanks the other tabs.
- * Results are cached for 15 minutes; refresh=1 asks Google again.
+ * Results are cached for 15 minutes; refresh=1 asks Google again. `live` (GA4
+ * Realtime, the last 30 minutes) is cached for a minute.
  */
 export const analyticsOverviewEndpoint: Endpoint = {
   path: "/analytics/overview",
@@ -37,9 +39,10 @@ export const analyticsOverviewEndpoint: Endpoint = {
 
     const ga4Settings = readGa4Settings();
     const gscSettings = readGscSettings();
-    const [ga4, gsc] = await Promise.all([
+    const [ga4, gsc, live] = await Promise.all([
       loadGa4(req, ga4Settings, range, refresh),
       loadSearch(req, gscSettings, range, refresh),
+      loadLive(req, ga4Settings, refresh),
     ]);
 
     return respond({
@@ -48,6 +51,7 @@ export const analyticsOverviewEndpoint: Endpoint = {
       gscConfigured: gscSettings.configured,
       ga4,
       gsc,
+      live,
     });
   },
 };
@@ -83,6 +87,17 @@ async function loadGa4(
     const problem = describeGa4Error(error);
     req.payload.logger.error({ err: error, msg: `Analytics (GA4): ${problem.error}` });
     return { status: "error", ...problem };
+  }
+}
+
+/** Realtime is an extra: when it fails, the dashboard leaves the live count out (GA4 errors show on the tabs). */
+async function loadLive(req: PayloadRequest, settings: Ga4Settings, refresh: boolean): Promise<LiveVisitors | null> {
+  if (!settings.configured) return null;
+  try {
+    return await getGa4Live(settings, refresh);
+  } catch (error) {
+    req.payload.logger.warn({ err: error, msg: `Analytics (GA4 Realtime): ${describeGa4Error(error).error}` });
+    return null;
   }
 }
 

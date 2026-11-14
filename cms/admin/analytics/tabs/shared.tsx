@@ -1,8 +1,45 @@
 import { Link } from "@payloadcms/ui";
 
+import { formatInteger } from "../../../../lib/analytics/format";
+import type { LiveVisitors } from "../../../../lib/analytics/types";
 import styles from "../dashboard.module.scss";
-import { IconExternal } from "../ui/icons";
+import { IconClock, IconExternal } from "../ui/icons";
 import { SetupNotice } from "../ui/States";
+import { cx } from "../ui/util";
+
+/**
+ * Above the GA4 tabs while the selected range has no processed visits at all:
+ * a new property, a tag that isn't sending, or a range from before tracking
+ * started. The live count tells a new property apart from a silent tag.
+ */
+export function AwaitingData({ live }: { live: LiveVisitors | null }) {
+  const activeNow = live?.activeUsers ?? 0;
+  return (
+    <div className={cx(styles.notice, styles.noticeCompact, activeNow > 0 ? undefined : styles.noticeNeutral)} role="status">
+      <div className={styles.noticeHead}>
+        <span className={styles.noticeIcon}>
+          <IconClock />
+        </span>
+        <h3 className={styles.noticeTitle}>
+          {activeNow > 0 ? "Visits are coming in; they appear here after the first full day" : "No processed visits in this range yet"}
+        </h3>
+      </div>
+      {activeNow > 0 ? (
+        <p>
+          Google Analytics has {formatInteger(activeNow)} active {activeNow === 1 ? "user" : "users"} in the last 30
+          minutes, but no processed visits in this range yet. This dashboard counts whole days up to yesterday, and
+          Google can take 24–48 hours to process a new property&rsquo;s first visits.
+        </p>
+      ) : (
+        <p>
+          This dashboard counts whole days up to yesterday, and Google can take 24–48 hours to process new visits. If
+          brigadely.com has been tracked for longer than that, check that <code>GA4_PROPERTY_ID</code> is the property
+          your Google tag sends data to.
+        </p>
+      )}
+    </div>
+  );
+}
 
 /** A page or article row: title, path, and quick links to edit it in /admin or open it live. */
 export function PageLabel({

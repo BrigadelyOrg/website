@@ -111,6 +111,12 @@ function calendarDay(now: Date, timeZone: string): string {
 
 // --- Site-wide ------------------------------------------------------------------------
 
+/** realtime: Realtime report, no dimensions, metrics [activeUsers, screenPageViews]. No row means nobody's on the site. */
+export function toLiveVisitors(realtime: Report): { activeUsers: number; pageViews: number } {
+  const row = realtime?.rows?.[0];
+  return { activeUsers: metric(row, 0), pageViews: metric(row, 1) };
+}
+
 /**
  * kpis: no dimensions, two periods, metrics [activeUsers, screenPageViews, engagementRate].
  * cta: dimension [date], two periods, metric [eventCount], filtered to cta_click.

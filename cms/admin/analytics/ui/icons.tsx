@@ -87,6 +87,15 @@ export function IconAlert(props: IconProps) {
   );
 }
 
+export function IconClock(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="8" cy="8" r="5.75" />
+      <path d="M8 5v3.25l2 1.25" />
+    </Icon>
+  );
+}
+
 /** Solid triangle for trend badges. */
 export function IconTrend({ direction }: { direction: "up" | "down" }) {
   return (

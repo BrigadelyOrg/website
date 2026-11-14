@@ -147,6 +147,19 @@ export type Ga4Stats = Omit<Ga4Report, "site" | "blog"> & {
   blog: Omit<BlogReport, "topArticles"> & { topArticles: Omit<TopArticle, "title" | "postId">[] };
 };
 
+/**
+ * Who's on the site now: the last 30 minutes from the GA4 Realtime API, the
+ * longest window a standard (non-360) property allows. Unlike the reports
+ * above, it isn't held back by Google's processing delay and it can't be
+ * filtered by hostname, so local test visits count too.
+ */
+export interface LiveVisitors {
+  activeUsers: number;
+  pageViews: number;
+  /** When this was fetched from Google (ISO 8601). */
+  fetchedAt: string;
+}
+
 // --- Google Search Console --------------------------------------------------------------
 
 export interface SearchTotals {
@@ -204,6 +217,8 @@ export interface AnalyticsOverviewResponse {
   gscConfigured: boolean;
   ga4: SectionState<Ga4Report>;
   gsc: SectionState<SearchReport>;
+  /** GA4 Realtime; null when GA4 isn't set up or the Realtime request failed. */
+  live: LiveVisitors | null;
 }
 
 /** 4xx body of the endpoint. */
