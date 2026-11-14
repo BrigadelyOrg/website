@@ -9,6 +9,7 @@ const links = [
   { name: "Compliance", path: "#compliance" },
   { name: "How it works", path: "#how-it-works" },
   { name: "FAQ", path: "#faqs" },
+  { name: "Blog", path: "/blog" },
 ];
 
 const Nav = ({ light = false }) => {
@@ -22,13 +23,21 @@ const Nav = ({ light = false }) => {
           : pathname !== "/"
           ? `/${link.path}`
           : link.path;
+        // A real page (not a section anchor) is "current" on itself and its sub-pages, e.g. /blog/<slug>.
+        const isCurrent =
+          link.path.startsWith("/") && (pathname === link.path || pathname.startsWith(`${link.path}/`));
         return (
           <Link
             key={index}
             href={href}
+            aria-current={isCurrent ? "page" : undefined}
             className={`text-sm font-medium font-sans transition-colors duration-200 ${
               light
-                ? "text-white/70 hover:text-white"
+                ? isCurrent
+                  ? "text-white"
+                  : "text-white/70 hover:text-white"
+                : isCurrent
+                ? "text-[#111111]"
                 : "text-gray-500 hover:text-[#111111]"
             }`}
           >

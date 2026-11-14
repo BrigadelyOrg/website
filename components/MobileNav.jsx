@@ -20,6 +20,7 @@ const links = [
   { name: "How it works", path: "#how-it-works" },
   { name: "For accountants", path: "#who" },
   { name: "FAQ", path: "#faqs" },
+  { name: "Blog", path: "/blog" },
 ];
 
 const MobileNav = ({ light = false }) => {
@@ -62,12 +63,18 @@ const MobileNav = ({ light = false }) => {
               : pathname !== "/"
               ? `/${link.path}`
               : link.path;
+            // A real page (not a section anchor) is "current" on itself and its sub-pages, e.g. /blog/<slug>.
+            const isCurrent =
+              link.path.startsWith("/") && (pathname === link.path || pathname.startsWith(`${link.path}/`));
             return (
               <Link
                 key={index}
                 href={href}
                 onClick={handleLinkClick}
-                className="text-lg font-medium font-sans text-gray-700 hover:text-[#007a3d] transition-all"
+                aria-current={isCurrent ? "page" : undefined}
+                className={`text-lg font-medium font-sans transition-all ${
+                  isCurrent ? "text-[#007a3d]" : "text-gray-700 hover:text-[#007a3d]"
+                }`}
               >
                 {link.name}
               </Link>
