@@ -1,3 +1,4 @@
+import { BookA } from "lucide-react";
 import type { Metadata } from "next";
 
 import JsonLd from "@/components/JsonLd";
@@ -65,13 +66,18 @@ export default async function GlossaryPage({ searchParams }: PageProps) {
       <JsonLd schema={termSetSchema} />
 
       <GlossaryDirectory terms={terms} initialQuery={query}>
-        <span className="inline-flex items-center rounded-full bg-brand-mint px-3 py-1.5 font-sans text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
-          Glossary
+        <span
+          aria-hidden="true"
+          className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-primary text-white shadow-[0_10px_28px_-10px_rgba(0,122,61,0.6)] md:h-20 md:w-20"
+        >
+          <BookA className="h-7 w-7 md:h-9 md:w-9" strokeWidth={2.25} />
         </span>
-        <h1 className="mt-6 max-w-4xl font-sans text-5xl font-black leading-[0.95] tracking-[-0.03em] text-[#111111] md:text-6xl lg:text-7xl">
+        <h1 className="mx-auto mt-7 max-w-4xl text-balance font-sans text-4xl font-black leading-[1.02] tracking-[-0.03em] text-[#111111] sm:text-5xl md:text-6xl">
           African Payroll, Tax &amp; Finance <span className="text-primary">Glossary.</span>
         </h1>
-        <p className="mt-6 max-w-2xl font-sans text-lg leading-relaxed text-gray-600">{DESCRIPTION}</p>
+        <p className="mx-auto mt-5 max-w-3xl font-sans text-base leading-relaxed text-gray-600 md:text-lg">
+          {DESCRIPTION}
+        </p>
       </GlossaryDirectory>
     </main>
   );
