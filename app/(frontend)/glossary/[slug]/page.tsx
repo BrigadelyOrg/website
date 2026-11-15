@@ -1,14 +1,16 @@
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import JsonLd from "@/components/JsonLd";
+import ArticleTableOfContents from "@/components/blog/ArticleTableOfContents";
+import MobileTableOfContents from "@/components/blog/MobileTableOfContents";
 import RichText from "@/components/blog/RichText";
 import GlossaryCTA from "@/components/glossary/GlossaryCTA";
 import QuickSearch from "@/components/glossary/QuickSearch";
-import TableOfContents from "@/components/glossary/TableOfContents";
 import { formatPostDate } from "@/lib/blog/format";
+import { getContentSettings } from "@/lib/blog/settings";
 import { glossaryCategoryLabel } from "@/lib/glossary/categories";
 import { outlineOf, type OutlineEntry } from "@/lib/outline";
 import { getGlossaryTerm } from "@/lib/glossary/queries";
@@ -92,7 +94,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function GlossaryTermPage({ params }: PageProps) {
   const { slug } = await params;
-  const term = await getGlossaryTerm(slug);
+  const [term, settings] = await Promise.all([getGlossaryTerm(slug), getContentSettings()]);
   if (!term) notFound();
 
   const url = `${GLOSSARY_URL}/${term.slug}`;
@@ -170,9 +172,10 @@ export default async function GlossaryTermPage({ params }: PageProps) {
           </div>
 
           <div className="mt-10 flex gap-12 lg:mt-14 xl:gap-16">
+            {/* The same card as blog articles: sections, the one being read highlighted, and the CMS button. */}
             {toc.length > 0 && (
-              <aside className="sticky top-24 hidden max-h-[calc(100vh-7rem)] w-64 shrink-0 self-start overflow-y-auto pb-6 lg:block">
-                <TableOfContents entries={toc} />
+              <aside className="sticky top-28 hidden w-64 shrink-0 self-start lg:block xl:w-72">
+                <ArticleTableOfContents entries={toc} button={settings.tocButton} />
               </aside>
             )}
 
@@ -196,30 +199,7 @@ export default async function GlossaryTermPage({ params }: PageProps) {
                 </p>
               </header>
 
-              {/* Phones and tablets: the table of contents folds into the top of the article. */}
-              {toc.length > 0 && (
-                <details className="group mt-8 rounded-2xl border border-gray-200 px-5 py-4 lg:hidden">
-                  <summary className="flex cursor-pointer list-none items-center justify-between font-sans text-sm font-semibold text-[#111111] [&::-webkit-details-marker]:hidden">
-                    Table of Contents
-                    <ChevronDown
-                      aria-hidden="true"
-                      className="h-4 w-4 text-gray-500 transition-transform duration-200 group-open:rotate-180"
-                    />
-                  </summary>
-                  <ol className="mt-3 space-y-2 border-t border-gray-100 pt-3">
-                    {toc.map((entry) => (
-                      <li key={entry.id}>
-                        <a
-                          href={`#${entry.id}`}
-                          className="font-sans text-sm text-gray-600 transition-colors hover:text-primary"
-                        >
-                          {entry.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </details>
-              )}
+              {toc.length > 0 && <MobileTableOfContents entries={toc} className="mt-8" />}
 
               <RichText data={term.content} headingIds={headingIds} className={`mt-10 ${CALLOUTS}`} />
 

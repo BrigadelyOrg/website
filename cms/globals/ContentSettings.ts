@@ -16,7 +16,7 @@ export const ContentSettings: GlobalConfig = {
   label: "Content settings",
   admin: {
     group: "Content",
-    description: "Site-wide options for blog articles.",
+    description: "Site-wide options for blog articles and glossary entries.",
   },
   access: {
     read: signedIn,
@@ -28,7 +28,8 @@ export const ContentSettings: GlobalConfig = {
       type: "group",
       label: "Table of contents button",
       admin: {
-        description: "The button at the bottom of the table of contents beside every blog article.",
+        description:
+          "The button at the bottom of the table of contents beside every blog article and glossary entry.",
       },
       fields: [
         {

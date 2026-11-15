@@ -79,6 +79,10 @@ export const Posts: CollectionConfig = {
               name: "content",
               type: "richText",
               required: true,
+              admin: {
+                description:
+                  'Format each section title as Heading 2 (type "## " at the start of a line, or use the toolbar). Those headings make up the table of contents beside the article.',
+              },
             },
             {
               name: "faqs",

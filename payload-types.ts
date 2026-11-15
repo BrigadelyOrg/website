@@ -153,6 +153,9 @@ export interface Post {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Format each section title as Heading 2 (type "## " at the start of a line, or use the toolbar). Those headings make up the table of contents beside the article.
+   */
   content: {
     root: {
       type: string;
@@ -666,7 +669,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Site-wide options for blog articles.
+ * Site-wide options for blog articles and glossary entries.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "content-settings".
@@ -674,7 +677,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface ContentSetting {
   id: number;
   /**
-   * The button at the bottom of the table of contents beside every blog article.
+   * The button at the bottom of the table of contents beside every blog article and glossary entry.
    */
   tocButton: {
     label: string;

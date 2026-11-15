@@ -1,4 +1,4 @@
-import { ChevronDown, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import ArticleTableOfContents from "@/components/blog/ArticleTableOfContents";
 import AuthorAvatar from "@/components/blog/AuthorAvatar";
 import BlogCTA from "@/components/blog/BlogCTA";
 import KeyTakeaways from "@/components/blog/KeyTakeaways";
+import MobileTableOfContents from "@/components/blog/MobileTableOfContents";
 import PostCard from "@/components/blog/PostCard";
 import RichText from "@/components/blog/RichText";
 import ShareButtons from "@/components/blog/ShareButtons";
@@ -261,52 +262,35 @@ export default async function BlogPostPage({ params }: PageProps) {
         </header>
 
         <div className="px-6 py-12 md:py-16 lg:py-20">
-          <div className={cn("mx-auto flex max-w-7xl gap-10 xl:gap-14", !hasToc && "justify-center")}>
-            {hasToc && (
+          {/* Table of contents on the left, share rail pinned to the right edge, article centred between them. */}
+          <div className="mx-auto flex max-w-7xl gap-10 xl:gap-14">
+            {hasToc ? (
               <aside className="sticky top-28 hidden w-64 shrink-0 self-start lg:block xl:w-72">
                 <ArticleTableOfContents entries={toc} button={settings.tocButton} />
               </aside>
+            ) : (
+              // Balances the share rail, so an article without a table of contents sits centred on the page.
+              <div aria-hidden="true" className="hidden w-12 shrink-0 xl:block" />
             )}
 
-            <div id="article-body" className="min-w-0 max-w-3xl flex-1">
-              {/* Phones and tablets: the table of contents folds into the top of the article. */}
-              {hasToc && (
-                <details className="group mb-10 rounded-2xl border border-gray-200 px-5 py-4 lg:hidden">
-                  <summary className="flex cursor-pointer list-none items-center justify-between font-sans text-sm font-semibold text-[#111111] [&::-webkit-details-marker]:hidden">
-                    Table of Contents
-                    <ChevronDown
-                      aria-hidden="true"
-                      className="h-4 w-4 text-gray-500 transition-transform duration-200 group-open:rotate-180"
-                    />
-                  </summary>
-                  <ol className="mt-3 space-y-2 border-t border-gray-100 pt-3">
-                    {toc.map((entry) => (
-                      <li key={entry.id}>
-                        <a
-                          href={`#${entry.id}`}
-                          className="font-sans text-sm text-gray-600 transition-colors hover:text-primary"
-                        >
-                          {entry.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </details>
-              )}
+            <div className="min-w-0 flex-1">
+              <div id="article-body" className="mx-auto max-w-[720px]">
+                {hasToc && <MobileTableOfContents entries={toc} className="mb-10" />}
 
-              {post.keyTakeaways.length > 0 && (
-                <div className="mb-12">
-                  <KeyTakeaways items={post.keyTakeaways} />
-                </div>
-              )}
+                {post.keyTakeaways.length > 0 && (
+                  <div className="mb-12">
+                    <KeyTakeaways items={post.keyTakeaways} />
+                  </div>
+                )}
 
-              <RichText data={post.content} headingIds={headingIds} />
+                <RichText data={post.content} headingIds={headingIds} />
 
-              {post.faqs.length > 0 && <ArticleFaqs faqs={post.faqs} />}
+                {post.faqs.length > 0 && <ArticleFaqs faqs={post.faqs} />}
 
-              {post.author && <AboutTheAuthor author={post.author} />}
+                {post.author && <AboutTheAuthor author={post.author} />}
 
-              <ShareButtons variant="inline" url={url} title={post.title} className="mt-12 xl:hidden" />
+                <ShareButtons variant="inline" url={url} title={post.title} className="mt-12 xl:hidden" />
+              </div>
             </div>
 
             <aside aria-label="Share and navigation" className="sticky top-28 hidden w-12 shrink-0 self-start xl:block">
