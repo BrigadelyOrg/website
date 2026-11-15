@@ -1,10 +1,13 @@
 import {
+  BlocksFeature,
   EXPERIMENTAL_TableFeature,
   FixedToolbarFeature,
   HeadingFeature,
   LinkFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
+
+import { PromoBlock } from "./blocks/Promo";
 
 // Default features we either reconfigure below or drop:
 // - heading: the article title is the page's only <h1>, so content starts at h2
@@ -20,5 +23,7 @@ export const editor = lexicalEditor({
     LinkFeature({ enabledCollections: ["posts", "glossary"] }),
     FixedToolbarFeature(),
     EXPERIMENTAL_TableFeature(),
+    // Articles and glossary entries share this editor, so both can include promos.
+    BlocksFeature({ blocks: [PromoBlock] }),
   ],
 });

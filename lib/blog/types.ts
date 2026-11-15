@@ -19,7 +19,14 @@ export type BlogCategory = {
 export type BlogAuthor = {
   name: string;
   roleTitle: string | null;
+  /** For "About the author"; written in the third person. */
+  bio: string | null;
   avatar: BlogImage | null;
+};
+
+export type BlogFaq = {
+  question: string;
+  answer: string;
 };
 
 /** A post as shown on cards (/blog grid and "Related articles"). */
@@ -37,7 +44,9 @@ export type BlogPostCard = {
 export type BlogPost = Omit<BlogPostCard, "authorName"> & {
   excerpt: string;
   readTime: number;
+  keyTakeaways: string[];
   content: Post["content"];
+  faqs: BlogFaq[];
   author: BlogAuthor | null;
   updatedAt: string;
   meta: {

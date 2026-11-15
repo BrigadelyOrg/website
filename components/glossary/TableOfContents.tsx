@@ -1,45 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
-import type { OutlineEntry } from "@/lib/glossary/outline";
+import { useActiveSection } from "@/lib/hooks/useActiveSection";
+import type { OutlineEntry } from "@/lib/outline";
 import { cn } from "@/lib/utils";
-
-/** A section counts as "being read" once its heading passes this line (just below the fixed header). */
-const READING_LINE_PX = 140;
 
 /** The term page's sticky sidebar: one link per H2 (plus FAQs), the current section highlighted. */
 export default function TableOfContents({ entries }: { entries: OutlineEntry[] }) {
-  const [activeId, setActiveId] = useState<string | null>(entries[0]?.id ?? null);
-
-  useEffect(() => {
-    if (entries.length === 0) return;
-    let frame = 0;
-
-    const update = () => {
-      frame = 0;
-      let current = entries[0].id;
-      for (const { id } of entries) {
-        const heading = document.getElementById(id);
-        if (heading && heading.getBoundingClientRect().top <= READING_LINE_PX) current = id;
-      }
-      // A short last section can't scroll up to the line: at the very bottom, it's the one being read.
-      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      setActiveId(atBottom ? entries[entries.length - 1].id : current);
-    };
-    const schedule = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-    };
-  }, [entries]);
+  const ids = useMemo(() => entries.map((entry) => entry.id), [entries]);
+  const activeId = useActiveSection(ids);
 
   return (
     <nav aria-labelledby="toc-heading">

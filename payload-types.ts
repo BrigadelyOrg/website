@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     posts: Post;
     glossary: GlossaryTerm;
+    promos: Promo;
     categories: Category;
     media: Media;
     users: User;
@@ -81,6 +82,7 @@ export interface Config {
   collectionsSelect: {
     posts: PostsSelect<false> | PostsSelect<true>;
     glossary: GlossarySelect<false> | GlossarySelect<true>;
+    promos: PromosSelect<false> | PromosSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -93,8 +95,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'content-settings': ContentSetting;
+  };
+  globalsSelect: {
+    'content-settings': ContentSettingsSelect<false> | ContentSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -138,6 +144,15 @@ export interface Post {
    * One or two sentences. Shown under the title, and used as the search description unless the SEO tab sets one.
    */
   excerpt: string;
+  /**
+   * Optional. Two to five short points, shown in a box at the top of the article.
+   */
+  keyTakeaways?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   content: {
     root: {
       type: string;
@@ -153,6 +168,16 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  /**
+   * Optional. Shown as expandable questions at the end of the article, and to search engines as FAQ data.
+   */
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -228,7 +253,15 @@ export interface User {
    * Shown under your name on articles, e.g. "Finance Ops Lead".
    */
   roleTitle?: string | null;
+  /**
+   * Two or three sentences about you, in the third person, shown in "About the author" at the end of your articles, e.g. "Ada Obi is a payroll specialist who…".
+   */
+  bio?: string | null;
   avatar?: (number | null) | Media;
+  /**
+   * Admins manage every account, promos and settings. Writers can only edit their own profile.
+   */
+  role: 'admin' | 'writer';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -322,6 +355,44 @@ export interface GlossaryTerm {
   createdAt: string;
 }
 /**
+ * Adverts that writers can add to articles and glossary entries with the editor's Promo block.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promos".
+ */
+export interface Promo {
+  id: number;
+  /**
+   * Internal name, shown when choosing a promo in the editor.
+   */
+  name: string;
+  /**
+   * The product it advertises, shown above the headline, e.g. "Statutory compliance".
+   */
+  label: string;
+  heading: string;
+  body: string;
+  buttonLabel: string;
+  /**
+   * A page on this site, like "/#compliance", or a full link.
+   */
+  buttonUrl: string;
+  /**
+   * Optional product screenshot, shown beside the text. Landscape images work best.
+   */
+  image?: (number | null) | Media;
+  /**
+   * Only published promos appear on the site. Switch back to Draft to hide it everywhere it's used.
+   */
+  status: 'draft' | 'published';
+  /**
+   * Background colour of the promo.
+   */
+  theme: 'bone' | 'mint' | 'dark';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -352,6 +423,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'glossary';
         value: number | GlossaryTerm;
+      } | null)
+    | ({
+        relationTo: 'promos';
+        value: number | Promo;
       } | null)
     | ({
         relationTo: 'categories';
@@ -415,7 +490,20 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   coverImage?: T;
   excerpt?: T;
+  keyTakeaways?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   content?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   meta?:
     | T
     | {
@@ -464,6 +552,23 @@ export interface GlossarySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promos_select".
+ */
+export interface PromosSelect<T extends boolean = true> {
+  name?: T;
+  label?: T;
+  heading?: T;
+  body?: T;
+  buttonLabel?: T;
+  buttonUrl?: T;
+  image?: T;
+  status?: T;
+  theme?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -499,7 +604,9 @@ export interface MediaSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   roleTitle?: T;
+  bio?: T;
   avatar?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -559,6 +666,42 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Site-wide options for blog articles.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "content-settings".
+ */
+export interface ContentSetting {
+  id: number;
+  /**
+   * The button at the bottom of the table of contents beside every blog article.
+   */
+  tocButton: {
+    label: string;
+    /**
+     * A page on this site, like "/pricing", or a full link.
+     */
+    url: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "content-settings_select".
+ */
+export interface ContentSettingsSelect<T extends boolean = true> {
+  tocButton?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections_widget".
  */
@@ -567,6 +710,19 @@ export interface CollectionsWidget {
     [k: string]: unknown;
   };
   width: 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PromoBlock".
+ */
+export interface PromoBlock {
+  /**
+   * Choose an advert from Content → Promos. Only published promos appear on the site.
+   */
+  promo: number | Promo;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'promo';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

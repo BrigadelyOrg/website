@@ -54,7 +54,13 @@ function toCategory(value: number | Category | null | undefined): BlogCategory |
 
 function toAuthor(value: number | User | null | undefined): BlogAuthor | null {
   if (typeof value !== "object" || value === null) return null;
-  return { name: value.name, roleTitle: value.roleTitle ?? null, avatar: toImage(value.avatar) };
+  // Only public profile fields: never the email address.
+  return {
+    name: value.name,
+    roleTitle: value.roleTitle ?? null,
+    bio: value.bio?.trim() || null,
+    avatar: toImage(value.avatar),
+  };
 }
 
 /** Fields shared by cards and full posts. */
@@ -81,7 +87,9 @@ function toPost(doc: Post): BlogPost {
     ...toPostBase(doc),
     excerpt: doc.excerpt,
     readTime: doc.readTime,
+    keyTakeaways: (doc.keyTakeaways ?? []).map(({ text }) => text.trim()).filter(Boolean),
     content: doc.content,
+    faqs: (doc.faqs ?? []).map(({ question, answer }) => ({ question, answer })),
     author: toAuthor(doc.author),
     updatedAt: doc.updatedAt,
     meta: {

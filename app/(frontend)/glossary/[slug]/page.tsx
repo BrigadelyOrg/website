@@ -10,7 +10,7 @@ import QuickSearch from "@/components/glossary/QuickSearch";
 import TableOfContents from "@/components/glossary/TableOfContents";
 import { formatPostDate } from "@/lib/blog/format";
 import { glossaryCategoryLabel } from "@/lib/glossary/categories";
-import { outlineOf, type OutlineEntry } from "@/lib/glossary/outline";
+import { outlineOf, type OutlineEntry } from "@/lib/outline";
 import { getGlossaryTerm } from "@/lib/glossary/queries";
 import { SITE_URL } from "@/lib/site";
 

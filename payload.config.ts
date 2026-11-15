@@ -11,9 +11,11 @@ import { Categories } from "./cms/collections/Categories";
 import { Glossary } from "./cms/collections/Glossary";
 import { Media } from "./cms/collections/Media";
 import { Posts } from "./cms/collections/Posts";
+import { Promos } from "./cms/collections/Promos";
 import { Users } from "./cms/collections/Users";
 import { editor } from "./cms/editor";
 import { analyticsOverviewEndpoint } from "./cms/endpoints/analyticsOverview";
+import { ContentSettings } from "./cms/globals/ContentSettings";
 import { generateDescription, generateTitle, generateURL } from "./cms/seo";
 import { migrations } from "./migrations";
 
@@ -58,7 +60,8 @@ export default buildConfig({
     },
   },
   // Posts, Categories and Glossary share the sidebar's "Content" group.
-  collections: [Posts, Glossary, Categories, Media, Users],
+  collections: [Posts, Glossary, Promos, Categories, Media, Users],
+  globals: [ContentSettings],
   // GET /api/analytics/overview: GA4 + Search Console numbers for the dashboard (signed-in users only).
   endpoints: [analyticsOverviewEndpoint],
   editor,

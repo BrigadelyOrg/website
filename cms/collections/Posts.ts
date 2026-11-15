@@ -58,9 +58,49 @@ export const Posts: CollectionConfig = {
               },
             },
             {
+              name: "keyTakeaways",
+              label: "Key takeaways",
+              type: "array",
+              maxRows: 5,
+              labels: { singular: "Takeaway", plural: "Takeaways" },
+              admin: {
+                description: "Optional. Two to five short points, shown in a box at the top of the article.",
+              },
+              fields: [
+                {
+                  name: "text",
+                  type: "textarea",
+                  required: true,
+                  maxLength: 240,
+                },
+              ],
+            },
+            {
               name: "content",
               type: "richText",
               required: true,
+            },
+            {
+              name: "faqs",
+              label: "FAQs",
+              type: "array",
+              labels: { singular: "FAQ", plural: "FAQs" },
+              admin: {
+                description:
+                  "Optional. Shown as expandable questions at the end of the article, and to search engines as FAQ data.",
+              },
+              fields: [
+                {
+                  name: "question",
+                  type: "text",
+                  required: true,
+                },
+                {
+                  name: "answer",
+                  type: "textarea",
+                  required: true,
+                },
+              ],
             },
           ],
         },

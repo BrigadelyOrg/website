@@ -1,6 +1,6 @@
-import { slugify } from "../slugify";
+import { slugify } from "./slugify";
 
-// The H2 sections of a Lexical document: the entries of a term page's table of
+// The H2 sections of a Lexical document: the entries of a page's table of
 // contents, and the anchor id each heading is rendered with (see
 // components/blog/RichText.tsx). Computing both in one pass keeps them in sync.
 

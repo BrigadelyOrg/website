@@ -1,4 +1,8 @@
-import type { DefaultNodeTypes, SerializedLinkNode } from "@payloadcms/richtext-lexical";
+import type {
+  DefaultNodeTypes,
+  SerializedBlockNode,
+  SerializedLinkNode,
+} from "@payloadcms/richtext-lexical";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import {
   LinkJSXConverter,
@@ -8,7 +12,12 @@ import {
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
-import type { Media, Post } from "@/payload-types";
+import type { Media, Post, PromoBlock } from "@/payload-types";
+
+import PromoCard from "./PromoCard";
+
+/** Lexical nodes the content can contain: the defaults plus the Promo block (cms/blocks/Promo.ts). */
+type ContentNode = DefaultNodeTypes | SerializedBlockNode<PromoBlock>;
 
 // Article typography. Colours come from the `prose-brigadely` theme in tailwind.config.js.
 const PROSE = [
@@ -50,10 +59,14 @@ function internalDocToHref({ linkNode }: { linkNode: SerializedLinkNode }): stri
   return section;
 }
 
-function buildConverters(headingIds?: WeakMap<object, string>): JSXConvertersFunction<DefaultNodeTypes> {
+function buildConverters(headingIds?: WeakMap<object, string>): JSXConvertersFunction<ContentNode> {
   return ({ defaultConverters }) => ({
     ...defaultConverters,
     ...LinkJSXConverter({ internalDocToHref }),
+    blocks: {
+      // An advert from Content → Promos; drafts render nothing.
+      promo: ({ node }) => <PromoCard promo={node.fields.promo} />,
+    },
     // Headings with an anchor id (a table of contents links to them) stop below the fixed header.
     heading: ({ node, nodesToJSX }) => {
       const Tag = HEADING_TAGS.has(node.tag) ? node.tag : "h2";
