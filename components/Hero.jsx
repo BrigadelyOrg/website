@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CalendlyButton from "@/components/CalendlyButton";
+import { TRUSTED_COMPANIES } from "@/content/customers";
 
 const BONE = "#F4EFE4";
 const GREEN = "#007a3d";
@@ -9,13 +10,6 @@ const GREEN = "#007a3d";
 const statutoryItems = ["PAYE", "PENSION", "NHF", "NSITF", "TAX"];
 
 
-const trustedCompanies = [
-  { name: "Alveum",src: "/img/alveum.png"  },
-  { name: "FBIS Tech",  src: "/img/fbis-logo.webp"    },
-  { name: "Ogentic AI", src: "/img/ogentic-logo.svg"     },
-  { name: "Qomat School", src: "/img/qomat-logo.jpeg"       },
-  { name: "Uphiva", src: "/img/uphiva-logo.jpg" },
-];
 
 const Hero = () => {
   return (
@@ -95,7 +89,7 @@ const Hero = () => {
           Trusted by operators across Africa
         </p>
         <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-6">
-          {trustedCompanies.map((company) => (
+          {TRUSTED_COMPANIES.map((company) => (
             <img
               key={company.name}
               src={company.src}

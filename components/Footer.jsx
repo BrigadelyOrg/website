@@ -2,25 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Socials from "./Socials";
+import { FEATURE_NAV_ITEMS } from "@/content/navigation";
 
 // Section anchors are prefixed with "/" so they resolve to the home page from
 // any route (e.g. /blog), not to a missing anchor on the current page.
 const footerLinks = {
-  Platform: [
-    { label: "Payroll", href: "/#product" },
-    { label: "Statutory compliance", href: "/#compliance" },
-    { label: "People & benefits", href: "/#product" },
-    { label: "Expense management", href: "/#product" },
-    { label: "Payments", href: "/#product" },
-    { label: "For accountants", href: "/#who" },
-  ],
+  // The six feature pages, named as in the header menu (content/navigation.ts).
+  Platform: FEATURE_NAV_ITEMS.map((item) => ({ label: item.name, href: item.href })),
   Company: [
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "mailto:info@brigadely.com" },
   ],
   Resources: [
     { label: "Glossary", href: "/glossary" },
-    { label: "Help centre", href: "#" },
+    { label: "Help centre", href: "/#faqs" },
     { label: "FAQ", href: "/#faqs" },
   ],
   Legal: [

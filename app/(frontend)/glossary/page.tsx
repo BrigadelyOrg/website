@@ -1,10 +1,11 @@
 import { BookA } from "lucide-react";
 import type { Metadata } from "next";
 
-import JsonLd from "@/components/JsonLd";
+import { JsonLd } from "@/components/JsonLd";
 import GlossaryDirectory from "@/components/glossary/GlossaryDirectory";
 import { getGlossaryIndex } from "@/lib/glossary/queries";
-import { SITE_URL } from "@/lib/site";
+import { GLOSSARY_SET_NAME } from "@/lib/glossary/schema";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 // Rendered per request from cached queries, so `next build` never needs the
 // database. Publishing in /admin expires the cache straight away.
@@ -28,13 +29,13 @@ export const metadata: Metadata = {
     locale: "en_NG",
     title: `${TITLE} | Brigadely`,
     description: DESCRIPTION,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Brigadely" }],
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: `${TITLE} | Brigadely`,
     description: DESCRIPTION,
-    images: ["/og-image.png"],
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 
@@ -51,7 +52,7 @@ export default async function GlossaryPage({ searchParams }: PageProps) {
     "@context": "https://schema.org",
     "@type": "DefinedTermSet",
     "@id": GLOSSARY_URL,
-    name: TITLE,
+    name: GLOSSARY_SET_NAME,
     description: DESCRIPTION,
     url: GLOSSARY_URL,
     hasDefinedTerm: terms.map((entry) => ({
@@ -63,7 +64,7 @@ export default async function GlossaryPage({ searchParams }: PageProps) {
 
   return (
     <main>
-      <JsonLd schema={termSetSchema} />
+      <JsonLd data={termSetSchema} />
 
       <GlossaryDirectory terms={terms} initialQuery={query}>
         <span

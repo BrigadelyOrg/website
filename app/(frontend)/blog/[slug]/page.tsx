@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import JsonLd from "@/components/JsonLd";
+import { JsonLd } from "@/components/JsonLd";
 import AboutTheAuthor from "@/components/blog/AboutTheAuthor";
 import ArticleFaqs from "@/components/blog/ArticleFaqs";
 import ArticleTableOfContents from "@/components/blog/ArticleTableOfContents";
@@ -20,7 +20,7 @@ import { getPostBySlug, getRelatedPosts } from "@/lib/blog/queries";
 import { getContentSettings } from "@/lib/blog/settings";
 import type { BlogImage } from "@/lib/blog/types";
 import { outlineOf, type OutlineEntry } from "@/lib/outline";
-import { SITE_URL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, LOGO_URL, SITE_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 // Rendered per request from cached queries, so `next build` never needs the
@@ -53,15 +53,18 @@ function absoluteUrl(path: string): string {
   return new URL(path, SITE_URL).toString();
 }
 
-function socialImages(image: BlogImage | null) {
-  if (!image) return undefined;
-  return [
-    {
-      url: image.url,
-      alt: image.alt,
-      ...(image.width && image.height ? { width: image.width, height: image.height } : {}),
-    },
-  ];
+/**
+ * The share image: the article's SEO or cover image as an absolute URL (media
+ * is served from /api/media/file/…), or the site's default image. Always set,
+ * since this page's `openGraph` replaces the root layout's.
+ */
+function shareImage(image: BlogImage | null) {
+  if (!image) return DEFAULT_OG_IMAGE;
+  return {
+    url: absoluteUrl(image.url),
+    alt: image.alt,
+    ...(image.width && image.height ? { width: image.width, height: image.height } : {}),
+  };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -73,7 +76,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const url = `${SITE_URL}/blog/${post.slug}`;
   const description = post.meta.description ?? post.excerpt;
-  const images = socialImages(post.meta.image ?? post.coverImage);
+  const image = shareImage(post.meta.image ?? post.coverImage);
   // An SEO title set in the CMS is used exactly as written (it is what the SEO
   // tab previews); otherwise the layout's "%s | Brigadely" template applies.
   const socialTitle = post.meta.title ?? `${post.title} | Brigadely`;
@@ -93,13 +96,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       modifiedTime: post.updatedAt,
       authors: post.author ? [post.author.name] : undefined,
       section: post.category?.title,
-      images,
+      images: [image],
     },
     twitter: {
-      card: images ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title: socialTitle,
       description,
-      images: images?.map((image) => image.url),
+      images: [image.url],
     },
   };
 }
@@ -111,7 +114,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const related = post.category ? await getRelatedPosts(post.id, post.category.id) : [];
   const url = `${SITE_URL}/blog/${post.slug}`;
-  const shareImage = post.meta.image ?? post.coverImage;
+  const image = shareImage(post.meta.image ?? post.coverImage);
 
   const { entries, headingIds } = outlineOf(post.content, PAGE_IDS);
   const toc: OutlineEntry[] = post.faqs.length > 0 ? [...entries, { id: "faqs", title: "FAQs" }] : entries;
@@ -122,7 +125,9 @@ export default async function BlogPostPage({ params }: PageProps) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.meta.description ?? post.excerpt,
-    image: shareImage ? [absoluteUrl(shareImage.url)] : undefined,
+    url,
+    image: [image.url],
+    // The collection's publish date field is `publishedDate` (required, so always set).
     datePublished: post.publishedDate,
     dateModified: post.updatedAt,
     author: post.author
@@ -132,11 +137,11 @@ export default async function BlogPostPage({ params }: PageProps) {
           jobTitle: post.author.roleTitle ?? undefined,
           description: post.author.bio ?? undefined,
         }
-      : undefined,
+      : { "@type": "Organization", name: "Brigadely", url: SITE_URL },
     publisher: {
       "@type": "Organization",
       name: "Brigadely",
-      logo: { "@type": "ImageObject", url: absoluteUrl("/img/logo1.png") },
+      logo: { "@type": "ImageObject", url: LOGO_URL },
     },
     mainEntityOfPage: url,
     articleSection: post.category?.title,
@@ -167,9 +172,9 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <main>
-      <JsonLd schema={articleSchema} />
-      <JsonLd schema={breadcrumbSchema} />
-      {faqSchema && <JsonLd schema={faqSchema} />}
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      {faqSchema && <JsonLd data={faqSchema} />}
 
       <article>
         <header className="bg-[#F4EFE4] px-6 pb-14 pt-28 md:pb-20 lg:pt-32">

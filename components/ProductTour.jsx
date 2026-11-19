@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
+import { FEATURE_NAV } from "@/content/navigation";
 
 const GREEN = "#007a3d";
 const GREEN_TINT = "#e0f3ec";
@@ -38,15 +41,19 @@ const DiamondChip = () => (
 
 /* ── Platform module grid ─────────────────────────────────────────── */
 
+// `feature`: the module's page (content/navigation.ts). Cards without one aren't linked.
+
 const platformModules = [
   {
     Chip: CircleChip,
     title: "Payroll",
+    feature: "payroll",
     body: "Run payroll for your entire workforce - full-time staff and contractors - on every cycle, with gross-to-net calculations handled automatically.",
   },
   {
     Chip: SquareChip,
     title: "Statutory compliance",
+    feature: "statutory-compliance",
     body: "Every statutory obligation your jurisdiction requires: calculated on each payroll run, remitted to the right authority, and filed on time - with a full audit trail.",
   },
   {
@@ -57,21 +64,25 @@ const platformModules = [
   {
     Chip: CircleChip,
     title: "Expense management",
+    feature: "expense-management",
     body: "Capture expenses, route approvals, enforce policy limits, and reimburse employees - without leaving the ledger.",
   },
   {
     Chip: SquareChip,
     title: "Vendor & supplier payments",
+    feature: "vendor-payments",
     body: "Pay suppliers and service providers directly from the ledger. Every outgoing payment is linked to its invoice, cost code, and withholding classification.",
   },
   {
     Chip: DiamondChip,
     title: "Asset management",
+    feature: "asset-management",
     body: "Track company assets, record depreciation, manage assignments, and maintain a permanent disposal log - all tied to the same ledger.",
   },
   {
     Chip: CircleChip,
-    title: "Stablecoin / USDC payouts",
+    title: "Contractor & USDC payouts",
+    feature: "contractor-payments",
     body: "Pay contractors, remote hires, and diaspora employees in USDC - settled instantly, at near-zero cost, without a correspondent banking chain. Proof that the ledger operates beyond a single currency.",
   },
   {
@@ -109,8 +120,8 @@ const ProductTour = () => {
             letterSpacing: "-0.025em",
           }}
         >
-          Every payment that leaves your business,<br className="hidden md:block" /> on one{" "}
-          <span style={{ color: GREEN }}>ledger.</span>
+          A single operating layer<br className="hidden md:block" /> for every outgoing{" "}
+          <span style={{ color: GREEN }}>payment</span>
         </h2>
 
         {/* Connective paragraph */}
@@ -122,23 +133,35 @@ const ProductTour = () => {
 
         {/* Platform module grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
-          {platformModules.map((m, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl p-6 flex flex-col gap-4 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
-            >
-              <m.Chip />
-              <div>
-                <h3
-                  className="text-sm text-[#111111] mb-1.5"
-                  style={{ fontFamily: "var(--font-inter)", fontWeight: 700 }}
-                >
-                  {m.title}
-                </h3>
-                <p className="font-sans text-xs text-gray-500 leading-relaxed">{m.body}</p>
+          {platformModules.map((m, i) => {
+            const feature = m.feature ? FEATURE_NAV[m.feature] : null;
+            return (
+              <div
+                key={i}
+                className="relative bg-white rounded-2xl p-6 flex flex-col gap-4 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
+              >
+                <m.Chip />
+                <div>
+                  <h3
+                    className="text-sm text-[#111111] mb-1.5"
+                    style={{ fontFamily: "var(--font-inter)", fontWeight: 700 }}
+                  >
+                    {m.title}
+                  </h3>
+                  <p className="font-sans text-xs text-gray-500 leading-relaxed">{m.body}</p>
+                </div>
+                {feature && (
+                  // The ::after overlay stretches the link over the whole card.
+                  <Link
+                    href={feature.href}
+                    className="mt-auto font-sans text-xs font-semibold text-[#007a3d] hover:text-[#005a2d] after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-[#007a3d]"
+                  >
+                    Explore {feature.name} <span aria-hidden="true">→</span>
+                  </Link>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

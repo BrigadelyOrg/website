@@ -23,8 +23,9 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className={`transition-all duration-300 ${scrolled ? "pt-3 px-4 md:px-8" : ""}`}>
+        {/* relative: "The Platform" mega-menu (Nav.tsx) opens below this bar, at its width. */}
         <div
-          className={`mx-auto transition-all duration-300 ${
+          className={`relative mx-auto transition-all duration-300 ${
             scrolled
               ? "max-w-6xl rounded-2xl bg-white/95 backdrop-blur-md shadow-[0_4px_32px_rgba(0,0,0,0.08)] border border-gray-100"
               : "bg-transparent"
@@ -45,7 +46,8 @@ const Header = () => {
               />
             </Link>
 
-            {/* Desktop nav - centred */}
+            {/* Desktop nav - centred. Rendered at every width (hidden with CSS below lg),
+                so the server HTML always carries the full menu for crawlers. */}
             <div className="hidden lg:flex flex-1 justify-center">
               <Nav />
             </div>

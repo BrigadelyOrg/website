@@ -1,14 +1,18 @@
 import Link from "next/link";
 import React from "react";
-import { FaFacebookF, FaLinkedinIn, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
+
+import { SOCIAL_PROFILES } from "@/lib/site";
+
+// The URLs live in lib/site.ts, which also feeds the Organization structured data's `sameAs`.
+const ICONS = {
+  Facebook: <FaFacebookF />,
+  LinkedIn: <FaLinkedinIn />,
+  Instagram: <FaInstagram />,
+};
 
 const Socials = ({ iconStyles }) => {
-  const socialLinks = [
-    { name: "Facebook", icon: <FaFacebookF />, url: "https://www.facebook.com/people/Brigadely/61591625181991/" },
-    { name: "LinkedIn", icon: <FaLinkedinIn />, url: "https://www.linkedin.com/company/brigadely" },
-    { name: "Instagram", icon: <FaInstagram />, url: "https://www.instagram.com/getbrigadely/" },
-    
-  ];
+  const socialLinks = SOCIAL_PROFILES.map((profile) => ({ ...profile, icon: ICONS[profile.name] }));
 
   return (
     <div className="flex space-x-4">

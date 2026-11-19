@@ -3,18 +3,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import JsonLd from "@/components/JsonLd";
+import { JsonLd } from "@/components/JsonLd";
 import ArticleTableOfContents from "@/components/blog/ArticleTableOfContents";
 import MobileTableOfContents from "@/components/blog/MobileTableOfContents";
 import RichText from "@/components/blog/RichText";
 import GlossaryCTA from "@/components/glossary/GlossaryCTA";
+import GlossaryFeatureCallout from "@/components/glossary/GlossaryFeatureCallout";
 import QuickSearch from "@/components/glossary/QuickSearch";
 import { formatPostDate } from "@/lib/blog/format";
 import { getContentSettings } from "@/lib/blog/settings";
 import { glossaryCategoryLabel } from "@/lib/glossary/categories";
 import { outlineOf, type OutlineEntry } from "@/lib/outline";
 import { getGlossaryTerm } from "@/lib/glossary/queries";
-import { SITE_URL } from "@/lib/site";
+import { GLOSSARY_SET_NAME } from "@/lib/glossary/schema";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 // Rendered per request from cached queries, so `next build` never needs the
 // database. Publishing in /admin expires the cache straight away.
@@ -25,7 +27,6 @@ type PageProps = {
 };
 
 const GLOSSARY_URL = `${SITE_URL}/glossary`;
-const GLOSSARY_NAME = "African Payroll, Tax & Finance Glossary";
 
 /** Ids this page uses outside the content; content headings get other ones. */
 const PAGE_IDS = [
@@ -35,6 +36,7 @@ const PAGE_IDS = [
   "related-terms-heading",
   "related-posts-heading",
   "glossary-cta-heading",
+  "glossary-feature-callout-heading",
   "toc-heading",
   "glossary-quick-search",
 ];
@@ -62,10 +64,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // "What is {term}?" gets the layout's "| Brigadely" suffix.
   const fallbackTitle = `What is ${term.term}?`;
   const socialTitle = term.meta.title ?? `${fallbackTitle} | Brigadely`;
+  // This page sets its own openGraph, which replaces the root layout's: an SEO image from
+  // the CMS (made absolute) or, explicitly, the site's default share image.
   const image = term.meta.image;
   const images = image
-    ? [{ url: image.url, alt: image.alt, ...(image.width && image.height ? { width: image.width, height: image.height } : {}) }]
-    : [{ url: "/og-image.png", width: 1200, height: 630, alt: "Brigadely" }];
+    ? [{ url: new URL(image.url, SITE_URL).toString(), alt: image.alt, ...(image.width && image.height ? { width: image.width, height: image.height } : {}) }]
+    : [DEFAULT_OG_IMAGE];
 
   return {
     title: term.meta.title ? { absolute: term.meta.title } : fallbackTitle,
@@ -113,7 +117,7 @@ export default async function GlossaryTermPage({ params }: PageProps) {
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
       "@id": GLOSSARY_URL,
-      name: GLOSSARY_NAME,
+      name: GLOSSARY_SET_NAME,
       url: GLOSSARY_URL,
     },
   };
@@ -143,9 +147,9 @@ export default async function GlossaryTermPage({ params }: PageProps) {
 
   return (
     <main>
-      <JsonLd schema={definedTermSchema} />
-      <JsonLd schema={breadcrumbSchema} />
-      {faqSchema && <JsonLd schema={faqSchema} />}
+      <JsonLd data={definedTermSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      {faqSchema && <JsonLd data={faqSchema} />}
 
       <div className="bg-white px-6 pb-24 pt-28 lg:pt-32">
         <div className="mx-auto max-w-6xl">
@@ -202,6 +206,9 @@ export default async function GlossaryTermPage({ params }: PageProps) {
               {toc.length > 0 && <MobileTableOfContents entries={toc} className="mt-8" />}
 
               <RichText data={term.content} headingIds={headingIds} className={`mt-10 ${CALLOUTS}`} />
+
+              {/* The matching product page, if this term has one (content/glossaryFeatureMap.ts). */}
+              <GlossaryFeatureCallout slug={term.slug} className="mt-12" />
 
               {term.faqs.length > 0 && (
                 <section

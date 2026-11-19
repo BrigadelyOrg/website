@@ -5,7 +5,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import JsonLd from "@/components/JsonLd";
+import { JsonLd } from "@/components/JsonLd";
+import { DEFAULT_OG_IMAGE, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 import { CtaTracker } from "./CtaTracker";
 
 const GTM_ID = "GTM-NQPV8M79";
@@ -16,33 +17,12 @@ const GTM_ID = "GTM-NQPV8M79";
 // set this to that same ID, or every page view is counted twice.
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Brigadely Technologies Limited",
-  url: "https://brigadely.com",
-  logo: "https://brigadely.com/img/logo1.png",
-  description:
-    "The financial operating system for African businesses - payroll, statutory compliance, vendor payments, and more, built for All.",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Ibadan",
-    addressRegion: "Oyo State",
-    addressCountry: "NG",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer support",
-    email: "info@brigadely.com",
-  },
-   sameAs: ["https://www.linkedin.com/company/brigadely"], 
-};
-
+// Site-wide. The Organization schema is on the home page (app/(frontend)/page.jsx).
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Brigadely",
-  url: "https://brigadely.com",
+  url: SITE_URL,
 };
 
 // --- Google fonts (primary system, matches Bujeti design standard) ---
@@ -133,29 +113,7 @@ export const metadata = {
     default: "Brigadely - The financial operating system for African businesses",
     template: "%s | Brigadely",
   },
-  description:
-    "Brigadely handles all your financial operations in one platform - payroll, statutory compliance, vendor payments, and more, built for African businesses.",
-  keywords: [
-    "payroll software Nigeria",
-    "Nigerian payroll software",
-    "online payroll Nigeria",
-    "PAYE remittance Nigeria",
-    "PAYE filing software Nigeria",
-    "multi-state PAYE Nigeria",
-    "pension remittance Nigeria",
-    "PenCom compliant payroll",
-    "statutory compliance Nigeria",
-    "NHF NSITF ITF filing",
-    "payroll for accountants Nigeria",
-    "payroll compliance software Africa",
-    "financial operating system Africa",
-    "Vendor manageement and payments Nigeria",
-    "expense management software Nigeria",
-    "stablecoin payroll Nigeria",
-    "Assest management software Nigeria",
-    "Workforce management software Nigeria",
-    "Leave management software Nigeria",
-  ],
+  description: SITE_DESCRIPTION,
   authors: [{ name: "Brigadely Technologies Limited" }],
   creator: "Brigadely Technologies Limited",
   publisher: "Brigadely Technologies Limited",
@@ -170,33 +128,22 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  // No `url` here and no `alternates.canonical`: every page inherits these, and
+  // pages without their own would otherwise point search engines at the home page.
   openGraph: {
     type: "website",
     locale: "en_NG",
-    url: "https://brigadely.com",
     siteName: "Brigadely",
     title: "Brigadely - The financial operating system for African businesses",
-    description:
-      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments - built for Nigeria.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Brigadely - The financial operating system for African businesses",
-      },
-    ],
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The financial operating system for African businesses - payroll, statutory compliance, vendor payments, and more, built for All.",
-    description:
-      "Automate PAYE, Pension, NHF, NSITF, and ITF on every payroll run. One platform for payroll, compliance, and payments - built for Nigeria.",
-    images: ["/og-image.png"],
+    title: "Brigadely — The financial operating system for African businesses",
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
     creator: "@brigadely",
-  },
-  alternates: {
-    canonical: "https://brigadely.com",
   },
   manifest: "/site.webmanifest",
   icons: {
@@ -263,8 +210,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <JsonLd schema={organizationSchema} />
-        <JsonLd schema={websiteSchema} />
+        <JsonLd data={websiteSchema} />
         {/* GA4 `cta_click` conversion events for sign-up and booking clicks. */}
         <CtaTracker />
         <Header />

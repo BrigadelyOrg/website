@@ -53,12 +53,8 @@ export async function GET(): Promise<Response> {
     DETAILS,
     "",
     ...section("Pages", [
+      // /pricing is hidden (noindex), so it isn't listed.
       { title: "Home", url: SITE_URL, note: SUMMARY },
-      {
-        title: "Pricing",
-        url: `${SITE_URL}/pricing`,
-        note: "Simple, transparent pricing for payroll, statutory compliance and payments built for African businesses.",
-      },
       {
         title: "Glossary",
         url: `${SITE_URL}/glossary`,

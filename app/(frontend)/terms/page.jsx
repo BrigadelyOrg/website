@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { SITE_URL } from "@/lib/site";
 import React from "react";
 
 export const metadata = {
-  title: "Terms of Service | Brigadely",
+  title: "Terms of Service",
+  alternates: { canonical: `${SITE_URL}/terms` },
   description:
     "Read Brigadely's Terms of Service to understand the conditions governing your use of our HR and payroll platform.",
 };

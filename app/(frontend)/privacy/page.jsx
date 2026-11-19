@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { SITE_URL } from "@/lib/site";
 import React from "react";
 
 export const metadata = {
-  title: "Privacy Policy | Brigadely",
+  title: "Privacy Policy",
+  alternates: { canonical: `${SITE_URL}/privacy` },
   description:
     "Learn how Brigadely collects, uses, and protects your personal data across our HR and payroll platform.",
 };

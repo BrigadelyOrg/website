@@ -20,7 +20,8 @@ const ClosingCTA = () => {
 
         {/* Headline */}
         <h2
-          className="text-5xl md:text-5xl lg:text-6xl text-[#111111] mb-8 max-w-3xl"
+          // text-balance: the heading runs to three lines, so even them out rather than leave a short last line.
+          className="text-5xl md:text-5xl lg:text-6xl text-[#111111] mb-8 max-w-3xl text-balance"
           style={{
             fontFamily: "var(--font-inter)",
             fontWeight: 900,
@@ -28,9 +29,8 @@ const ClosingCTA = () => {
             letterSpacing: "-0.03em",
           }}
         >
-          One ledger. Every payment<br />
-          out of your{" "}
-          <span style={{ color: GREEN }}>business.</span>
+          Run your entire financial operation from one unified{" "}
+          <span style={{ color: GREEN }}>system</span>
         </h2>
 
         {/* Subhead */}

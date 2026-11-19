@@ -1,9 +1,13 @@
 import Link from "next/link";
+import { SITE_URL } from "@/lib/site";
 import React from "react";
 import CalendlyButton from "@/components/CalendlyButton";
 
 export const metadata = {
-  title: "Pricing | Brigadely",
+  title: "Pricing",
+  alternates: { canonical: `${SITE_URL}/pricing` },
+  // Hidden for now: kept out of the sitemap and navigation, and not indexed (links still followed).
+  robots: { index: false, follow: true },
   description:
     "Simple, transparent pricing for payroll, statutory compliance and payments built for African businesses. Every plan includes full statutory compliance.",
 };

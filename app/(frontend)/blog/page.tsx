@@ -4,7 +4,7 @@ import Link from "next/link";
 import BlogCTA from "@/components/blog/BlogCTA";
 import BlogIndex from "@/components/blog/BlogIndex";
 import { categoriesWithPosts, getPublishedPosts } from "@/lib/blog/queries";
-import { SITE_URL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 // Rendered per request from cached queries, so `next build` never needs the
 // database. Publishing in /admin expires the cache straight away.
@@ -27,11 +27,14 @@ export const metadata: Metadata = {
     locale: "en_NG",
     title: `${TITLE} | Brigadely`,
     description: DESCRIPTION,
+    // This `openGraph` replaces the root layout's, so it needs its own image.
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${TITLE} | Brigadely`,
     description: DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 
